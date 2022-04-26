@@ -1,16 +1,11 @@
 import {
-    AxesHelper,
-    BoxGeometry,
-    BufferGeometry, Material,
     Mesh,
-    MeshStandardMaterial, Object3D, SphereBufferGeometry,
+    MeshStandardMaterial, Object3D,
     SphereGeometry,
     Vector3
 } from 'three';
-import {Geometry} from 'three/examples/jsm/deprecated/Geometry';
-import GUI from 'lil-gui';
 import {GLTF, GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-import ResourcesLoader from './ResourcesLoader';
+import ResourcesLoader from '../ResourcesLoader';
 
 export class Tomato {
     private scene: Object3D
@@ -20,7 +15,6 @@ export class Tomato {
     public long = 1
     public size = 1
     public grow = 1
-    private loader: GLTFLoader;
 
 
     constructor() {
@@ -47,27 +41,6 @@ export class Tomato {
         this.tomatoSphere = sphereParent
     }
 
-    private buildBody() {
-        const geometry = new SphereGeometry( 2, 32, 16 );
-        const material = new MeshStandardMaterial({
-            color: '#c23838',
-            metalness: 0.4,
-            roughness: 0.6,
-        })
-        this.scene = new Mesh(geometry, material)
-
-        const sphereVerticesArray = []
-        const vertices= geometry.attributes.position.array
-        for (let i = 0; i < vertices.length; i += 3) {
-            const vec = new Vector3(vertices[i], vertices[i+1], vertices[i+2]);
-            sphereVerticesArray.push(vec);
-            let mag = vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
-            mag = Math.sqrt(mag);
-            // const norm = new THREE.Vector3(vertex.x / mag, vertex.y / mag, vertex.z / mag);
-            // sphereVerticesNormArray.push(norm);
-        }
-        console.log(sphereVerticesArray)
-    }
     get mesh() {
         return this.scene
     }

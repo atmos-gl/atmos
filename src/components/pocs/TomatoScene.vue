@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {App} from '../three/App';
+import {TomatoApp} from '../../three/pocs/TomatoApp';
 
 const canvas = ref(null);
-const app = new App()
+const app = new TomatoApp()
 onMounted(() => {
   app.init(canvas.value)
   app.run()

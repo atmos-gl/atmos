@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import Scene from './components/Scene.vue';
-import useLoader from './composables/useLoader';
-import resources from './ressources';
+import {ref} from 'vue';
+import Tomato from './components/pocs/Tomato.vue';
 
-const {loading, percentageProgress} = useLoader(resources)
+const currentPoc = ref('')
 </script>
 
 <template>
-  <div v-if="loading">Loading: {{ percentageProgress }}</div>
-  <Scene v-else />
+  <div class="flex flex-col p-8 items-center gap-2" v-if="currentPoc === ''">
+    <h1 class="text-2xl font-bold mb-4">Pocs Atmos</h1>
+    <button class="bg-blue-200 py-2 px-4 rounded"
+            @click="currentPoc = 'tomato'">Parametric tomato
+    </button>
+    <button class="bg-blue-200 py-2 px-4 rounded"
+            @click="currentPoc = 'mobile'">WebGL on mobile
+    </button>
+    <button class="bg-blue-200 py-2 px-4 rounded"
+            @click="currentPoc = 'dragdrop'">Drag n drop
+    </button>
+  </div>
+  <Tomato  v-if="currentPoc === 'tomato'" />
 </template>
 
 <style>
@@ -19,14 +29,5 @@ html, body {
 }
 * {
   box-sizing: border-box;
-}
-#app {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
 }
 </style>

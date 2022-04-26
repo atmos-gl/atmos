@@ -3,7 +3,7 @@ import {Tomato} from './Tomato';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
 
-export class App {
+export class TomatoApp {
     private scene: Scene | null = null
     private camera: PerspectiveCamera | null = null
     private renderer: WebGLRenderer | null = null
