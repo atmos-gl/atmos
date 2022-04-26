@@ -1,6 +1,7 @@
-import {AmbientLight, Clock, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three'
+import {AmbientLight, Clock, PerspectiveCamera, PlaneGeometry, PointLight, Scene, Vector3, WebGLRenderer} from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
+import {CustomPlane} from "./CustomPlane";
 
 export class DragDropApp {
     private scene: Scene | null = null
@@ -15,6 +16,10 @@ export class DragDropApp {
     private controls: OrbitControls
 
     private gui: GUI;
+
+    private ground: CustomPlane | null = null
+    private wallLeft: CustomPlane | null = null
+    private wallBack: CustomPlane | null = null
 
     public init(canvas: HTMLCanvasElement) {
         this.canvas = canvas
@@ -45,6 +50,21 @@ export class DragDropApp {
         this.pointLight.position.y = 5
         this.pointLight.position.z = -5
         this.scene.add(this.pointLight)
+
+        this.ground = new CustomPlane(0xffff00)
+        this.scene.add(this.ground.mesh)
+        this.ground.mesh.rotateX(-Math.PI / 2)
+
+        this.wallLeft = new CustomPlane(0xFF0000)
+        this.scene.add(this.wallLeft.mesh)
+        this.wallLeft.mesh.rotateY(-Math.PI / 2)
+        this.wallLeft.mesh.position.set(-50, 50, 0)
+
+
+        this.wallBack = new CustomPlane(0x0000FF)
+        this.scene.add(this.wallBack.mesh)
+        this.wallBack.mesh.position.set(0, 50, -50)
+
     }
 
     resizeRendererToDisplaySize() {
