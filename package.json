@@ -1,5 +1,5 @@
 {
-  "name": "atmos",
+  "name": "parametric-potato",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -8,6 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/three": "^0.139.0",
+    "lil-gui": "^0.16.1",
+    "three": "^0.139.2",
     "vue": "^3.2.25"
   },
   "devDependencies": {
