@@ -1,4 +1,4 @@
-import {ResourcesToLoad} from './three/ResourcesLoader';
+import {ResourcesToLoad} from '../ResourcesLoader';
 
 const resources: ResourcesToLoad = {
     gltf: {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import Tomato from './components/pocs/Tomato.vue';
+import DragDrop from './components/pocs/DragDrop.vue';
 
 const currentPoc = ref('')
 </script>
@@ -19,6 +20,7 @@ const currentPoc = ref('')
     </button>
   </div>
   <Tomato  v-if="currentPoc === 'tomato'" />
+  <DragDrop  v-if="currentPoc === 'dragdrop'" />
 </template>
 
 <style>

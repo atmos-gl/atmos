@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import TomatoScene from './TomatoScene.vue';
 import useLoader from '../../composables/useLoader';
-import resources from '../../three/pocs/ressourcesTomato';
+import ressourcesDragDrop from '../../three/pocs/ressourcesDragDrop';
+import DragDropScene from './DragDropScene.vue';
 
-const {loading, percentageProgress} = useLoader(resources)
+const {loading, percentageProgress} = useLoader(ressourcesDragDrop)
 </script>
 
 <template>
   <div v-if="loading">Loading: {{ percentageProgress }}</div>
-  <TomatoScene v-else />
+  <DragDropScene v-else />
 </template>
 
 <style>
