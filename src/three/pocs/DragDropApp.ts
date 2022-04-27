@@ -80,7 +80,7 @@ export class DragDropApp {
 
         // @ts-ignore
         document.addEventListener('mousemove', (event) => {
-            currentCube.mesh.position.set((event.clientX / window.innerWidth) * 10 , 5, (event.clientY / window.innerHeight) * 10)
+            currentCube.mesh.position.set((event.clientX / window.innerWidth) * 50 , 5, (event.clientY / window.innerHeight) * 50)
         });
 
         document.addEventListener('click', () => {
