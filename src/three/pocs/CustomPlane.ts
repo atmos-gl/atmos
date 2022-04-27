@@ -1,6 +1,6 @@
 import {
     DoubleSide,
-    Mesh, MeshBasicMaterial, Object3D, PlaneGeometry,
+    Mesh, MeshBasicMaterial, PlaneGeometry,
 } from 'three';
 
 export class CustomPlane {

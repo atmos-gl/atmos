@@ -2,6 +2,8 @@ import {AmbientLight, Clock, PerspectiveCamera, PlaneGeometry, PointLight, Scene
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
 import {CustomPlane} from "./CustomPlane";
+import {Cube} from "./Cube";
+import {DragControls} from "three/examples/jsm/controls/DragControls";
 
 export class DragDropApp {
     private scene: Scene | null = null
@@ -21,6 +23,8 @@ export class DragDropApp {
     private wallLeft: CustomPlane | null = null
     private wallBack: CustomPlane | null = null
 
+    private cube: Cube | null = null
+
     public init(canvas: HTMLCanvasElement) {
         this.canvas = canvas
         this.scene = new Scene()
@@ -35,11 +39,11 @@ export class DragDropApp {
         const gl = this.renderer.getContext()
         const aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
         this.camera = new PerspectiveCamera(45, aspect, 0.01, 1000)
-        this.camera.position.set(10, 10, 10)
+        this.camera.position.set(100, 100, 100)
         this.camera.lookAt(0, 0, 0)
 
-        this.controls = new OrbitControls(this.camera, this.canvas)
-        this.controls.enableDamping = true
+        // this.controls = new OrbitControls(this.camera, this.canvas)
+        // this.controls.enableDamping = true
 
 
         this.ambientLight = new AmbientLight('#ffffff', 1)
@@ -60,10 +64,31 @@ export class DragDropApp {
         this.wallLeft.mesh.rotateY(-Math.PI / 2)
         this.wallLeft.mesh.position.set(-50, 50, 0)
 
-
         this.wallBack = new CustomPlane(0x0000FF)
         this.scene.add(this.wallBack.mesh)
         this.wallBack.mesh.position.set(0, 50, -50)
+
+        this.cube = new Cube(0x38761D)
+        this.scene.add(this.cube.mesh)
+        this.cube.mesh.position.set(0, 5, 0)
+
+        const dragCubes = [this.cube.mesh]
+
+        const controlsDrag = new DragControls(dragCubes, this.camera, this.renderer.domElement) ;
+
+        // add event listener to highlight dragged objects
+
+        // @ts-ignore
+        controlsDrag.addEventListener( 'dragstart', function ( event, controls ) {
+            // event.object.material.emissive.set( 0xaaaaaa );
+
+        } );
+
+        // @ts-ignore
+        controlsDrag.addEventListener( 'dragend', function ( event, controls ) {
+            // event.object.material.emissive.set( 0x000000 );
+
+        } );
 
     }
 
@@ -93,7 +118,7 @@ export class DragDropApp {
         }
 
         // @ts-ignore
-        this.controls.update()
+        // this.controls.update()
 
 
         this.render()
