@@ -75,6 +75,18 @@ export class DragDropApp {
         const dragCubes = [this.cube.mesh]
 
         const controlsDrag = new DragControls(dragCubes, this.camera, this.renderer.domElement) ;
+
+        let currentCube = this.cube
+
+        // @ts-ignore
+        document.addEventListener('mousemove', (event) => {
+            currentCube.mesh.position.set((event.clientX / window.innerWidth) * 10 , 5, (event.clientY / window.innerHeight) * 10)
+        });
+
+        document.addEventListener('click', () => {
+            currentCube = new Cube(0x38761D)
+            this.scene.add(currentCube.mesh)
+        })
     }
 
     resizeRendererToDisplaySize() {
@@ -104,6 +116,7 @@ export class DragDropApp {
 
         // @ts-ignore
         this.cube.mesh.position.clamp(new Vector3(-45, 5, -45), new Vector3(45, 5, 45))
+        // this.cube.mesh.position.set(mouse.x, 5, 0)
 
         this.render()
     }
