@@ -70,26 +70,11 @@ export class DragDropApp {
 
         this.cube = new Cube(0x38761D)
         this.scene.add(this.cube.mesh)
-        this.cube.mesh.position.set(0, 5, 0)
+        this.cube.mesh.position.set(-50, 5, -50)
 
         const dragCubes = [this.cube.mesh]
 
         const controlsDrag = new DragControls(dragCubes, this.camera, this.renderer.domElement) ;
-
-        // add event listener to highlight dragged objects
-
-        // @ts-ignore
-        controlsDrag.addEventListener( 'dragstart', function ( event, controls ) {
-            // event.object.material.emissive.set( 0xaaaaaa );
-
-        } );
-
-        // @ts-ignore
-        controlsDrag.addEventListener( 'dragend', function ( event, controls ) {
-            // event.object.material.emissive.set( 0x000000 );
-
-        } );
-
     }
 
     resizeRendererToDisplaySize() {
@@ -118,8 +103,7 @@ export class DragDropApp {
         }
 
         // @ts-ignore
-        // this.controls.update()
-
+        this.cube.mesh.position.clamp(new Vector3(-45, 5, -45), new Vector3(45, 5, 45))
 
         this.render()
     }

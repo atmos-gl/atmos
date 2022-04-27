@@ -2,7 +2,7 @@ import {
     Box3,
     BoxGeometry,
     DoubleSide,
-    Mesh, MeshBasicMaterial, SphereGeometry
+    Mesh, MeshBasicMaterial, SphereGeometry, Vector3
 } from 'three';
 
 export class Cube {
