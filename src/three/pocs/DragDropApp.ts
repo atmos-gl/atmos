@@ -1,140 +1,227 @@
-import {AmbientLight, Clock, PerspectiveCamera, PlaneGeometry, PointLight, Scene, Vector3, WebGLRenderer} from 'three'
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import GUI from 'lil-gui';
-import {CustomPlane} from "./CustomPlane";
-import {Cube} from "./Cube";
-import {DragControls} from "three/examples/jsm/controls/DragControls";
+import {
+    AmbientLight, BoxGeometry,
+    Color, DirectionalLight, GridHelper,
+    Mesh, MeshBasicMaterial, MeshLambertMaterial,
+    PerspectiveCamera, PlaneGeometry,
+    Raycaster,
+    Scene, Vector2,
+    WebGLRenderer
+} from 'three'
 
 export class DragDropApp {
-    private scene: Scene | null = null
-    private camera: PerspectiveCamera | null = null
-    private renderer: WebGLRenderer | null = null
-    private canvas: HTMLCanvasElement | null = null
-    private clock: Clock | null = null
+    private camera;
+    private scene;
+    private renderer;
+    private plane;
+    private pointer: Vector2;
+    private raycaster: Raycaster;
+    private isShiftDown = false;
 
-    private ambientLight: AmbientLight
-    private pointLight: PointLight;
+    private rollOverMesh;
+    private rollOverMaterial;
+    private cubeGeo;
+    private cubeMaterial;
 
-    private controls: OrbitControls
-
-    private gui: GUI;
-
-    private ground: CustomPlane | null = null
-    private wallLeft: CustomPlane | null = null
-    private wallBack: CustomPlane | null = null
-
-    private cube: Cube | null = null
+    private objects = [];
 
     public init(canvas: HTMLCanvasElement) {
-        this.canvas = canvas
-        this.scene = new Scene()
-        this.renderer = new WebGLRenderer({
-            canvas: this.canvas
-        })
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        this.camera = new PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+        this.camera.position.set( 500, 800, 1300 );
+        this.camera.lookAt( 0, 0, 0 );
 
-        this.clock = new Clock()
-        this.gui = new GUI()
+        this.scene = new Scene();
+        this.scene.background = new Color( 0xf0f0f0 );
 
-        const gl = this.renderer.getContext()
-        const aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
-        this.camera = new PerspectiveCamera(45, aspect, 0.01, 1000)
-        this.camera.position.set(100, 100, 100)
-        this.camera.lookAt(0, 0, 0)
+        // roll-over helpers
 
-        // this.controls = new OrbitControls(this.camera, this.canvas)
-        // this.controls.enableDamping = true
+        const rollOverGeo = new BoxGeometry( 50, 50, 50 );
+        this.rollOverMaterial = new MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
+        this.rollOverMesh = new Mesh( rollOverGeo, this.rollOverMaterial );
+        this.scene.add( this.rollOverMesh );
 
+        // cubes
 
-        this.ambientLight = new AmbientLight('#ffffff', 1)
-        this.scene.add(this.ambientLight)
+        this.cubeGeo = new BoxGeometry( 50, 50, 50 );
+        this.cubeMaterial = new MeshLambertMaterial( { color: 0xfeb74c } );
 
-        this.pointLight = new PointLight(0xffffff, 1)
-        this.pointLight.position.x = 5
-        this.pointLight.position.y = 5
-        this.pointLight.position.z = -5
-        this.scene.add(this.pointLight)
+        // grid
 
-        this.ground = new CustomPlane(0xffff00)
-        this.scene.add(this.ground.mesh)
-        this.ground.mesh.rotateX(-Math.PI / 2)
+        const gridHelper = new GridHelper( 1000, 20 );
+        this.scene.add( gridHelper );
 
-        this.wallLeft = new CustomPlane(0xFF0000)
-        this.scene.add(this.wallLeft.mesh)
-        this.wallLeft.mesh.rotateY(-Math.PI / 2)
-        this.wallLeft.mesh.position.set(-50, 50, 0)
+        //
 
-        this.wallBack = new CustomPlane(0x0000FF)
-        this.scene.add(this.wallBack.mesh)
-        this.wallBack.mesh.position.set(0, 50, -50)
+        this.raycaster = new Raycaster();
+        this.pointer = new Vector2();
 
-        this.cube = new Cube(0x38761D)
-        this.scene.add(this.cube.mesh)
-        this.cube.mesh.position.set(-50, 5, -50)
+        const geometry = new PlaneGeometry( 1000, 1000 );
+        geometry.rotateX( - Math.PI / 2 );
 
-        const dragCubes = [this.cube.mesh]
+        this.plane = new Mesh( geometry, new MeshBasicMaterial( { visible: false } ) );
+        this.scene.add( this.plane );
 
-        const controlsDrag = new DragControls(dragCubes, this.camera, this.renderer.domElement) ;
+        this.objects.push( this.plane );
 
-        let currentCube = this.cube
+        // lights
 
-        // @ts-ignore
-        document.addEventListener('mousemove', (event) => {
-            currentCube.mesh.position.set((event.clientX / window.innerWidth) * 50 , 5, (event.clientY / window.innerHeight) * 50)
-        });
+        const ambientLight = new AmbientLight( 0x606060 );
+        this.scene.add( ambientLight );
 
-        document.addEventListener('click', () => {
-            currentCube = new Cube(0x38761D)
-            this.scene.add(currentCube.mesh)
-        })
+        const directionalLight = new DirectionalLight( 0xffffff );
+        directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+        this.scene.add( directionalLight );
+
+        this.renderer = new WebGLRenderer( { antialias: true } );
+        this.renderer.setPixelRatio( window.devicePixelRatio );
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( this.renderer.domElement );
+
+        document.addEventListener( 'pointermove', this.onPointerMove );
+        document.addEventListener( 'pointerdown', this.onPointerDown );
+        document.addEventListener( 'keydown', this.onDocumentKeyDown );
+        document.addEventListener( 'keyup', this.onDocumentKeyUp );
+
+        //
+
+        window.addEventListener( 'resize', this.onWindowResize );
     }
 
-    resizeRendererToDisplaySize() {
-        const width = this.canvas!.clientWidth
-        const height = this.canvas!.clientHeight
-        const needResize = this.canvas!.width !== width || this.canvas!.height !== height
-        if (needResize) {
-            this.renderer?.setSize(width, height, false)
+    onWindowResize() {
+
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+
+        this.render();
+
+    }
+
+    onPointerMove( event ) {
+
+        this.pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+        this.raycaster.setFromCamera( this.pointer, this.camera );
+
+        const intersects = this.raycaster.intersectObjects( this.objects, false );
+
+        if ( intersects.length > 0 ) {
+
+            const intersect = intersects[ 0 ];
+
+            this.rollOverMesh.position.copy( intersect.point ).add( intersect.face.normal );
+            this.rollOverMesh.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
+
+            this.render();
+
         }
-        return needResize
+
     }
 
-    private render() {
-        this.renderer!.render(this.scene!, this.camera!)
+    onPointerDown( event ) {
+
+        this.pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+        this.raycaster.setFromCamera( this.pointer, this.camera );
+
+        const intersects = this.raycaster.intersectObjects( this.objects, false );
+
+        if ( intersects.length > 0 ) {
+
+            const intersect = intersects[ 0 ];
+
+            // delete cube
+
+            if ( this.isShiftDown ) {
+
+                if ( intersect.object !== this.plane ) {
+
+                    this.scene.remove( intersect.object );
+
+                    this.objects.splice( this.objects.indexOf( intersect.object ), 1 );
+
+                }
+
+                // create cube
+
+            } else {
+
+                const voxel = new Mesh( this.cubeGeo, this.cubeMaterial );
+                voxel.position.copy( intersect.point ).add( intersect.face.normal );
+                voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
+                this.scene.add( voxel );
+
+                this.objects.push( voxel );
+
+            }
+
+            this.render();
+
+        }
+
     }
+
+    onDocumentKeyDown( event ) {
+
+        switch ( event.keyCode ) {
+
+            case 16: this.isShiftDown = true; break;
+
+        }
+
+    }
+
+    onDocumentKeyUp( event ) {
+
+        switch ( event.keyCode ) {
+
+            case 16: this.isShiftDown = false; break;
+
+        }
+
+    }
+
+    render() {
+
+        this.renderer.render( this.scene, this.camera );
+
+    }
+
+
+
 
     animate() {
-        window.requestAnimationFrame(this.animate.bind(this))
-
-        const elapsedTime = this.clock!.getElapsedTime()
-        // Update ...
-        if (this.resizeRendererToDisplaySize()) {
-            const gl = this.renderer!.getContext()
-            this.camera!.aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
-            this.camera!.updateProjectionMatrix()
-        }
+        // window.requestAnimationFrame(this.animate.bind(this))
+        //
+        // const elapsedTime = this.clock!.getElapsedTime()
+        // // Update ...
+        // if (this.resizeRendererToDisplaySize()) {
+        //     const gl = this.renderer!.getContext()
+        //     this.camera!.aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
+        //     this.camera!.updateProjectionMatrix()
+        // }
 
         // @ts-ignore
-        this.cube.mesh.position.clamp(new Vector3(-45, 5, -45), new Vector3(45, 5, 45))
+        // this.cube.mesh.position.clamp(new Vector3(-45, 5, -45), new Vector3(45, 5, 45))
         // this.cube.mesh.position.set(mouse.x, 5, 0)
 
-        this.render()
+        // this.render()
     }
-
-
-    // Run app, load things, add listeners, ...
+    //
+    //
+    // // Run app, load things, add listeners, ...
     run() {
         console.log("Dragdrop App run")
 
         this.render()
-        this.animate()
+        // this.animate()
     }
 
     // Memory management
-    destroy() {
-        this.scene = null
-        this.camera = null
-        this.renderer = null
-        this.canvas = null
-    }
+    // destroy() {
+    //     this.scene = null
+    //     this.camera = null
+    //     this.renderer = null
+    //     this.canvas = null
+    // }
 }
