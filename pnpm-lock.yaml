@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@paapi/client': ^1.0.1
+  '@paapi/client': ^1.0.2
   '@types/three': ^0.139.0
   '@vitejs/plugin-vue': ^2.3.1
   '@vueuse/core': ^8.3.1
@@ -17,7 +17,7 @@ specifiers:
   windicss: ^3.5.1
 
 dependencies:
-  '@paapi/client': 1.0.1
+  '@paapi/client': 1.0.2
   '@types/three': 0.139.0
   '@vueuse/core': 8.3.1_vue@3.2.33
   '@vueuse/integrations': 8.3.1_qrcode@1.5.0+vue@3.2.33
@@ -66,8 +66,8 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@paapi/client/1.0.1:
-    resolution: {integrity: sha512-3WH6B/36qAK68IiN2mO9Fq9wGVYEuqIbek8A3nKvVJUi3qMFneQB0YEKvRx8pPLmlFq0dw/lieYjnFHd+wuFAQ==}
+  /@paapi/client/1.0.2:
+    resolution: {integrity: sha512-zpJYoQDADpvfSr5Q6LbPGh+wcLlS+Js4L3/hVEj4p2mt0k+ScWYPwb2Eq16CIMEUJSbK38/nWMR64bKj1ELI1A==}
     dependencies:
       socket.io-client: 4.5.0
     transitivePeerDependencies:

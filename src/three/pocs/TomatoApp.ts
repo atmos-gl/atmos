@@ -18,6 +18,10 @@ export class TomatoApp {
     private tomato: Tomato | null = null
     private gui: GUI;
 
+    private guis: any = {}
+
+    private changeCallback = () => {}
+
     public init(canvas: HTMLCanvasElement) {
         this.canvas = canvas
         this.scene = new Scene()
@@ -37,6 +41,7 @@ export class TomatoApp {
 
         this.controls = new OrbitControls(this.camera, this.canvas)
         this.controls.enableDamping = true
+        this.controls.dampingFactor = 0.2
 
 
         this.ambientLight = new AmbientLight('#cc4747', 1)
@@ -52,9 +57,34 @@ export class TomatoApp {
 
         this.tomato = new Tomato()
         this.scene.add(this.tomato.mesh)
-        this.gui.add(this.tomato, 'long').min(0.7).max(1.5).step(0.001)
-        this.gui.add(this.tomato, 'grow').min(0.7).max(1.5).step(0.001)
-        this.gui.add(this.tomato, 'size').min(0.7).max(1.5).step(0.001)
+        this.guis.long = this.gui.add(this.tomato, 'long').min(0.7).max(1.5).step(0.001).onChange(() => this.paramChange())
+        this.guis.grow = this.gui.add(this.tomato, 'grow').min(0.7).max(1.5).step(0.001).onChange(() => this.paramChange())
+        this.guis.size = this.gui.add(this.tomato, 'size').min(0.7).max(1.5).step(0.001).onChange(() => this.paramChange())
+    }
+
+    public onTomatoChange(callback) {
+        this.changeCallback = callback
+    }
+
+    private paramChange() {
+        this.changeCallback()
+    }
+    get tomatoParams() {
+        return {
+            long: this.tomato.long,
+            grow: this.tomato.grow,
+            size: this.tomato.size,
+        }
+    }
+    set tomatoParams(params: any) {
+        if (!this.tomato) return
+        this.tomato.long = params.long
+        this.tomato.grow = params.grow
+        this.tomato.size = params.size
+
+        this.guis.long.updateDisplay()
+        this.guis.grow.updateDisplay()
+        this.guis.size.updateDisplay()
     }
 
     resizeRendererToDisplaySize() {

@@ -1,10 +1,12 @@
 import paapi from '@paapi/client';
 import {reactive, ref, toRef} from 'vue';
 
-export default function usePair(withId?: string) {
+export default function usePair() {
     const link = reactive(paapi())
-    link.pair(withId).then()
-
     const id = toRef(link, 'id')
-    return {link, id}
+    const paired = ref(false)
+    link.onPair(() => {
+        paired.value = true
+    })
+    return {link, id, paired}
 }
