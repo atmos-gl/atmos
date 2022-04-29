@@ -6,5 +6,8 @@ export default defineConfig({
     plugins: [
         vue(),
         WindiCSS(),
-    ]
+    ],
+    server: {
+        host: '0.0.0.0'
+    }
 })
