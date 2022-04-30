@@ -1,10 +1,26 @@
 # Atmos
 
 ## Running POCs
+Each POC is in the same app.
 
-## POC Description
-### Parametric tomato
+The project is using [pnpm](https://pnpm.io) as its package manager, in place of npm.
 
-### Drag n Drop
+If not already done, install pnpm:
 
-### Mobile
+```
+npm install -g pnpm@next-7
+```
+
+Then clone the repo and checkout the `pocs` branch.
+
+Install dependencies:
+```
+pnpm install
+```
+
+Then run the project:
+```
+pnpm run dev
+```
+
+The project will be running at [localhost:3000](http://localhost:3000/).
