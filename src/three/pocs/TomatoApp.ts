@@ -56,7 +56,6 @@ export class TomatoApp {
         this.gui.add(this.tomato, 'grow').min(0.7).max(1.5).step(0.001)
         this.gui.add(this.tomato, 'size').min(0.7).max(1.5).step(0.001)
     }
-
     resizeRendererToDisplaySize() {
         const width = this.canvas!.clientWidth
         const height = this.canvas!.clientHeight
