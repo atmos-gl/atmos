@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <header class="h-screen text-white">
+  <header class="h-screen text-white bg-black">
 
     <nav class="flex items-center py-8 max-w-6xl px-4 mx-auto">
       <h1 class="text-3xl">Atmos</h1>
