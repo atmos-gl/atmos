@@ -1,4 +1,4 @@
-import {Loader, LoadingManager, Texture, TextureLoader} from 'three';
+import {Group, Loader, LoadingManager, Texture, TextureLoader} from 'three';
 import {GLTF, GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader';
 
@@ -31,6 +31,7 @@ export default class ResourcesLoader {
 
     private textureResources: ResourceStore<Texture> = {}
     private gltfResources: ResourceStore<GLTF> = {}
+    private fbxResources: ResourceStore<Group> = {}
 
     private constructor() {
         this.manager = new LoadingManager()
@@ -100,11 +101,23 @@ export default class ResourcesLoader {
     getGLTF(key): GLTF {
         return this.getResource<GLTF>(key, this.gltfResources)
     }
+    loadFBX(key: string, url: string) {
+        this.loadResource<Group>(key, url, this.fbxLoader, this.fbxResources)
+    }
+
+    getFBX(key): Group {
+        return this.getResource<Group>(key, this.fbxResources)
+    }
 
     bulkLoad(resources: ResourcesToLoad) {
         if (resources.gltf) {
             Object.keys(resources.gltf).forEach(key => {
                 this.loadGLTF(key, resources.gltf[key])
+            })
+        }
+        if (resources.fbx) {
+            Object.keys(resources.fbx).forEach(key => {
+                this.loadFBX(key, resources.fbx[key])
             })
         }
         if (resources.texture) {
