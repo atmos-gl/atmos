@@ -3,9 +3,11 @@ import {
     AnimationMixer,
     Group,
     Object3D,
-    Vector3
+    Vector3,
+    MathUtils
 } from 'three';
 import ResourcesLoader from '../ResourcesLoader';
+import {animate} from 'popmotion';
 
 export class Box {
     public scene: Object3D
@@ -13,6 +15,7 @@ export class Box {
     private canvas: HTMLElement;
     public door: Object3D;
     public handle: Object3D;
+    private _open = 0
 
     private minRotation = 0;
     private maxRotation = 2;
@@ -49,8 +52,29 @@ export class Box {
         // this.mixer.update(deltaTime)
     }
 
-    public setOpen(factor: number) {
+    set open(factor: number) {
+        factor = MathUtils.clamp(factor, 0, 1)
+        this._open = factor
         this.door.rotation.y = -factor * (this.maxRotation - this.minRotation) + this.minRotation
+    }
+    get open() {
+        return this._open
+    }
+
+    public openBy(offset) {
+        console.log(offset)
+        this.open = this._open + offset
+    }
+
+    public snapDoor() {
+        const to = this.open > 0.4 ? 1 : 0;
+        animate({
+            from: this.open,
+            to,
+            onUpdate: val => {
+                this.open = val
+            }
+        })
     }
 
     destroy() {

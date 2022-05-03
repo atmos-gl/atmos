@@ -13,6 +13,7 @@
     "@vueuse/core": "^8.3.1",
     "@vueuse/integrations": "^8.3.1",
     "lil-gui": "^0.16.1",
+    "popmotion": "^11.0.3",
     "qrcode": "^1.5.0",
     "three": "^0.139.2",
     "vue": "^3.2.25",

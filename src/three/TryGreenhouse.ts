@@ -4,8 +4,8 @@ import {
     Clock, Mesh,
     MeshPhongMaterial,
     PerspectiveCamera,
-    PointLight,
-    Scene,
+    PointLight, Raycaster,
+    Scene, Vector2, Vector3,
     WebGLRenderer
 } from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
@@ -14,12 +14,14 @@ import GUI from 'lil-gui';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
+import {start} from 'repl';
 
 export class TryGreenhouse extends BaseScene {
 
     private ambientLight: AmbientLight
     private pointLight: PointLight;
     private box: Box;
+    private xOffset: number;
 
 
     public init(canvas: HTMLCanvasElement) {
@@ -53,19 +55,58 @@ export class TryGreenhouse extends BaseScene {
         // ))
 
         let dragging = false
+        let mouseStart = 0
+        const raycaster = new Raycaster()
+        const pointer = new Vector2()
+        let startOpen = 0
         this.canvas.addEventListener('mousedown', (e) => {
+            pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+            pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+
+            raycaster.setFromCamera( pointer, this.camera );
+            const intersects = raycaster.intersectObjects( [this.box.handle] );
+
+            if (intersects.length === 0) {
+                return
+            }
             dragging = true
+            mouseStart = e.layerX
+            startOpen = this.box.open
         })
         this.canvas.addEventListener('mouseup', (e) => {
             dragging = false
+            this.box.snapDoor()
         })
         this.canvas.addEventListener('mousemove', (e) => {
             if (dragging) {
-                console.log('dragging')
+                const x = e.layerX
+                const offset = x - mouseStart
+                this.box.open = startOpen + offset / this.xOffset
             }
         })
 
-        window.tmp = this.box
+
+        this.resizeRendererToDisplaySize()
+        this.camera.updateMatrixWorld()
+
+        const vector = new Vector3()
+        this.box.handle.getWorldPosition(vector)
+        vector.project(this.camera)
+
+        const w2 = this.canvas.clientWidth / 2
+        const startX = (vector.x * w2) + w2
+
+        this.box.open = 1
+        this.box.handle.getWorldPosition(vector)
+        vector.project(this.camera)
+
+        const we2 = this.canvas.clientWidth / 2
+        const endX = (vector.x * we2) + we2
+
+        this.xOffset = endX - startX - 100
+        this.box.open = 0
+
+        console.log(this.xOffset)
     }
 
     animate() {
