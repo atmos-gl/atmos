@@ -15,13 +15,16 @@
     "lil-gui": "^0.16.1",
     "qrcode": "^1.5.0",
     "three": "^0.139.2",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.1",
     "typescript": "^4.5.4",
     "vite": "^2.9.5",
+    "vite-plugin-voie": "^0.7.3",
     "vite-plugin-windicss": "^1.8.4",
+    "voie-pages": "^0.4.0",
     "vue-tsc": "^0.34.7",
     "windicss": "^3.5.1"
   }

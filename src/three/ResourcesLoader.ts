@@ -1,5 +1,6 @@
 import {Loader, LoadingManager, Texture, TextureLoader} from 'three';
 import {GLTF, GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader';
 
 interface ResourceStore<T> {
     [key: string]: T
@@ -13,9 +14,11 @@ interface ResourceLoader<T> {
         onError?: (event: ErrorEvent) => void,
     ): void;
 }
+
 export interface ResourcesToLoad {
-    gltf: { [key: string] : string }
-    texture: { [key: string] : string }
+    gltf?: { [key: string]: string }
+    fbx?: { [key: string]: string }
+    texture?: { [key: string]: string }
 }
 
 export default class ResourcesLoader {
@@ -24,6 +27,7 @@ export default class ResourcesLoader {
     private readonly manager: LoadingManager;
     private textureLoader: TextureLoader;
     private gltfLoader: GLTFLoader;
+    private fbxLoader: FBXLoader;
 
     private textureResources: ResourceStore<Texture> = {}
     private gltfResources: ResourceStore<GLTF> = {}
@@ -33,29 +37,37 @@ export default class ResourcesLoader {
 
         this.textureLoader = new TextureLoader(this.manager)
         this.gltfLoader = new GLTFLoader(this.manager)
+        this.fbxLoader = new FBXLoader(this.manager)
     }
 
     get onStart() {
         return this.manager.onStart
     }
+
     set onStart(cb) {
         this.manager.onStart = cb
     }
+
     get onLoad() {
         return this.manager.onLoad
     }
+
     set onLoad(cb) {
         this.manager.onLoad = cb
     }
+
     get onProgress() {
         return this.manager.onProgress
     }
+
     set onProgress(cb) {
         this.manager.onProgress = cb
     }
+
     get onError() {
         return this.manager.onError
     }
+
     set onError(cb) {
         this.manager.onError = cb
     }
@@ -90,12 +102,16 @@ export default class ResourcesLoader {
     }
 
     bulkLoad(resources: ResourcesToLoad) {
-        Object.keys(resources.gltf).forEach(key => {
-            this.loadGLTF(key, resources.gltf[key])
-        })
-        Object.keys(resources.texture).forEach(key => {
-            this.loadTexture(key, resources.texture[key])
-        })
+        if (resources.gltf) {
+            Object.keys(resources.gltf).forEach(key => {
+                this.loadGLTF(key, resources.gltf[key])
+            })
+        }
+        if (resources.texture) {
+            Object.keys(resources.texture).forEach(key => {
+                this.loadTexture(key, resources.texture[key])
+            })
+        }
     }
 
     // Singleton
