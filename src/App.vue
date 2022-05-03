@@ -3,6 +3,7 @@ import {ref} from 'vue';
 import Tomato from './components/pocs/Tomato.vue';
 import DragDrop from './components/pocs/DragDrop.vue';
 import Mobile from './components/pocs/Mobile.vue';
+import Header from './components/Header.vue';
 import {useUrlSearchParams} from '@vueuse/core';
 
 const params = useUrlSearchParams()
@@ -11,6 +12,7 @@ const currentPoc = ref(params.id ? 'mobile' : '')
 </script>
 
 <template>
+  <Header />
   <div class="flex flex-col p-8 items-center gap-2" v-if="currentPoc === ''">
     <h1 class="text-2xl font-bold mb-4">Pocs Atmos</h1>
     <button class="bg-blue-200 py-2 px-4 rounded"
