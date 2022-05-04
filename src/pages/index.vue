@@ -4,5 +4,7 @@ import Header from './../components/Header.vue';
 
 <template>
   <Header />
-  <main>Salut</main>
+  <main style="height: 200vh">
+
+  </main>
 </template>
