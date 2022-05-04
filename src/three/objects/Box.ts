@@ -1,24 +1,28 @@
-import {
-    Group,
-    Object3D,
-    Vector3
-} from 'three';
+import {Group, Object3D, Vector3} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
+import {DragAnimatable} from '../three-composables/useDragAnimations';
+import Door from './Door';
 
 export class Box {
-    private scene: Object3D
+    public scene: Object3D
+    public door: Door;
+
 
     constructor() {
         this.init()
     }
 
     public init() {
-        // const gltf = ResourcesLoader.getInstance().getGLTF('tomato')
-        // console.log(gltf)
-        // this.importModel(gltf)
+        const fbx = ResourcesLoader.getInstance().getFBX('box')
+        this.importModel(fbx)
+
     }
 
     private importModel(fbx: Group) {
+        fbx.scale.set(0.01, 0.01, 0.01)
+        this.scene = fbx
+
+        this.door = new Door(this.scene.children.find(obj => obj.name === 'porte'))
 
     }
 
@@ -30,8 +34,8 @@ export class Box {
         // this.turretPivot.lookAt(position)
     }
 
-    public animate(elapsedTime: number) {
-
+    public animate(deltaTime: number) {
+        // this.mixer.update(deltaTime)
     }
 
     destroy() {

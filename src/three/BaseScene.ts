@@ -38,7 +38,7 @@ export class BaseScene {
         this.controls.dampingFactor = damping
     }
 
-    resizeRendererToDisplaySize() {
+    protected resizeRendererToDisplaySize() {
         const width = this.canvas!.clientWidth
         const height = this.canvas!.clientHeight
         const needResize = this.canvas!.width !== width || this.canvas!.height !== height
@@ -64,6 +64,15 @@ export class BaseScene {
         this.controls?.update()
 
         this.render()
+    }
+
+    get width() {
+        const gl = this.renderer!.getContext()
+        return gl.drawingBufferWidth
+    }
+    get height() {
+        const gl = this.renderer!.getContext()
+        return gl.drawingBufferHeight
     }
 
     // Run app, load things, add listeners, ...
