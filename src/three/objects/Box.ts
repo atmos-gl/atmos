@@ -8,11 +8,10 @@ import {
 } from 'three';
 import ResourcesLoader from '../ResourcesLoader';
 import {animate} from 'popmotion';
+import {DragAnimatable} from '../three-composables/useDragAnimations';
 
-export class Box {
+export class Box implements DragAnimatable {
     public scene: Object3D
-    private mixer: AnimationMixer;
-    private canvas: HTMLElement;
     public door: Object3D;
     public handle: Object3D;
     private _open = 0
@@ -20,7 +19,9 @@ export class Box {
     private minRotation = 0;
     private maxRotation = 2;
 
-    constructor(canvas: HTMLElement) {
+    public onOpen?: () => void
+
+    constructor() {
         this.init()
     }
 
@@ -52,27 +53,31 @@ export class Box {
         // this.mixer.update(deltaTime)
     }
 
-    set open(factor: number) {
+    set animationProgress(factor: number) {
         factor = MathUtils.clamp(factor, 0, 1)
         this._open = factor
         this.door.rotation.y = -factor * (this.maxRotation - this.minRotation) + this.minRotation
+        if (factor === 1) {
+            this.onOpen?.()
+        }
     }
-    get open() {
+
+    get animationProgress() {
         return this._open
     }
 
-    public openBy(offset) {
+    public animationProgressBy(offset: number) {
         console.log(offset)
-        this.open = this._open + offset
+        this.animationProgress = this.animationProgress + offset
     }
 
-    public snapDoor() {
-        const to = this.open > 0.4 ? 1 : 0;
+    public snapAnimation() {
+        const to = this.animationProgress > 0.3 ? 1 : 0;
         animate({
-            from: this.open,
+            from: this.animationProgress,
             to,
             onUpdate: val => {
-                this.open = val
+                this.animationProgress = val
             }
         })
     }
