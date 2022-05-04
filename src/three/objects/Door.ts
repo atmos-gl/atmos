@@ -3,7 +3,7 @@ import {DragAnimatable} from '../three-composables/useDragAnimations';
 import {animate} from 'popmotion';
 
 export default class Door implements DragAnimatable{
-    private object: Object3D;
+    public mesh: Object3D;
     public handle: Object3D;
     private _open = 0
 
@@ -13,16 +13,16 @@ export default class Door implements DragAnimatable{
     public onOpen?: () => void
 
     constructor(object: Object3D) {
-        this.object = object
+        this.mesh = object
 
-        this.handle = this.object.children.find(obj => obj.name === 'poignee')
-        this.minRotation = this.object.rotation.y
+        this.handle = this.mesh.getObjectByName('poignee')
+        this.minRotation = this.mesh.rotation.y
     }
 
     set animationProgress(factor: number) {
         factor = MathUtils.clamp(factor, 0, 1)
         this._open = factor
-        this.object.rotation.y = -factor * (this.maxRotation - this.minRotation) + this.minRotation
+        this.mesh.rotation.y = -factor * (this.maxRotation - this.minRotation) + this.minRotation
         if (factor === 1) {
             this.onOpen?.()
         }

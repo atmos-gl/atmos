@@ -2,7 +2,7 @@ import {
     AmbientLight,
     BoxGeometry,
     Clock, Mesh,
-    MeshPhongMaterial,
+    MeshPhongMaterial, PCFSoftShadowMap,
     PerspectiveCamera,
     PointLight, Raycaster,
     Scene, Vector2, Vector3,
@@ -28,19 +28,25 @@ export class TryGreenhouse extends BaseScene {
 
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
+        this.renderer.shadowMap.enabled = true
+        this.renderer.shadowMap.type = PCFSoftShadowMap
         // this.enableControls()
-        this.ambientLight = new AmbientLight('#ffffff', 0.3)
+            this.ambientLight = new AmbientLight('#c9e9f6', 0.4)
         this.scene.add(this.ambientLight)
 
-        const pointLight = new PointLight('#4453b2', 0.9)
-        pointLight.position.x = -10
-        pointLight.position.y = 10
-        pointLight.position.z = 10
-        this.scene.add(pointLight)
-        this.pointLight = new PointLight('#99e1cb', 0.9)
+        // const pointLight = new PointLight('#fff', 0.4)
+        // pointLight.position.x = -10
+        // pointLight.position.y = 10
+        // pointLight.position.z = 10
+        // this.scene.add(pointLight)
+        this.pointLight = new PointLight('#9da2a6', 1.2)
         this.pointLight.position.x = 10
         this.pointLight.position.y = 10
         this.pointLight.position.z = 10
+        this.pointLight.castShadow = true
+        this.pointLight.shadow.mapSize.width = 1024
+        this.pointLight.shadow.mapSize.height = 1024
+        this.pointLight.shadow.radius = 3
         this.scene.add(this.pointLight)
 
         this.box = new Box()
@@ -48,8 +54,8 @@ export class TryGreenhouse extends BaseScene {
 
         this.camera.position.x = 4
         this.camera.position.y = 5
-        this.camera.position.z = 22
-        this.camera.lookAt(0, 0, 0)
+        this.camera.position.z = 20
+        this.camera.lookAt(0, 2, 0)
 
         // this.scene.add(new Mesh(
         //     new BoxGeometry(5, 5),
@@ -64,6 +70,10 @@ export class TryGreenhouse extends BaseScene {
         this.box.door.onOpen = () => {
             this.openDoorInteraction.unbind()
         }
+
+        setTimeout(() => {
+            this.resizeRendererToDisplaySize()
+        }, 2000)
     }
 
     animate() {
