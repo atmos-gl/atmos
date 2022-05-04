@@ -1,20 +1,6 @@
-import {
-    AmbientLight,
-    BoxGeometry,
-    Clock, Mesh,
-    MeshPhongMaterial, PCFSoftShadowMap,
-    PerspectiveCamera,
-    PointLight, Raycaster,
-    Scene, Vector2, Vector3,
-    WebGLRenderer
-} from 'three';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import {Tomato} from './pocs/Tomato';
-import GUI from 'lil-gui';
+import {AmbientLight, PCFSoftShadowMap, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
-import {DragControls} from 'three/examples/jsm/controls/DragControls';
-import {start} from 'repl';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 
 export class TryGreenhouse extends BaseScene {
@@ -31,7 +17,7 @@ export class TryGreenhouse extends BaseScene {
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
         // this.enableControls()
-            this.ambientLight = new AmbientLight('#c9e9f6', 0.4)
+            this.ambientLight = new AmbientLight('#a4daf1', 0.4)
         this.scene.add(this.ambientLight)
 
         // const pointLight = new PointLight('#fff', 0.4)
@@ -40,9 +26,9 @@ export class TryGreenhouse extends BaseScene {
         // pointLight.position.z = 10
         // this.scene.add(pointLight)
         this.pointLight = new PointLight('#9da2a6', 1.2)
-        this.pointLight.position.x = 10
-        this.pointLight.position.y = 10
-        this.pointLight.position.z = 10
+        this.pointLight.position.x = 7
+        this.pointLight.position.y = 12
+        this.pointLight.position.z = 14
         this.pointLight.castShadow = true
         this.pointLight.shadow.mapSize.width = 1024
         this.pointLight.shadow.mapSize.height = 1024

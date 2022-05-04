@@ -53,6 +53,9 @@ export class Box {
         })
         const pipe = model.getObjectByName('tuyeau').children[0] as Mesh
         pipe.material = glassMaterial
+        //
+        // this.scene.getObjectByName('Cube').castShadow = true
+        // this.scene.getObjectByName('Cube').receiveShadow = true
 
     }
 
