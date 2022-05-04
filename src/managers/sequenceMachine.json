@@ -1,0 +1,53 @@
+{
+  "id": "Experience",
+  "initial": "introduction",
+  "states": {
+    "introduction": {
+      "on": {
+        "next": {
+          "target": "setupPowerBlock"
+        }
+      }
+    },
+    "setupPowerBlock": {
+      "initial": "openDoor",
+      "states": {
+        "openDoor": {
+          "on": {
+            "next": {
+              "target": "plugCO2"
+            }
+          }
+        },
+        "plugCO2": {
+          "on": {
+            "next": {
+              "target": "plugWater"
+            }
+          }
+        },
+        "plugWater": {
+          "on": {
+            "next": {
+              "target": "pourFertilizer"
+            }
+          }
+        },
+        "pourFertilizer": {
+          "on": {
+            "next": {
+              "target": "putUranium"
+            }
+          }
+        },
+        "putUranium": {}
+      },
+      "on": {
+        "next": {
+          "target": "leaveWork"
+        }
+      }
+    },
+    "leaveWork": {}
+  }
+}

@@ -2,6 +2,8 @@ import {AmbientLight, PCFSoftShadowMap, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
+import sequenceManager from '../managers/sequenceManager';
+import {animate, createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
 
 export class TryGreenhouse extends BaseScene {
 
@@ -17,7 +19,7 @@ export class TryGreenhouse extends BaseScene {
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
         // this.enableControls()
-            this.ambientLight = new AmbientLight('#a4daf1', 0.4)
+            this.ambientLight = new AmbientLight('#aedaea', 0.4)
         this.scene.add(this.ambientLight)
 
         // const pointLight = new PointLight('#fff', 0.4)
@@ -40,7 +42,7 @@ export class TryGreenhouse extends BaseScene {
 
         this.camera.position.x = 4
         this.camera.position.y = 5
-        this.camera.position.z = 20
+        this.camera.position.z = 25
         this.camera.lookAt(0, 2, 0)
 
         // this.scene.add(new Mesh(
@@ -55,11 +57,44 @@ export class TryGreenhouse extends BaseScene {
         this.openDoorInteraction.bind()
         this.box.door.onOpen = () => {
             this.openDoorInteraction.unbind()
+            sequenceManager.send('next')
         }
+
+        sequenceManager.onTransition(state => this.matchCamToStep(state))
 
         setTimeout(() => {
             this.resizeRendererToDisplaySize()
         }, 2000)
+    }
+
+    matchCamToStep(state: any) {
+        if (state.value.setupPowerBlock === 'plugCO2') {
+            const from = {
+                ...this.camera.position,
+                tx: 0,
+                ty: 2,
+                tz: 0,
+            }
+            const to = {
+                x: 3,
+                y: 0,
+                z: 12,
+                tx: 3,
+                ty: 0,
+                tz: 0,
+            }
+            animate({
+                from,
+                to,
+                onUpdate: (val) => {
+                    const {x, y, z, tx, ty, tz} = val
+                    this.camera.position.set(x, y, z)
+                    this.camera.lookAt(tx, ty, tz)
+                },
+                duration: 1500,
+                ease: mirrorEasing(createExpoIn(4))
+            })
+        }
     }
 
     animate() {

@@ -76,6 +76,7 @@ export default function useDragAnimation(
         ? (dragEventsSource.clientWidth / 2)
         : (dragEventsSource.clientHeight / 2)
 
+
         const startVal = ((isHorizontal ? vector.x : vector.y) * s2) + s2
 
         target.animationProgress = 1
