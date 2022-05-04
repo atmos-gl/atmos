@@ -9,7 +9,7 @@ export default defineConfig({
                 'pearl': '#F5F7F6',
             },
             fontFamily: {
-                'core': ['Poppins'],
+                'core': ['dahlia'],
             }
         }
     }

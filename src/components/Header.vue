@@ -16,6 +16,10 @@
   </header>
 </template>
 
-<style>
-
+<style lang="scss">
+header {
+  background: transparent radial-gradient(closest-side at 26% 47%, var(--vert-impérial) 0%, #001606 100%) 0% 0% no-repeat padding-box;
+  background: transparent radial-gradient(closest-side at 26% 47%, #074D2F 0%, #001606 100%) 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
 </style>

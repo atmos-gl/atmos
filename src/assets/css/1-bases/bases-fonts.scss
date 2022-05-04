@@ -9,5 +9,6 @@
     font-weight: $size;
   }
 }
-@include font-face(Poppins, 400);
-@include font-face(Poppins, 700);
+@include font-face("dahlia", 400);
+@include font-face("dahlia", 500);
+@include font-face("dahlia", 700);
