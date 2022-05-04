@@ -66,8 +66,15 @@ export class Room extends BaseScene {
         // }
 
         const controls = new OrbitControls( this.camera, this.renderer.domElement );
+        const tempV = new Vector3()
 
-
+        const item = document.querySelector('.js-overlay');
+        console.log(this.box.mesh.getObjectByName("Tv_Cabinet").getWorldPosition(tempV))
+        tempV.project(this.camera);
+        const x = (tempV.x *  .5 + .5) * canvas.clientWidth;
+        const y = (tempV.y * -.5 + .5) * canvas.clientHeight;
+        // @ts-ignore
+        item.style.transform = `translate(-50%, -50%) translate(${x}px,${y}px)`;
     }
 
     animate() {
