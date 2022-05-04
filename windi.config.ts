@@ -8,6 +8,9 @@ export default defineConfig({
                 'jade': '#CDE4D5',
                 'pearl': '#F5F7F6',
             },
+            fontFamily: {
+                'core': ['Poppins'],
+            }
         }
     }
 })

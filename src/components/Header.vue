@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <header class="h-screen text-white bg-black">
+  <header class="h-screen text-white bg-black font-core">
 
-    <nav class="flex items-center py-8 max-w-6xl px-4 mx-auto">
+    <nav class="o-container flex items-center py-8">
       <h1 class="text-3xl">Atmos</h1>
       <ul class="flex ml-auto">
         <li class="mr-4"><a href="">Serre</a></li>
