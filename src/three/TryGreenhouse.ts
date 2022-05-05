@@ -4,6 +4,7 @@ import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 import sequenceManager from '../managers/sequenceManager';
 import {animate, createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
+import {animateAsync} from '../utils';
 
 export class TryGreenhouse extends BaseScene {
 
@@ -71,7 +72,21 @@ export class TryGreenhouse extends BaseScene {
         }, 0)
     }
 
-    onStep(state: any) {
+    async moveCamera(from, to) {
+        await animateAsync({
+            from,
+            to,
+            onUpdate: (val) => {
+                const {x, y, z, tx, ty, tz} = val
+                this.camera.position.set(x, y, z)
+                this.camera.lookAt(tx, ty, tz)
+            },
+            duration: 1500,
+            ease: mirrorEasing(createExpoIn(4)),
+        })
+    }
+
+    async onStep(state: any) {
         if (state.value.setupPowerBlock === 'plugCO2') {
             const from = {
                 ...this.camera.position,
@@ -87,27 +102,38 @@ export class TryGreenhouse extends BaseScene {
                 ty: 0,
                 tz: 0,
             }
-            animate({
-                from,
-                to,
-                onUpdate: (val) => {
-                    const {x, y, z, tx, ty, tz} = val
-                    this.camera.position.set(x, y, z)
-                    this.camera.lookAt(tx, ty, tz)
-                },
-                duration: 1500,
-                ease: mirrorEasing(createExpoIn(4)),
-                onComplete: () => {
-                    this.box.co2Bottle.show()
-                    this.box.co2Bottle.onFinished = () => {
-                        sequenceManager.send('next')
-                    }
-                }
-            })
+            await this.moveCamera(from, to)
+            this.box.co2Bottle.onFinished = () => {
+                sequenceManager.send('next')
+            }
+            await this.box.co2Bottle.show()
+            return
         }
 
         if (state.value.setupPowerBlock === 'plugWater') {
-            this.box.waterBottle.show()
+            this.box.waterBottle.onFinished = () => {
+                sequenceManager.send('next')
+            }
+            await this.box.waterBottle.show()
+            return
+        }
+
+        if (state.value.setupPowerBlock === 'pourFertilizer') {
+            const from = {
+                ...this.camera.position,
+                tx: 2,
+                ty: 0,
+                tz: 0,
+            }
+            const to = {
+                x: 12,
+                y: 5,
+                z: -2,
+                tx: 2,
+                ty: 1,
+                tz: -2,
+            }
+            await this.moveCamera(from, to)
         }
     }
 

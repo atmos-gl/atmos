@@ -1,4 +1,4 @@
-import {AmbientLight, Clock, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
+import {AmbientLight, Clock, MathUtils, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {Tomato} from './pocs/Tomato';
 import GUI from 'lil-gui';
@@ -20,7 +20,7 @@ export class BaseScene {
         this.renderer = new WebGLRenderer({
             canvas: this.canvas
         })
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        this.renderer.setPixelRatio(MathUtils.clamp(window.devicePixelRatio, 1, 2))
 
         this.clock = new Clock()
         this.gui = new GUI()
@@ -30,6 +30,9 @@ export class BaseScene {
         this.camera = new PerspectiveCamera(45, aspect, 0.01, 1000)
         this.camera.position.set(10, 10, 10)
         this.camera.lookAt(0, 0, 0)
+
+        this.resizeRendererToDisplaySize()
+        this.fixResize()
     }
 
     protected enableControls(damping = 0.2) {
@@ -52,13 +55,18 @@ export class BaseScene {
         this.renderer!.render(this.scene!, this.camera!)
     }
 
+    protected fixResize() {
+
+        const gl = this.renderer!.getContext()
+        this.camera!.aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
+        this.camera!.updateProjectionMatrix()
+    }
+
     animate() {
         window.requestAnimationFrame(this.animate.bind(this))
 
         if (this.resizeRendererToDisplaySize()) {
-            const gl = this.renderer!.getContext()
-            this.camera!.aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
-            this.camera!.updateProjectionMatrix()
+            this.fixResize()
         }
 
         this.controls?.update()
