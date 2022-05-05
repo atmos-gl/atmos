@@ -3,13 +3,18 @@ import ResourcesLoader from '../ResourcesLoader';
 import {DragAnimatable} from '../three-composables/useDragAnimations';
 import Door from './Door';
 import {GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
+import Bottle from './Bottle';
+import {BaseScene} from '../BaseScene';
 
 export class Box {
-    public scene: Object3D
+    public model: Object3D
     public door: Door;
+    public co2Bottle: Bottle;
+    private scene: BaseScene;
 
 
-    constructor() {
+    constructor(scene: BaseScene) {
+        this.scene = scene
         this.init()
     }
 
@@ -21,26 +26,16 @@ export class Box {
 
     }
 
-    private importModel(model: GLTF) {
-        // model.remove(
-        //     model.getObjectByName('Light_1'),
-        //     model.getObjectByName('Light'),
-        // )
-        // console.log(model.getObjectByName('tuyeau'))
-        model.scene.scale.set(0.01, 0.01, 0.01)
-        console.log(model)
-        this.scene = model.scene
-        this.door = new Door(this.scene.getObjectByName('porte'))
-
-    }
     private importFBX(model: Group) {
         console.log(model)
         // console.log(model.getObjectByName('tuyeau'))
         model.scale.set(0.01, 0.01, 0.01)
-        this.scene = model
-        this.door = new Door(this.scene.getObjectByName('porte'))
+        this.model = model
+        this.door = new Door(this.model.getObjectByName('porte'))
         this.door.handle.castShadow = true
         console.log(this.door.mesh.getObjectByName('Cube_1').receiveShadow = true)
+
+        this.co2Bottle = new Bottle(model.getObjectByName('Bonbonne_de_CO2'), this.scene)
 
         const envMap = ResourcesLoader.getInstance().getCubeTexture('envmap')
         const glassMaterial = new MeshStandardMaterial({
@@ -60,7 +55,7 @@ export class Box {
     }
 
     get mesh() {
-        return this.scene
+        return this.model
     }
 
     public aim(position: Vector3) {
@@ -74,6 +69,6 @@ export class Box {
     destroy() {
         // this.scene.dispose()
         // this.scene.material.dispose()
-        this.scene = null
+        this.model = null
     }
 }

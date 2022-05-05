@@ -33,7 +33,6 @@ export default class Door implements DragAnimatable{
     }
 
     public animationProgressBy(offset: number) {
-        console.log(offset)
         this.animationProgress = this.animationProgress + offset
     }
 

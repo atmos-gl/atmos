@@ -5,9 +5,9 @@ import GUI from 'lil-gui';
 
 export class BaseScene {
     protected scene: Scene | null = null
-    protected camera: PerspectiveCamera | null = null
+    public camera: PerspectiveCamera | null = null
     protected renderer: WebGLRenderer | null = null
-    protected canvas: HTMLCanvasElement | null = null
+    public canvas: HTMLCanvasElement | null = null
     protected clock: Clock | null = null
 
     protected controls?: OrbitControls

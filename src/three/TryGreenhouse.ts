@@ -37,7 +37,7 @@ export class TryGreenhouse extends BaseScene {
         this.pointLight.shadow.radius = 3
         this.scene.add(this.pointLight)
 
-        this.box = new Box()
+        this.box = new Box(this)
         this.scene.add(this.box.mesh)
 
         this.camera.position.x = 4
@@ -60,14 +60,14 @@ export class TryGreenhouse extends BaseScene {
             sequenceManager.send('next')
         }
 
-        sequenceManager.onTransition(state => this.matchCamToStep(state))
+        sequenceManager.onTransition(state => this.onStep(state))
 
         setTimeout(() => {
             this.resizeRendererToDisplaySize()
         }, 2000)
     }
 
-    matchCamToStep(state: any) {
+    onStep(state: any) {
         if (state.value.setupPowerBlock === 'plugCO2') {
             const from = {
                 ...this.camera.position,
@@ -76,10 +76,10 @@ export class TryGreenhouse extends BaseScene {
                 tz: 0,
             }
             const to = {
-                x: 3,
+                x: 2,
                 y: 0,
                 z: 12,
-                tx: 3,
+                tx: 2,
                 ty: 0,
                 tz: 0,
             }
@@ -92,7 +92,10 @@ export class TryGreenhouse extends BaseScene {
                     this.camera.lookAt(tx, ty, tz)
                 },
                 duration: 1500,
-                ease: mirrorEasing(createExpoIn(4))
+                ease: mirrorEasing(createExpoIn(4)),
+                onComplete: () => {
+                    this.box.co2Bottle.show()
+                }
             })
         }
     }
