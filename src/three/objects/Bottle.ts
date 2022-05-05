@@ -15,7 +15,7 @@ const createXtoZ = (start, end, amp, offset = 0) => {
 
 
 export default class Bottle {
-    public mesh: Object3D;
+    public object: Object3D;
 
     private scene: BaseScene;
     private controls: DragControls;
@@ -25,9 +25,13 @@ export default class Bottle {
     private targetObject: Mesh;
     private helperAnimation: { stop: () => void } = null;
     private xToRotate: (x) => any;
+    private visibleOpacity: number;
+    private initialX: number;
 
-    constructor(object: Object3D, targetObjectMesh: Mesh, scene: BaseScene) {
-        this.mesh = object
+    public onFinished?: () => void;
+
+    constructor(object: Object3D, targetObjectMesh: Mesh, scene: BaseScene, initialTranslate = 700) {
+        this.object = object
         this.targetObject = targetObjectMesh
         this.scene = scene
 
@@ -36,42 +40,35 @@ export default class Bottle {
 
         this.init()
         this.setupControls()
+        this.setupPositions(initialTranslate)
     }
 
     init() {
-        const metalMat = new MeshStandardMaterial({
-            color: '#c9d1d9',
-            roughness: 0.5,
-            metalness: 0.6,
-            transparent: true
+        this.object.traverse(object => {
+            if (object instanceof Mesh) {
+                this.visibleOpacity = object.material.opacity
+            }
         })
-
-        const goldMat = new MeshStandardMaterial({
-            color: '#ffcd00',
-            roughness: 0.2,
-            metalness: 0.6,
-            transparent: true
-        })
-        ;(this.mesh.getObjectByName('Cylinder') as Mesh).material = metalMat
-        ;(this.mesh.getObjectByName('Sweep') as Mesh).material = goldMat
-
         this.setOpacity(0)
+    }
 
+    setupPositions(initialTranslate: number) {
+        this.xToZ = createXtoZ(50, 500, 300, this.object.position.z)
+        this.xToRotate = createXtoZ(50, 500, Math.PI / 6)
+
+        this.finalPosition = this.object.position.clone()
+        this.targetPosition = this.object.position.clone()
+        this.targetPosition.y -= 20;
+        this.initialX = this.object.position.x + initialTranslate
+
+        this.object.position.x += initialTranslate + 200
+        this.object.position.y -= 20
     }
 
     setupControls() {
-        this.controls = new DragControls([this.mesh], this.scene.camera, this.scene.canvas)
+        this.controls = new DragControls([this.object], this.scene.camera, this.scene.canvas)
         this.controls.transformGroup = true
         this.controls.deactivate()
-        this.xToZ = createXtoZ(50, 500, 300, this.mesh.position.z)
-        this.xToRotate = createXtoZ(50, 500, Math.PI / 6)
-
-        this.finalPosition = this.mesh.position.clone()
-        this.targetPosition = this.mesh.position.clone()
-        this.targetPosition.y -= 20;
-
-        this.mesh.position.x += 900
-        this.mesh.position.y -= 20
 
         this.controls.addEventListener('dragstart', (e) => {
             this.startHelper()
@@ -109,18 +106,19 @@ export default class Bottle {
     }
 
     async show() {
-        this.mesh.visible = true
+        this.object.visible = true
+        console.log(this.object.position.x)
         await animateAsync({
             from: {
-                translate: this.mesh.position.x,
+                translate: this.object.position.x,
                 opacity: 0
             },
             to: {
-                translate: 500,
-                opacity: 1
+                translate: this.initialX,
+                opacity: this.visibleOpacity
             },
             onUpdate: v => {
-                this.mesh.position.x = v.translate
+                this.object.position.x = v.translate
                 this.setOpacity(v.opacity)
             },
             ease: reverseEasing(createExpoIn(4)),
@@ -130,22 +128,22 @@ export default class Bottle {
     }
 
     onDrag() {
-        this.mesh.position.y = MathUtils.clamp(this.mesh.position.y, 1, 120)
-        this.mesh.position.z = this.xToZ(this.mesh.position.x)
-        this.mesh.rotation.x = this.xToRotate(this.mesh.position.x)
+        this.object.position.y = MathUtils.clamp(this.object.position.y, 1, 120)
+        this.object.position.z = this.xToZ(this.object.position.x)
+        this.object.rotation.x = this.xToRotate(this.object.position.x)
 
-        if (this.mesh.position.x < -220) {
-            this.mesh.position.x = -220
+        if (this.object.position.x < -220) {
+            this.object.position.x = -220
         }
 
-        const distanceToTarget = this.mesh.position.distanceTo(this.targetPosition)
+        const distanceToTarget = this.object.position.distanceTo(this.targetPosition)
         if (distanceToTarget < 20) {
             this.snap()
         }
     }
 
     setOpacity(o) {
-        this.mesh.traverse(object => {
+        this.object.traverse(object => {
             if (object instanceof Mesh) {
                 object.material.opacity = o
             }
@@ -156,29 +154,30 @@ export default class Bottle {
         this.controls.dispose()
         this.stopHelper()
         await animateAsync({
-            from: this.mesh.position,
+            from: this.object.position,
             to: this.targetPosition,
             onUpdate: v => {
                 const {x, y, z} = v
-                this.mesh.position.set(x, y, z)
+                this.object.position.set(x, y, z)
             },
         })
         await animateAsync({
             from: {
                 rotation: 0,
-                ...this.mesh.position
+                ...this.object.position
             },
             to: {
                 rotation: Math.PI * 4,
                 ...this.finalPosition
             },
             onUpdate: v => {
-                this.mesh.rotation.y = v.rotation
+                this.object.rotation.y = v.rotation
                 const {x, y, z} = v
-                this.mesh.position.set(x, y, z)
+                this.object.position.set(x, y, z)
             },
             duration: 1000
         })
+        this.onFinished?.()
     }
 
 }

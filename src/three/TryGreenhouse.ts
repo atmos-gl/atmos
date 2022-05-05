@@ -95,8 +95,15 @@ export class TryGreenhouse extends BaseScene {
                 ease: mirrorEasing(createExpoIn(4)),
                 onComplete: () => {
                     this.box.co2Bottle.show()
+                    this.box.co2Bottle.onFinished = () => {
+                        sequenceManager.send('next')
+                    }
                 }
             })
+        }
+
+        if (state.value.setupPowerBlock === 'plugWater') {
+            this.box.waterBottle.show()
         }
     }
 

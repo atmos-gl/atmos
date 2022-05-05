@@ -5,12 +5,15 @@ import Door from './Door';
 import {GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
 import Bottle from './Bottle';
 import {BaseScene} from '../BaseScene';
+import glassMaterial from '../materials/glassMaterial';
+import {goldMat, metalMat} from '../materials/metalMaterials';
 
 export class Box {
     public model: Object3D
     public door: Door;
     public co2Bottle: Bottle;
     private scene: BaseScene;
+    public waterBottle: Bottle;
 
 
     constructor(scene: BaseScene) {
@@ -21,41 +24,41 @@ export class Box {
     public init() {
         const model = ResourcesLoader.getInstance().getFBX('box')
         this.importFBX(model)
-        // const model = ResourcesLoader.getInstance().getGLTF('box')
-        // this.importModel(model)
 
     }
 
     private importFBX(model: Group) {
         console.log(model)
-        // console.log(model.getObjectByName('tuyeau'))
+
         model.scale.set(0.01, 0.01, 0.01)
         this.model = model
         this.door = new Door(this.model.getObjectByName('porte'))
         this.door.handle.castShadow = true
-        console.log(this.door.mesh.getObjectByName('Cube_1').receiveShadow = true)
+        this.door.mesh.getObjectByName('Cube_1').receiveShadow = true
 
+        const co2Bottle = model.getObjectByName('Bonbonne_de_CO2');
+
+        ;(co2Bottle.getObjectByName('Cylinder') as Mesh).material = metalMat
+        ;(co2Bottle.getObjectByName('Sweep') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
-            model.getObjectByName('Bonbonne_de_CO2'),
+            co2Bottle,
             this.model.getObjectByName('Tube_1') as Mesh,
             this.scene
         )
 
-        const envMap = ResourcesLoader.getInstance().getCubeTexture('envmap')
-        const glassMaterial = new MeshStandardMaterial({
-            color: '#ffffff',
-            transparent: true,
-            opacity: 0.6,
-            roughness: 0,
-            metalness: 0.8,
-            envMap,
-        })
+        const waterBottle = model.getObjectByName('Bouteille')
+        waterBottle.material = glassMaterial('rgba(182,210,234,0.57)')
+        this.waterBottle = new Bottle(waterBottle,
+            this.model.getObjectByName('Tube_5') as Mesh,
+            this.scene,
+            500)
+
+
         const pipe = model.getObjectByName('tuyeau').children[0] as Mesh
-        pipe.material = glassMaterial
+        pipe.material = glassMaterial()
         //
         // this.scene.getObjectByName('Cube').castShadow = true
         // this.scene.getObjectByName('Cube').receiveShadow = true
-
     }
 
     get mesh() {
