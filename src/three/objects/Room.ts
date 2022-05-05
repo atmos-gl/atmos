@@ -3,7 +3,7 @@ import ResourcesLoader from '../ResourcesLoader';
 import {DragAnimatable} from '../three-composables/useDragAnimations';
 import Door from './Door';
 
-export class Box {
+export class RoomObject {
     public scene: Object3D
     // public door: Door;
 

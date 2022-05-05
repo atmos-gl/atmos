@@ -1,30 +1,18 @@
-import {
-    AmbientLight,
-    BoxGeometry,
-    Clock, Mesh,
-    MeshPhongMaterial,
-    PerspectiveCamera,
-    PointLight, Raycaster,
-    Scene, Vector2, Vector3,
-    WebGLRenderer
-} from 'three';
+import {AmbientLight, PointLight} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import {Tomato} from './pocs/Tomato';
-import GUI from 'lil-gui';
 import {BaseScene} from './BaseScene';
-import {Box} from './objects/Room';
-import {DragControls} from 'three/examples/jsm/controls/DragControls';
-import {start} from 'repl';
-import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
+import {RoomObject} from './objects/Room';
+import {DragAnimation} from './three-composables/useDragAnimations';
+import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 
 export class Room extends BaseScene {
 
     private ambientLight: AmbientLight
     private pointLight: PointLight;
-    private box: Box;
+    private room: RoomObject;
     private xOffset: number;
     private openDoorInteraction: DragAnimation;
-
+    private labelRenderer;
 
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
@@ -43,8 +31,8 @@ export class Room extends BaseScene {
         this.pointLight.position.z = 10
         this.scene.add(this.pointLight)
 
-        this.box = new Box()
-        this.scene.add(this.box.mesh)
+        this.room = new RoomObject()
+        this.scene.add(this.room.mesh)
 
         this.camera.position.x = 4
         this.camera.position.y = 5
@@ -65,20 +53,32 @@ export class Room extends BaseScene {
         //     this.openDoorInteraction.unbind()
         // }
 
-        const controls = new OrbitControls( this.camera, this.renderer.domElement );
-        const tempV = new Vector3()
 
-        const item = document.querySelector('.js-overlay');
-        console.log(this.box.mesh.getObjectByName("Tv_Cabinet").getWorldPosition(tempV))
-        tempV.project(this.camera);
-        const x = (tempV.x *  .5 + .5) * canvas.clientWidth;
-        const y = (tempV.y * -.5 + .5) * canvas.clientHeight;
-        // @ts-ignore
-        item.style.transform = `translate(-50%, -50%) translate(${x}px,${y}px)`;
+
+        const object = this.room.mesh.getObjectByName("Guitar")
+
+        const poi = document.createElement('div')
+        poi.innerHTML = '+'
+        poi.classList.add('poi')
+        const objectCSS = new CSS2DObject(poi)
+        objectCSS.position.set(0, 0, 0)
+
+        object.add(objectCSS)
+
+        this.labelRenderer = new CSS2DRenderer();
+        this.labelRenderer.setSize( window.innerWidth, window.innerHeight );
+        this.labelRenderer.domElement.style.position = 'absolute';
+        this.labelRenderer.domElement.style.top = '0px';
+        document.getElementById( 'labels' ).appendChild( this.labelRenderer.domElement );
+
+        const controls = new OrbitControls( this.camera, this.labelRenderer.domElement );
     }
 
     animate() {
-        this.box.animate(this.clock.getDelta())
+        this.room.animate(this.clock.getDelta())
+
+        this.labelRenderer.render( this.scene, this.camera );
+
         super.animate()
     }
 
