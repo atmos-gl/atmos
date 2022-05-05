@@ -20,7 +20,7 @@ export class TryGreenhouse extends BaseScene {
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
         // this.enableControls()
-        this.ambientLight = new AmbientLight('#aedaea', 0.4)
+        this.ambientLight = new AmbientLight('#b5c7ef', 0.4)
         this.scene.add(this.ambientLight)
 
         // const pointLight = new PointLight('#fff', 0.4)
@@ -28,7 +28,7 @@ export class TryGreenhouse extends BaseScene {
         // pointLight.position.y = 10
         // pointLight.position.z = 10
         // this.scene.add(pointLight)
-        this.pointLight = new PointLight('#9da2a6', 1.2)
+        this.pointLight = new PointLight('#c4a8a8', 1.2)
         this.pointLight.position.x = 7
         this.pointLight.position.y = 12
         this.pointLight.position.z = 14
@@ -72,28 +72,8 @@ export class TryGreenhouse extends BaseScene {
         }, 0)
     }
 
-    async moveCamera(from, to) {
-        await animateAsync({
-            from,
-            to,
-            onUpdate: (val) => {
-                const {x, y, z, tx, ty, tz} = val
-                this.camera.position.set(x, y, z)
-                this.camera.lookAt(tx, ty, tz)
-            },
-            duration: 1500,
-            ease: mirrorEasing(createExpoIn(4)),
-        })
-    }
-
     async onStep(state: any) {
         if (state.value.setupPowerBlock === 'plugCO2') {
-            const from = {
-                ...this.camera.position,
-                tx: 0,
-                ty: 2,
-                tz: 0,
-            }
             const to = {
                 x: 2,
                 y: 0,
@@ -102,7 +82,7 @@ export class TryGreenhouse extends BaseScene {
                 ty: 0,
                 tz: 0,
             }
-            await this.moveCamera(from, to)
+            await this.camera.move(to)
             this.box.co2Bottle.onFinished = () => {
                 sequenceManager.send('next')
             }
@@ -119,21 +99,15 @@ export class TryGreenhouse extends BaseScene {
         }
 
         if (state.value.setupPowerBlock === 'pourFertilizer') {
-            const from = {
-                ...this.camera.position,
-                tx: 2,
-                ty: 0,
-                tz: 0,
-            }
             const to = {
-                x: 12,
-                y: 5,
-                z: -2,
-                tx: 2,
-                ty: 1,
-                tz: -2,
-            }
-            await this.moveCamera(from, to)
+                    x: 5,
+                    y: 5,
+                    z: 5,
+                    tx: 4,
+                    ty: 2,
+                    tz: 0,
+                }
+            await this.camera.move(to)
         }
     }
 

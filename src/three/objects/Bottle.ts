@@ -1,8 +1,9 @@
-import {Color, Material, MathUtils, Mesh, MeshPhongMaterial, MeshStandardMaterial, Object3D, Vector3} from 'three';
-import {animate, Animation, createExpoIn, reverseEasing} from 'popmotion';
+import {Color, Material, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector3} from 'three';
+import {animate, createExpoIn, reverseEasing} from 'popmotion';
 import {BaseScene} from '../BaseScene';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import {animateAsync} from '../../utils';
+import CustomDragControls from '../custom/CustomDragControls';
 
 
 const createXtoZ = (start, end, amp, offset = 0) => {
@@ -66,17 +67,19 @@ export default class Bottle {
     }
 
     setupControls() {
-        this.controls = new DragControls([this.object], this.scene.camera, this.scene.canvas)
+        this.controls = new CustomDragControls(
+            [this.object],
+            this.scene.camera,
+            this.scene.canvas,
+            {
+                hoverCursor: 'grab',
+                grabbingCursor: 'grabbing'
+            }
+        )
         this.controls.transformGroup = true
         this.controls.deactivate()
 
-        this.controls.addEventListener('hoveron', (e) => {
-            setTimeout(() => {
-                this.scene.canvas.style.cursor = 'grab'
-            }, 0)
-        })
-        this.controls.addEventListener('dragstart', (e) => {
-            this.scene.canvas.style.cursor = 'grabbing'
+        this.controls.addEventListener('dragstart', () => {
             this.startHelper()
         })
         this.controls.addEventListener('drag', (e) => {

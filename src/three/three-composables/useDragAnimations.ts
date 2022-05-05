@@ -55,8 +55,10 @@ export default function useDragAnimation(
         dragEventsSource.style.cursor = 'grabbing'
     }
     const onMouseUp = (e) => {
+        if (dragging) {
+            dragEventsSource.style.cursor = 'grab'
+        }
         dragging = false
-        dragEventsSource.style.cursor = 'grab'
         target.snapAnimation?.()
     }
     const onMouseMove = (e) => {

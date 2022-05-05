@@ -1,11 +1,13 @@
-import {AmbientLight, Clock, MathUtils, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
+import {Clock, MathUtils, PerspectiveCamera, Scene, WebGLRenderer} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import {Tomato} from './pocs/Tomato';
 import GUI from 'lil-gui';
+import {animateAsync} from '../utils';
+import {createExpoIn, mirrorEasing} from 'popmotion';
+import CustomCamera from './custom/CustomCamera';
 
 export class BaseScene {
     protected scene: Scene | null = null
-    public camera: PerspectiveCamera | null = null
+    public camera: CustomCamera | null = null
     protected renderer: WebGLRenderer | null = null
     public canvas: HTMLCanvasElement | null = null
     protected clock: Clock | null = null
@@ -27,7 +29,7 @@ export class BaseScene {
 
         const gl = this.renderer.getContext()
         const aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
-        this.camera = new PerspectiveCamera(45, aspect, 0.01, 1000)
+        this.camera = new CustomCamera(45, aspect, 0.01, 1000)
         this.camera.position.set(10, 10, 10)
         this.camera.lookAt(0, 0, 0)
 
