@@ -65,6 +65,10 @@ export class TryGreenhouse extends BaseScene {
         setTimeout(() => {
             this.resizeRendererToDisplaySize()
         }, 2000)
+
+        setTimeout(() => {
+            console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
+        }, 0)
     }
 
     onStep(state: any) {
@@ -105,9 +109,6 @@ export class TryGreenhouse extends BaseScene {
         if (state.value.setupPowerBlock === 'plugWater') {
             this.box.waterBottle.show()
         }
-        setTimeout(() => {
-            console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
-        }, 0)
     }
 
     animate() {
