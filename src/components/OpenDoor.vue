@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useLoader from '@/composables/useLoader';
+import useLoader from '../composables/useLoader';
 import ressourcesDragDrop from '../three/pocs/ressourcesDragDrop';
 
 const {loading, percentageProgress} = useLoader(ressourcesDragDrop)
