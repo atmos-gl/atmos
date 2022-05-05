@@ -99,15 +99,14 @@ export class TryGreenhouse extends BaseScene {
         }
 
         if (state.value.setupPowerBlock === 'pourFertilizer') {
-            const to = {
-                    x: 5,
-                    y: 5,
-                    z: 5,
-                    tx: 4,
-                    ty: 2,
-                    tz: 0,
-                }
-            await this.camera.move(to)
+            await this.camera.move({
+                x: 5,
+                y: 5,
+                z: 5,
+                tx: 4,
+                ty: 2,
+                tz: 0.5,
+            })
         }
     }
 

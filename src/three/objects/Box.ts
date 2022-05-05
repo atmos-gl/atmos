@@ -46,7 +46,7 @@ export class Box {
             this.scene
         )
 
-        const waterBottle = model.getObjectByName('Bouteille')
+        const waterBottle = model.getObjectByName('Bouteille') as Mesh
         waterBottle.material = glassMaterial('rgba(182,210,234,0.57)')
         this.waterBottle = new Bottle(waterBottle,
             this.model.getObjectByName('Tube_5') as Mesh,

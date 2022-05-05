@@ -109,7 +109,8 @@ export default class Bottle {
             from: '#' + currentColor,
             to: '#000',
             onUpdate: v => {
-                this.targetObject.material.emissive = new Color(v)
+                const mat = this.targetObject.material as MeshPhongMaterial
+                mat.emissive = new Color(v)
             }
         })
     }
