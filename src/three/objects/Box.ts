@@ -7,6 +7,7 @@ import Bottle from './Bottle';
 import {BaseScene} from '../BaseScene';
 import glassMaterial from '../materials/glassMaterial';
 import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
+import Tray from './Tray';
 
 export class Box {
     public model: Object3D
@@ -14,6 +15,7 @@ export class Box {
     public co2Bottle: Bottle;
     private scene: BaseScene;
     public waterBottle: Bottle;
+    public tray: Tray;
 
 
     constructor(scene: BaseScene) {
@@ -24,7 +26,7 @@ export class Box {
     public init() {
         const model = ResourcesLoader.getInstance().getFBX('box')
         this.importFBX(model)
-
+        this.setupChildren()
     }
 
     private importFBX(model: Group) {
@@ -32,11 +34,14 @@ export class Box {
 
         model.scale.set(0.01, 0.01, 0.01)
         this.model = model
+    }
+
+    setupChildren() {
         this.door = new Door(this.model.getObjectByName('porte'))
         this.door.handle.castShadow = true
         this.door.mesh.getObjectByName('Cube_1').receiveShadow = true
 
-        const co2Bottle = model.getObjectByName('Bonbonne_de_CO2');
+        const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
         ;(co2Bottle.getObjectByName('Cylinder') as Mesh).material = getMetalMaterial()
         ;(co2Bottle.getObjectByName('Sweep') as Mesh).material = goldMat
@@ -46,7 +51,7 @@ export class Box {
             this.scene
         )
 
-        const waterBottle = model.getObjectByName('Bouteille') as Mesh
+        const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
         waterBottle.material = glassMaterial('rgba(182,210,234,0.57)')
         this.waterBottle = new Bottle(waterBottle,
             this.model.getObjectByName('Tube_5') as Mesh,
@@ -54,11 +59,10 @@ export class Box {
             500)
 
 
-        const pipe = model.getObjectByName('tuyeau').children[0] as Mesh
+        const pipe = this.model.getObjectByName('tuyeau').children[0] as Mesh
         pipe.material = glassMaterial()
-        //
-        // this.scene.getObjectByName('Cube').castShadow = true
-        // this.scene.getObjectByName('Cube').receiveShadow = true
+
+        this.tray = new Tray(this.model.getObjectByName('Tiroir'), this.scene)
     }
 
     get mesh() {
