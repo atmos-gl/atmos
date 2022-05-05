@@ -16,7 +16,7 @@ export default class Door implements DragAnimatable{
         this.mesh = object
 
         this.handle = this.mesh.getObjectByName('poignee')
-        this.minRotation = this.mesh.rotation.y
+        this.mesh.rotation.y = this.minRotation
     }
 
     set animationProgress(factor: number) {

@@ -35,7 +35,11 @@ export class Box {
         this.door.handle.castShadow = true
         console.log(this.door.mesh.getObjectByName('Cube_1').receiveShadow = true)
 
-        this.co2Bottle = new Bottle(model.getObjectByName('Bonbonne_de_CO2'), this.scene)
+        this.co2Bottle = new Bottle(
+            model.getObjectByName('Bonbonne_de_CO2'),
+            this.model.getObjectByName('Tube_1') as Mesh,
+            this.scene
+        )
 
         const envMap = ResourcesLoader.getInstance().getCubeTexture('envmap')
         const glassMaterial = new MeshStandardMaterial({
