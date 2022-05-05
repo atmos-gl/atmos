@@ -6,7 +6,7 @@ import {GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
 import Bottle from './Bottle';
 import {BaseScene} from '../BaseScene';
 import glassMaterial from '../materials/glassMaterial';
-import {goldMat, metalMat} from '../materials/metalMaterials';
+import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 
 export class Box {
     public model: Object3D
@@ -38,7 +38,7 @@ export class Box {
 
         const co2Bottle = model.getObjectByName('Bonbonne_de_CO2');
 
-        ;(co2Bottle.getObjectByName('Cylinder') as Mesh).material = metalMat
+        ;(co2Bottle.getObjectByName('Cylinder') as Mesh).material = getMetalMaterial()
         ;(co2Bottle.getObjectByName('Sweep') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
             co2Bottle,

@@ -33,10 +33,11 @@ export default function useDragAnimation(
     const isHorizontal = axis === Axis.horizontal
     let dragging = false
     let mouseStart = 0
-    const raycaster = new Raycaster()
     const pointer = new Vector2()
     let startProgress = 0
     let progressOffset
+
+    const raycaster = new Raycaster()
 
     const onMouseDown = (e) => {
         pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -51,9 +52,11 @@ export default function useDragAnimation(
         dragging = true
         mouseStart = isHorizontal ? e.layerX : e.layerY
         startProgress = target.animationProgress
+        dragEventsSource.style.cursor = 'grabbing'
     }
     const onMouseUp = (e) => {
         dragging = false
+        dragEventsSource.style.cursor = 'grab'
         target.snapAnimation?.()
     }
     const onMouseMove = (e) => {
@@ -61,6 +64,17 @@ export default function useDragAnimation(
             const val = isHorizontal ? e.layerX : e.layerY
             const offset = val - mouseStart
             target.animationProgress = startProgress + offset / progressOffset
+        } else {
+            pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(pointer, camera);
+            const intersects = raycaster.intersectObjects([target.handle]);
+
+            if (intersects.length) {
+                dragEventsSource.style.cursor = 'grab'
+            } else {
+                dragEventsSource.style.cursor = 'auto'
+            }
         }
     }
 
@@ -93,6 +107,7 @@ export default function useDragAnimation(
         dragEventsSource.addEventListener('mousemove', onMouseMove)
     }
     const unbind = () => {
+        dragEventsSource.style.cursor = 'auto'
         dragEventsSource.removeEventListener('mousedown', onMouseDown)
         dragEventsSource.removeEventListener('mouseup', onMouseUp)
         dragEventsSource.removeEventListener('mousemove', onMouseMove)

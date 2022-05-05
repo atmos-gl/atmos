@@ -53,8 +53,8 @@ export default class Bottle {
     }
 
     setupPositions(initialTranslate: number) {
-        this.xToZ = createXtoZ(50, 500, 300, this.object.position.z)
-        this.xToRotate = createXtoZ(50, 500, Math.PI / 6)
+        this.xToZ = createXtoZ(50, 450, 300, this.object.position.z)
+        this.xToRotate = createXtoZ(50, 450, Math.PI / 6)
 
         this.finalPosition = this.object.position.clone()
         this.targetPosition = this.object.position.clone()
@@ -70,7 +70,13 @@ export default class Bottle {
         this.controls.transformGroup = true
         this.controls.deactivate()
 
+        this.controls.addEventListener('hoveron', (e) => {
+            setTimeout(() => {
+                this.scene.canvas.style.cursor = 'grab'
+            }, 0)
+        })
         this.controls.addEventListener('dragstart', (e) => {
+            this.scene.canvas.style.cursor = 'grabbing'
             this.startHelper()
         })
         this.controls.addEventListener('drag', (e) => {

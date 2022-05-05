@@ -19,7 +19,7 @@ export class TryGreenhouse extends BaseScene {
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
         // this.enableControls()
-            this.ambientLight = new AmbientLight('#aedaea', 0.4)
+        this.ambientLight = new AmbientLight('#aedaea', 0.4)
         this.scene.add(this.ambientLight)
 
         // const pointLight = new PointLight('#fff', 0.4)
@@ -105,6 +105,9 @@ export class TryGreenhouse extends BaseScene {
         if (state.value.setupPowerBlock === 'plugWater') {
             this.box.waterBottle.show()
         }
+        setTimeout(() => {
+            console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
+        }, 0)
     }
 
     animate() {
