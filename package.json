@@ -13,12 +13,15 @@
     "@vueuse/core": "^8.3.1",
     "@vueuse/integrations": "^8.3.1",
     "lil-gui": "^0.16.1",
+    "popmotion": "^11.0.3",
     "qrcode": "^1.5.0",
     "three": "^0.139.2",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "xstate": "^4.31.0"
   },
   "devDependencies": {
+    "@types/node": "^17.0.31",
     "@vitejs/plugin-vue": "^2.3.1",
     "sass": "^1.51.0",
     "typescript": "^4.5.4",
