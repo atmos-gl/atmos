@@ -1,13 +1,13 @@
-import {AmbientLight, Clock, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
+import {Clock, MathUtils, Scene, WebGLRenderer} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import {Tomato} from './pocs/Tomato';
 import GUI from 'lil-gui';
+import CustomCamera from './custom/CustomCamera';
 
 export class BaseScene {
     protected scene: Scene | null = null
-    protected camera: PerspectiveCamera | null = null
+    public camera: CustomCamera | null = null
     protected renderer: WebGLRenderer | null = null
-    protected canvas: HTMLCanvasElement | null = null
+    public canvas: HTMLCanvasElement | null = null
     protected clock: Clock | null = null
 
     protected controls?: OrbitControls
@@ -20,16 +20,19 @@ export class BaseScene {
         this.renderer = new WebGLRenderer({
             canvas: this.canvas
         })
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        this.renderer.setPixelRatio(MathUtils.clamp(window.devicePixelRatio, 1, 2))
 
         this.clock = new Clock()
         this.gui = new GUI()
 
         const gl = this.renderer.getContext()
         const aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
-        this.camera = new PerspectiveCamera(45, aspect, 0.01, 1000)
+        this.camera = new CustomCamera(45, aspect, 0.01, 1000)
         this.camera.position.set(10, 10, 10)
         this.camera.lookAt(0, 0, 0)
+
+        this.resizeRendererToDisplaySize()
+        this.fixResize()
     }
 
     protected enableControls(damping = 0.2) {
@@ -52,13 +55,18 @@ export class BaseScene {
         this.renderer!.render(this.scene!, this.camera!)
     }
 
+    protected fixResize() {
+
+        const gl = this.renderer!.getContext()
+        this.camera!.aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
+        this.camera!.updateProjectionMatrix()
+    }
+
     animate() {
         window.requestAnimationFrame(this.animate.bind(this))
 
         if (this.resizeRendererToDisplaySize()) {
-            const gl = this.renderer!.getContext()
-            this.camera!.aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
-            this.camera!.updateProjectionMatrix()
+            this.fixResize()
         }
 
         this.controls?.update()
