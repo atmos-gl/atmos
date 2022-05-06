@@ -11,7 +11,7 @@ export default function getGlassMaterial(color = '#ffffff') {
         // metalness: 0.8,
         envMap,
         transmission: 1,
-        ior: 10,
+        ior: 5,
     })
     mat.thickness = 15
     return mat
