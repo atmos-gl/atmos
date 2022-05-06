@@ -3,9 +3,11 @@ import {ResourcesToLoad} from '../ResourcesLoader';
 const resources: ResourcesToLoad = {
     fbx: {
         box: '/three-assets/fbx/box.fbx',
-        room: '/three-assets/fbx/room.fbx'
+        // explore: '/three-assets/fbx/explore_v2.fbx'
     },
-    gltf: {},
+    gltf: {
+        explore: '/three-assets/gltf/explore_v1.gltf'
+    },
     texture: {}
 }
 export default resources
