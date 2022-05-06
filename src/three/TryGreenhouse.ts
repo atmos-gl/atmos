@@ -105,6 +105,7 @@ export class TryGreenhouse extends BaseScene {
             })
             this.box.tray.enable()
             this.box.tray.onOpen = () => {
+                this.box.tray.disable()
                 this.camera.move({
                     x: 5,
                     y: 5.5,

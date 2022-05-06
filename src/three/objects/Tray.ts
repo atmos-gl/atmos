@@ -51,6 +51,9 @@ export default class Tray {
     enable() {
         this.controls.activate()
     }
+    disable() {
+        this.controls.dispose()
+    }
 
     onDrag() {
         const position = this.object.position
