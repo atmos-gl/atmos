@@ -3,7 +3,7 @@ import {ResourcesToLoad} from '../ResourcesLoader';
 const resources: ResourcesToLoad = {
     fbx: {
         box: '/three-assets/fbx/box.fbx',
-        // explore: '/three-assets/fbx/explore_v2.fbx'
+        test: '/three-assets/fbx/test.fbx',
     },
     gltf: {
         explore: '/three-assets/gltf/explore_v1.gltf'
