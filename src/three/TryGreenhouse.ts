@@ -64,10 +64,6 @@ export class TryGreenhouse extends BaseScene {
         sequenceManager.onTransition(state => this.onStep(state))
 
         setTimeout(() => {
-            this.resizeRendererToDisplaySize()
-        }, 2000)
-
-        setTimeout(() => {
             console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
         }, 0)
     }

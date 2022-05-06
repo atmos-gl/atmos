@@ -1,8 +1,6 @@
-import {Clock, MathUtils, PerspectiveCamera, Scene, WebGLRenderer} from 'three';
+import {Clock, MathUtils, Scene, WebGLRenderer} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
-import {animateAsync} from '../utils';
-import {createExpoIn, mirrorEasing} from 'popmotion';
 import CustomCamera from './custom/CustomCamera';
 
 export class BaseScene {
