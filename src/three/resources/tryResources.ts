@@ -2,9 +2,11 @@ import {ResourcesToLoad} from '../ResourcesLoader';
 
 const resources: ResourcesToLoad = {
     fbx: {
-        box: '/three-assets/fbx/box.fbx'
+        box: '/three-assets/fbx/box.fbx',
+        explore: '/three-assets/fbx/test.fbx',
     },
     gltf: {
+        explore: '/three-assets/gltf/explore_v1.gltf'
         // box: '/three-assets/gltf/box.gltf'
     },
     texture: {},
