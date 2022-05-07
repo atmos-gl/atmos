@@ -3,8 +3,6 @@ import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 import sequenceManager from '../managers/sequenceManager';
-import {animate, createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
-import {animateAsync} from '../utils';
 
 export class TryGreenhouse extends BaseScene {
 
@@ -60,6 +58,7 @@ export class TryGreenhouse extends BaseScene {
             this.openDoorInteraction.unbind()
             sequenceManager.send('next')
         }
+
 
         sequenceManager.onTransition(state => this.onStep(state))
 

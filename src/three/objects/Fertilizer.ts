@@ -1,11 +1,10 @@
-import {AnimationAction, AnimationClip, AnimationMixer, LoopOnce, Mesh, Object3D} from 'three';
-import {createExpoIn, reverseEasing} from 'popmotion';
+import {AnimationAction, AnimationClip, AnimationMixer, LoopOnce, MathUtils, Mesh, Object3D, Vector2} from 'three';
 import {BaseScene} from '../BaseScene';
-import {animateAsync} from '../../utils';
 import {getMetalMaterial} from '../materials/metalMaterials';
+import useDragAnimation, {DragAnimatable, DragAnimation} from '../three-composables/useDragAnimations';
 
 
-export default class Fertilizer {
+export default class Fertilizer implements DragAnimatable {
     public object: Object3D;
 
     private scene: BaseScene;
@@ -17,6 +16,10 @@ export default class Fertilizer {
     private animClip: AnimationClip;
     private action: AnimationAction;
     private progress: number;
+    public movement = new Vector2(-300, 300)
+
+    private animationBounds: Array<number> = [ 0.345, 3 ]
+    private fertilizerAnimation: DragAnimation;
 
     constructor(object: Object3D, scene: BaseScene, animationClip: AnimationClip) {
         this.object = object
@@ -40,18 +43,39 @@ export default class Fertilizer {
         //
         this.mixer = new AnimationMixer(this.object)
         this.action = this.mixer.clipAction(this.animClip)
-        this.action.setLoop(LoopOnce, 1)
         this.action.clampWhenFinished = true
         this.action.play()
 
-        this.progress = 0.345
-        this.scene.gui.add(this, 'progress').min(0.345).max(3)
+        this.progress = this.animationBounds[0]
+
+        this.fertilizerAnimation = useDragAnimation(this, this.scene.canvas, this.scene.camera)
         // console.log('play ?')
         // this.object.visible = false
         // this.setOpacity(0)
     }
+
+    get animationProgress() {
+        return this.progress - 0.345
+    }
+
+    set animationProgress(set) {
+        this.progress = MathUtils.clamp(set + 0.345, this.animationBounds[0], this.animationBounds[1])
+    }
+
+    animationProgressBy(offset: number): void {
+        this.animationProgress = this.animationProgress + offset
+    }
+
+    get handle() {
+        return this.object
+    }
+
+    public snapAnimation() {
+        console.log('shouldsnap ?')
+    }
+
     async show() {
-        this.action.play()
+        this.fertilizerAnimation.bind()
         // this.object.visible = true
         // await animateAsync({
         //     from: {
