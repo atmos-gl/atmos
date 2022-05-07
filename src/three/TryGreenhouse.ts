@@ -52,7 +52,6 @@ export class TryGreenhouse extends BaseScene {
         this.resizeRendererToDisplaySize()
         this.camera.updateMatrixWorld()
         this.openDoorInteraction = useDragAnimation(this.box.door, this.canvas, this.camera)
-
         this.openDoorInteraction.bind()
         this.box.door.onOpen = () => {
             this.openDoorInteraction.unbind()

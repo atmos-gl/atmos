@@ -2,6 +2,7 @@ import {AnimationAction, AnimationClip, AnimationMixer, LoopOnce, MathUtils, Mes
 import {BaseScene} from '../BaseScene';
 import {getMetalMaterial} from '../materials/metalMaterials';
 import useDragAnimation, {DragAnimatable, DragAnimation} from '../three-composables/useDragAnimations';
+import {animate} from 'popmotion';
 
 
 export default class Fertilizer implements DragAnimatable {
@@ -20,6 +21,9 @@ export default class Fertilizer implements DragAnimatable {
 
     private animationBounds: Array<number> = [ 0.345, 3 ]
     private fertilizerAnimation: DragAnimation;
+
+    private dragThreshold = 0.5
+    private hasEnded = false
 
     constructor(object: Object3D, scene: BaseScene, animationClip: AnimationClip) {
         this.object = object
@@ -60,6 +64,11 @@ export default class Fertilizer implements DragAnimatable {
 
     set animationProgress(set) {
         this.progress = MathUtils.clamp(set + 0.345, this.animationBounds[0], this.animationBounds[1])
+        if (!this.hasEnded && this.animationProgress > this.dragThreshold) {
+            this.fertilizerAnimation.unbind()
+            this.hasEnded = true
+            this.snapAnimation()
+        }
     }
 
     animationProgressBy(offset: number): void {
@@ -71,7 +80,17 @@ export default class Fertilizer implements DragAnimatable {
     }
 
     public snapAnimation() {
-        console.log('shouldsnap ?')
+        const shouldEnd = this.animationProgress > this.dragThreshold
+        const to = shouldEnd ? this.animationBounds[1] : 0;
+        const duration = shouldEnd ? 2000 : 500
+        animate({
+            from: this.animationProgress,
+            to,
+            onUpdate: val => {
+                this.animationProgress = val
+            },
+            duration
+        })
     }
 
     async show() {
@@ -106,9 +125,6 @@ export default class Fertilizer implements DragAnimatable {
     animate(deltaTime: number) {
         // this.mixer.update(deltaTime)
         this.mixer.setTime(this.progress)
-    }
-
-    async snap() {
     }
 
 }

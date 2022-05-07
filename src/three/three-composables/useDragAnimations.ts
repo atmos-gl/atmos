@@ -60,7 +60,7 @@ export default function useDragAnimation(
         startPoint = new Vector2(e.layerX, e.layerY)
         dragEventsSource.style.cursor = 'grabbing'
     }
-    const onMouseUp = (e) => {
+    const onMouseUp = () => {
         if (dragging) {
             dragEventsSource.style.cursor = 'grab'
         }
@@ -77,12 +77,7 @@ export default function useDragAnimation(
             const projectedDistance = Math.cos(angle) * vecToStart.length()
             const offsetProgress = projectedDistance / movement.length()
 
-            // const val = e.layerX
-            // const offset = val - mouseStart
-            // target.animationProgress = startProgress + offset / movement.x
-
             target.animationProgress = startProgress + offsetProgress
-
         } else {
             const intersects = intersect(e)
             if (intersects.length) {
@@ -145,6 +140,7 @@ export default function useDragAnimation(
         bindEvents()
     }
     const unbind = () => {
+        dragging = false
         dragEventsSource.style.cursor = 'auto'
         dragEventsSource.removeEventListener('mousedown', onMouseDown)
         dragEventsSource.removeEventListener('mouseup', onMouseUp)
