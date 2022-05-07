@@ -89,8 +89,8 @@ export default function useDragAnimation(
         vector.project(camera)
 
         const s2 = isHorizontal
-        ? (dragEventsSource.clientWidth / 2)
-        : (dragEventsSource.clientHeight / 2)
+            ? (dragEventsSource.clientWidth / 2)
+            : (dragEventsSource.clientHeight / 2)
 
 
         const startVal = ((isHorizontal ? vector.x : vector.y) * s2) + s2

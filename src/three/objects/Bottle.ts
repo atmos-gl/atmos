@@ -51,6 +51,7 @@ export default class Bottle {
             }
         })
         this.setOpacity(0)
+        this.object.visible = false
     }
 
     setupPositions(initialTranslate: number) {
@@ -117,7 +118,6 @@ export default class Bottle {
 
     async show() {
         this.object.visible = true
-        console.log(this.object.position.x)
         await animateAsync({
             from: {
                 translate: this.object.position.x,

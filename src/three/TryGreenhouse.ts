@@ -104,9 +104,9 @@ export class TryGreenhouse extends BaseScene {
                 tz: 0.5,
             })
             this.box.tray.enable()
-            this.box.tray.onOpen = () => {
+            this.box.tray.onOpen = async () => {
                 this.box.tray.disable()
-                this.camera.move({
+                await this.camera.move({
                     x: 5,
                     y: 5.5,
                     z: 5,
@@ -114,6 +114,7 @@ export class TryGreenhouse extends BaseScene {
                     ty: 3,
                     tz: 0.5,
                 })
+                this.box.fertilizer.show()
             }
         }
     }
