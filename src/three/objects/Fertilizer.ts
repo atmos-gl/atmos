@@ -17,7 +17,7 @@ export default class Fertilizer implements DragAnimatable {
     private animClip: AnimationClip;
     private action: AnimationAction;
     private progress: number;
-    public movement = new Vector2(-300, 300)
+    public movement = new Vector2(-0.4, -0.4)
 
     private animationBounds: Array<number> = [ 0.345, 3 ]
     private fertilizerAnimation: DragAnimation;

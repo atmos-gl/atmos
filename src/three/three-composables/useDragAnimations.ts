@@ -40,8 +40,8 @@ export default function useDragAnimation(
     const raycaster = new Raycaster()
 
     const updatePointer = (e) => {
-        pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-        pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        pointer.x = (e.clientX / dragEventsSource.clientWidth) * 2 - 1;
+        pointer.y = -(e.clientY / dragEventsSource.clientHeight) * 2 + 1;
     }
     const intersect = (e) => {
         updatePointer(e)
@@ -57,7 +57,7 @@ export default function useDragAnimation(
         dragging = true
         mouseStart = e.layerX
         startProgress = target.animationProgress
-        startPoint = new Vector2(e.layerX, e.layerY)
+        startPoint = pointer.clone()
         dragEventsSource.style.cursor = 'grabbing'
     }
     const onMouseUp = () => {
@@ -69,9 +69,9 @@ export default function useDragAnimation(
     }
     const onMouseMove = (e) => {
         if (dragging) {
-            const mousePosition = new Vector2(e.layerX, e.layerY)
+            updatePointer(e)
             // @ts-ignore
-            const vecToStart = new Vector3(...mousePosition.clone().sub(startPoint), 0)
+            const vecToStart = new Vector3(...pointer.clone().sub(startPoint), 0)
             // @ts-ignore
             const angle = vecToStart.angleTo(new Vector3(...movement, 0))
             const projectedDistance = Math.cos(angle) * vecToStart.length()
@@ -117,25 +117,15 @@ export default function useDragAnimation(
         target.handle.getWorldPosition(vector)
         vector.project(camera)
 
-        const w2 = dragEventsSource.clientWidth / 2
-        const h2 = dragEventsSource.clientHeight / 2
-
-        const start = new Vector2(
-            (vector.x * w2) + w2,
-            (vector.y * h2) + h2,
-        )
+        const start = new Vector2(vector.x, vector.y)
 
         target.animationProgress = 1
         target.handle.getWorldPosition(vector)
         vector.project(camera)
 
-        const end = new Vector2(
-            (vector.x * w2) + w2,
-            (vector.y * h2) + h2,
-        )
+        const end = new Vector2(vector.x, vector.y)
 
         movement = end.sub(start)
-        console.log(movement)
         target.animationProgress = 0
         bindEvents()
     }
