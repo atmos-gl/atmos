@@ -1,6 +1,6 @@
 import {PerspectiveCamera, Vector3} from 'three';
 import {animateAsync} from '../../utils';
-import {createExpoIn, mirrorEasing} from 'popmotion';
+import {createExpoIn, Easing, mirrorEasing} from 'popmotion';
 
 export default class CustomCamera extends PerspectiveCamera{
     public lastLookAt: Vector3
@@ -9,7 +9,7 @@ export default class CustomCamera extends PerspectiveCamera{
         this.lastLookAt = typeof vector === 'object' ? vector : new Vector3(vector, y, z)
     }
 
-    async move(to, from?, duration = 1500) {
+    async move(to, from?, duration = 1500, ease?: Easing|Easing[]) {
         if (!to) {
             throw new Error('to param required')
         }
@@ -31,7 +31,7 @@ export default class CustomCamera extends PerspectiveCamera{
                 this.lookAt(tx, ty, tz)
             },
             duration,
-            ease: mirrorEasing(createExpoIn(4)),
+            ease: ease ?? mirrorEasing(createExpoIn(4)),
         })
     }
 }

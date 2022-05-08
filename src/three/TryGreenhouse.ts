@@ -3,6 +3,7 @@ import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 import sequenceManager from '../managers/sequenceManager';
+import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
 
 export class TryGreenhouse extends BaseScene {
 
@@ -111,7 +112,7 @@ export class TryGreenhouse extends BaseScene {
                     tx: 4,
                     ty: 3,
                     tz: 0.5,
-                })
+                }, null, 600, mirrorEasing(createExpoIn(3)))
                 this.box.fertilizer.show()
             }
         }
