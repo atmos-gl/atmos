@@ -14,37 +14,38 @@
       "states": {
         "openDoor": {
           "on": {
-            "next": {
+            "doorOk": {
               "target": "plugCO2"
             }
           }
         },
         "plugCO2": {
           "on": {
-            "next": {
+            "co2Ok": {
               "target": "plugWater"
             }
           }
         },
         "plugWater": {
           "on": {
-            "next": {
+            "waterOk": {
               "target": "pourFertilizer"
             }
           }
         },
         "pourFertilizer": {
           "on": {
-            "next": {
+            "fertilizerOk": {
               "target": "putUranium"
             }
           }
         },
-        "putUranium": {}
-      },
-      "on": {
-        "next": {
-          "target": "leaveWork"
+        "putUranium": {
+          "on": {
+            "uraniumOk": {
+              "target": "#Experience.leaveWork"
+            }
+          }
         }
       }
     },

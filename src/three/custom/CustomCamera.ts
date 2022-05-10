@@ -4,6 +4,9 @@ import {createExpoIn, Easing, mirrorEasing} from 'popmotion';
 
 export default class CustomCamera extends PerspectiveCamera{
     public lastLookAt: Vector3
+
+    public onMoveChange?: (isMoving: boolean) => void
+
     lookAt(vector: Vector3 | number, y?: number, z?: number) {
         super.lookAt(vector, y, z);
         this.lastLookAt = typeof vector === 'object' ? vector : new Vector3(vector, y, z)
@@ -22,6 +25,7 @@ export default class CustomCamera extends PerspectiveCamera{
                 tz: z,
             }
         }
+        this.onMoveChange?.(true)
         await animateAsync({
             from,
             to,
@@ -33,5 +37,6 @@ export default class CustomCamera extends PerspectiveCamera{
             duration,
             ease: ease ?? mirrorEasing(createExpoIn(4)),
         })
+        this.onMoveChange?.(false)
     }
 }

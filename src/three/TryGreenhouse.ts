@@ -5,6 +5,7 @@ import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimat
 import sequenceManager from '../managers/sequenceManager';
 import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
 
+
 export class TryGreenhouse extends BaseScene {
 
     private ambientLight: AmbientLight
@@ -43,7 +44,7 @@ export class TryGreenhouse extends BaseScene {
         this.camera.position.x = 4
         this.camera.position.y = 5
         this.camera.position.z = 25
-        this.camera.lookAt(0, 2, 0)
+        this.camera.lookAt(2, 2, 0)
 
         // this.scene.add(new Mesh(
         //     new BoxGeometry(5, 5),
@@ -56,7 +57,7 @@ export class TryGreenhouse extends BaseScene {
         this.openDoorInteraction.bind()
         this.box.door.onOpen = () => {
             this.openDoorInteraction.unbind()
-            sequenceManager.send('next')
+            sequenceManager.send('doorOk')
         }
 
 
@@ -79,7 +80,7 @@ export class TryGreenhouse extends BaseScene {
             }
             await this.camera.move(to)
             this.box.co2Bottle.onFinished = () => {
-                sequenceManager.send('next')
+                sequenceManager.send('co2Ok')
             }
             await this.box.co2Bottle.show()
             return
@@ -87,7 +88,7 @@ export class TryGreenhouse extends BaseScene {
 
         if (state.value.setupPowerBlock === 'plugWater') {
             this.box.waterBottle.onFinished = () => {
-                sequenceManager.send('next')
+                sequenceManager.send('waterOk')
             }
             await this.box.waterBottle.show()
             return

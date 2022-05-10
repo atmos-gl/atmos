@@ -1,4 +1,4 @@
-import {Color, Material, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector3} from 'three';
+import {Color, Material, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3} from 'three';
 import {animate, createExpoIn, reverseEasing} from 'popmotion';
 import {BaseScene} from '../BaseScene';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
@@ -31,7 +31,7 @@ export default class Bottle {
 
     public onFinished?: () => void;
 
-    constructor(object: Object3D, targetObjectMesh: Mesh, scene: BaseScene, initialTranslate = 700) {
+    constructor(object: Object3D, targetObjectMesh: Mesh, scene: BaseScene) {
         this.object = object
         this.targetObject = targetObjectMesh
         this.scene = scene
@@ -41,7 +41,7 @@ export default class Bottle {
 
         this.init()
         this.setupControls()
-        this.setupPositions(initialTranslate)
+        this.setupPositions()
     }
 
     init() {
@@ -54,17 +54,19 @@ export default class Bottle {
         this.object.visible = false
     }
 
-    setupPositions(initialTranslate: number) {
+    setupPositions() {
         this.xToZ = createXtoZ(50, 450, 300, this.object.position.z)
         this.xToRotate = createXtoZ(50, 450, Math.PI / 6)
 
         this.finalPosition = this.object.position.clone()
         this.targetPosition = this.object.position.clone()
         this.targetPosition.y -= 20;
-        this.initialX = this.object.position.x + initialTranslate
 
-        this.object.position.x += initialTranslate + 200
-        this.object.position.y -= 20
+        const initialPosition = new Vector2(500, -120)
+        this.initialX = initialPosition.x
+
+        this.object.position.x = initialPosition.x + 200
+        this.object.position.y += initialPosition.y
     }
 
     setupControls() {
@@ -138,7 +140,7 @@ export default class Bottle {
     }
 
     onDrag() {
-        this.object.position.y = MathUtils.clamp(this.object.position.y, 1, 120)
+        this.object.position.y = MathUtils.clamp(this.object.position.y, -10, 120)
         this.object.position.z = this.xToZ(this.object.position.x)
         this.object.rotation.x = this.xToRotate(this.object.position.x)
 
