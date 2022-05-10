@@ -7,7 +7,9 @@ enum Axis {
 
 export interface DragAnimatable {
     animationProgress: number
-    handle: Object3D
+    handle?: Object3D
+    movement?: Vector2
+
     animationProgressBy(offset: number): void
     snapAnimation?(): void
 }
@@ -26,35 +28,39 @@ interface DragOptions {
 export default function useDragAnimation(
     target: DragAnimatable,
     dragEventsSource: HTMLElement,
-    camera: Camera,
-    axis: Axis = Axis.horizontal
+    camera: Camera
 ): DragAnimation {
-
-    const isHorizontal = axis === Axis.horizontal
     let dragging = false
     let mouseStart = 0
     const pointer = new Vector2()
     let startProgress = 0
-    let progressOffset
+    let movement: Vector2 = new Vector2()
+    let startPoint: Vector2 = new Vector2()
 
     const raycaster = new Raycaster()
 
-    const onMouseDown = (e) => {
-        pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-        pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
+    const updatePointer = (e) => {
+        pointer.x = (e.clientX / dragEventsSource.clientWidth) * 2 - 1;
+        pointer.y = -(e.clientY / dragEventsSource.clientHeight) * 2 + 1;
+    }
+    const intersect = (e) => {
+        updatePointer(e)
         raycaster.setFromCamera(pointer, camera);
-        const intersects = raycaster.intersectObjects([target.handle]);
+        return raycaster.intersectObjects([target.handle]);
+    }
 
+    const onMouseDown = (e) => {
+        const intersects = intersect(e)
         if (intersects.length === 0) {
             return
         }
         dragging = true
-        mouseStart = isHorizontal ? e.layerX : e.layerY
+        mouseStart = e.layerX
         startProgress = target.animationProgress
+        startPoint = pointer.clone()
         dragEventsSource.style.cursor = 'grabbing'
     }
-    const onMouseUp = (e) => {
+    const onMouseUp = () => {
         if (dragging) {
             dragEventsSource.style.cursor = 'grab'
         }
@@ -63,15 +69,17 @@ export default function useDragAnimation(
     }
     const onMouseMove = (e) => {
         if (dragging) {
-            const val = isHorizontal ? e.layerX : e.layerY
-            const offset = val - mouseStart
-            target.animationProgress = startProgress + offset / progressOffset
-        } else {
-            pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-            pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
-            raycaster.setFromCamera(pointer, camera);
-            const intersects = raycaster.intersectObjects([target.handle]);
+            updatePointer(e)
+            // @ts-ignore
+            const vecToStart = new Vector3(...pointer.clone().sub(startPoint), 0)
+            // @ts-ignore
+            const angle = vecToStart.angleTo(new Vector3(...movement, 0))
+            const projectedDistance = Math.cos(angle) * vecToStart.length()
+            const offsetProgress = projectedDistance / movement.length()
 
+            target.animationProgress = startProgress + offsetProgress
+        } else {
+            const intersects = intersect(e)
             if (intersects.length) {
                 dragEventsSource.style.cursor = 'grab'
             } else {
@@ -80,35 +88,49 @@ export default function useDragAnimation(
         }
     }
 
+    const bindEvents = () => {
+        dragEventsSource.addEventListener('mousedown', onMouseDown)
+        dragEventsSource.addEventListener('mouseup', onMouseUp)
+        dragEventsSource.addEventListener('mousemove', onMouseMove)
+    }
+
     const bind = (opts?: DragOptions) => {
-        if (opts?.target) {target = opts.target}
-        if (opts?.dragEventsSource) {dragEventsSource = opts.dragEventsSource}
-        if (opts?.camera) {camera = opts.camera}
+        if (opts?.target) {
+            target = opts.target
+        }
+        if (opts?.dragEventsSource) {
+            dragEventsSource = opts.dragEventsSource
+        }
+        if (opts?.camera) {
+            camera = opts.camera
+        }
+        if (target.movement) {
+            movement = target.movement
+            bindEvents()
+            return
+        }
+        if (!target.handle) {
+            throw new Error('A DragAnimatable must at least have a handle or a movement')
+        }
+
         const vector = new Vector3()
         target.handle.getWorldPosition(vector)
         vector.project(camera)
 
-        const s2 = isHorizontal
-        ? (dragEventsSource.clientWidth / 2)
-        : (dragEventsSource.clientHeight / 2)
-
-
-        const startVal = ((isHorizontal ? vector.x : vector.y) * s2) + s2
+        const start = new Vector2(vector.x, vector.y)
 
         target.animationProgress = 1
         target.handle.getWorldPosition(vector)
         vector.project(camera)
 
-        const endVal = ((isHorizontal ? vector.x : vector.y) * s2) + s2
+        const end = new Vector2(vector.x, vector.y)
 
-        progressOffset = endVal - startVal - 100
+        movement = end.sub(start)
         target.animationProgress = 0
-
-        dragEventsSource.addEventListener('mousedown', onMouseDown)
-        dragEventsSource.addEventListener('mouseup', onMouseUp)
-        dragEventsSource.addEventListener('mousemove', onMouseMove)
+        bindEvents()
     }
     const unbind = () => {
+        dragging = false
         dragEventsSource.style.cursor = 'auto'
         dragEventsSource.removeEventListener('mousedown', onMouseDown)
         dragEventsSource.removeEventListener('mouseup', onMouseUp)
@@ -117,6 +139,5 @@ export default function useDragAnimation(
     return {
         bind,
         unbind
-
     }
 }

@@ -12,7 +12,7 @@ export class BaseScene {
 
     protected controls?: OrbitControls
 
-    protected gui: GUI;
+    public gui: GUI;
 
     public init(canvas: HTMLCanvasElement) {
         this.canvas = canvas

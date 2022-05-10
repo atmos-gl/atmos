@@ -15,6 +15,9 @@ export class ExplorePoiObject {
     public init() {
         const gltf = ResourcesLoader.getInstance().getGLTF('explore')
         this.importModel(gltf.scene)
+        // const fbx = ResourcesLoader.getInstance().getFBX('explore')
+        // this.importModel(fbx)
+        // console.log(gltf)
     }
 
     private importModel(fbx: Group) {

@@ -1,13 +1,13 @@
-import {Group, Mesh, MeshStandardMaterial, Object3D, Vector3} from 'three';
+import {AnimationClip, AnimationMixer, Group, Mesh, Object3D, Vector3} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
-import {DragAnimatable} from '../three-composables/useDragAnimations';
 import Door from './Door';
-import {GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
 import Bottle from './Bottle';
 import {BaseScene} from '../BaseScene';
 import glassMaterial from '../materials/glassMaterial';
 import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
+import Fertilizer from './Fertilizer';
+import {mix} from 'popmotion';
 
 export class Box {
     public model: Object3D
@@ -16,6 +16,7 @@ export class Box {
     private scene: BaseScene;
     public waterBottle: Bottle;
     public tray: Tray;
+    public fertilizer: Fertilizer;
 
 
     constructor(scene: BaseScene) {
@@ -43,8 +44,8 @@ export class Box {
 
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
-        ;(co2Bottle.getObjectByName('Cylinder') as Mesh).material = getMetalMaterial()
-        ;(co2Bottle.getObjectByName('Sweep') as Mesh).material = goldMat
+        ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial()
+        ;(co2Bottle.getObjectByName('parvis_c02') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
             co2Bottle,
             this.model.getObjectByName('Tube_1') as Mesh,
@@ -58,11 +59,21 @@ export class Box {
             this.scene,
             500)
 
-
         const pipe = this.model.getObjectByName('tuyeau').children[0] as Mesh
         pipe.material = glassMaterial()
 
         this.tray = new Tray(this.model.getObjectByName('Tiroir'), this.scene)
+
+        const fertilizer = this.model.getObjectByName('fertilisant')
+        const fertilizerClip = AnimationClip.findByName(this.model.animations, 'fertilizer')
+        // console.log(fertilizerClip)
+        this.fertilizer = new Fertilizer(fertilizer, this.scene, fertilizerClip)
+
+        const mixer = new AnimationMixer(fertilizer)
+        const action = mixer.clipAction(fertilizerClip)
+        // @ts-ignore
+        window.action = action
+        action.play()
     }
 
     get mesh() {
@@ -74,7 +85,7 @@ export class Box {
     }
 
     public animate(deltaTime: number) {
-        // this.mixer.update(deltaTime)
+        this.fertilizer.animate(deltaTime)
     }
 
     destroy() {

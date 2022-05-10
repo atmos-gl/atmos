@@ -3,8 +3,7 @@ import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 import sequenceManager from '../managers/sequenceManager';
-import {animate, createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
-import {animateAsync} from '../utils';
+import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
 
 export class TryGreenhouse extends BaseScene {
 
@@ -54,12 +53,12 @@ export class TryGreenhouse extends BaseScene {
         this.resizeRendererToDisplaySize()
         this.camera.updateMatrixWorld()
         this.openDoorInteraction = useDragAnimation(this.box.door, this.canvas, this.camera)
-
         this.openDoorInteraction.bind()
         this.box.door.onOpen = () => {
             this.openDoorInteraction.unbind()
             sequenceManager.send('next')
         }
+
 
         sequenceManager.onTransition(state => this.onStep(state))
 
@@ -104,15 +103,17 @@ export class TryGreenhouse extends BaseScene {
                 tz: 0.5,
             })
             this.box.tray.enable()
-            this.box.tray.onOpen = () => {
-                this.camera.move({
+            this.box.tray.onOpen = async () => {
+                this.box.tray.disable()
+                await this.camera.move({
                     x: 5,
                     y: 5.5,
                     z: 5,
                     tx: 4,
                     ty: 3,
                     tz: 0.5,
-                })
+                }, null, 600, mirrorEasing(createExpoIn(3)))
+                this.box.fertilizer.show()
             }
         }
     }
