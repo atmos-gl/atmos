@@ -4,6 +4,7 @@ import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 import sequenceManager from '../managers/sequenceManager';
 import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
+import {computed} from 'vue';
 
 
 export class TryGreenhouse extends BaseScene {
@@ -14,11 +15,11 @@ export class TryGreenhouse extends BaseScene {
     private xOffset: number;
     private openDoorInteraction: DragAnimation;
 
-
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
+        this.renderer.setClearAlpha(0.1)
         // this.enableControls()
         this.ambientLight = new AmbientLight('#b5c7ef', 0.4)
         this.scene.add(this.ambientLight)
@@ -66,6 +67,13 @@ export class TryGreenhouse extends BaseScene {
         setTimeout(() => {
             console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
         }, 0)
+    }
+
+    get co2BottleUi() {
+        return {
+            showUi: this.box.co2Bottle.showUi,
+            uiPosition: this.box.co2Bottle.uiPosition,
+        }
     }
 
     async onStep(state: any) {

@@ -2,8 +2,9 @@ import {Color, Material, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector2, 
 import {animate, createExpoIn, reverseEasing} from 'popmotion';
 import {BaseScene} from '../BaseScene';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
-import {animateAsync} from '../../utils';
+import {animateAsync, delay} from '../../utils';
 import CustomDragControls from '../custom/CustomDragControls';
+import {reactive, Ref, ref, UnwrapNestedRefs} from 'vue';
 
 
 const createXtoZ = (start, end, amp, offset = 0) => {
@@ -30,6 +31,8 @@ export default class Bottle {
     private initialX: number;
 
     public onFinished?: () => void;
+    public showUi: Ref<boolean>;
+    public uiPosition: UnwrapNestedRefs<Vector2>;
 
     constructor(object: Object3D, targetObjectMesh: Mesh, scene: BaseScene) {
         this.object = object
@@ -42,6 +45,7 @@ export default class Bottle {
         this.init()
         this.setupControls()
         this.setupPositions()
+        this.setupRefs()
     }
 
     init() {
@@ -87,6 +91,16 @@ export default class Bottle {
         })
         this.controls.addEventListener('drag', (e) => {
             this.onDrag()
+        })
+    }
+
+    private setupRefs() {
+        this.showUi = ref(false)
+        this.uiPosition = reactive(new Vector2(0, 0))
+
+        this.controls.addEventListener('dragstart', async () => {
+            await delay(200)
+            this.showUi.value = false
         })
     }
 
@@ -137,6 +151,16 @@ export default class Bottle {
             duration: 1000
         })
         this.controls.activate()
+        this.updateUiPosition()
+        this.showUi.value = true
+    }
+    private updateUiPosition() {
+        const vector = new Vector3()
+        this.object.getWorldPosition(vector)
+        vector.project(this.scene.camera)
+
+        this.uiPosition.x = ( vector.x + 1) * this.scene.canvas.clientWidth / 2;
+        this.uiPosition.y = - ( vector.y - 1) * this.scene.canvas.clientHeight / 2;
     }
 
     onDrag() {
@@ -191,5 +215,4 @@ export default class Bottle {
         })
         this.onFinished?.()
     }
-
 }
