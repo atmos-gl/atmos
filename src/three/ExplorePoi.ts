@@ -13,6 +13,7 @@ export class ExplorePoi extends BaseScene {
         camPos: Vector3,
         objInstance: Object3D
         textContainer: String
+        isClickable: Boolean
     }> = []
 
     private defaultCamPos: Vector3 = new Vector3(4, 5, 15)
@@ -21,6 +22,7 @@ export class ExplorePoi extends BaseScene {
     private poiList: Array<HTMLElement> = []
 
     public onSelectPoi?: (poiIndex: number) => void;
+    public currentPoiIndex?: number = null
 
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
@@ -53,28 +55,32 @@ export class ExplorePoi extends BaseScene {
         this.poiObjects.push({
             camPos: new Vector3(1.4540604173045868, 1.2172741970719216, 1.7441767779243642),
             objInstance: this.explorePoiObject.mesh.getObjectByName('Serre').getObjectByName('spray_2'),
-            textContainer: "js-watering"
+            textContainer: "js-watering",
+            isClickable: true
         })
 
         // Speakers
         this.poiObjects.push({
             camPos: new Vector3(-0.7083525562764238, 1.2927609887630331, 1.1327723884841376),
             objInstance: this.explorePoiObject.mesh.getObjectByName('Serre').getObjectByName('enceinte_1'),
-            textContainer: "js-speaker"
+            textContainer: "js-speaker",
+            isClickable: true
         })
 
         // Pipe
         this.poiObjects.push({
             camPos: new Vector3(2.4472711249308396, -2.9288871737952995, 1.931505296936661),
             objInstance: this.explorePoiObject.mesh.getObjectByName('pipe'),
-            textContainer: "js-pipe"
+            textContainer: "js-pipe",
+            isClickable: true
         })
 
         // Power Plant
         this.poiObjects.push({
             camPos: new Vector3(1.9319959043329842, -2.1286130154035687, 6.3185349634937085),
             objInstance: this.explorePoiObject.mesh.getObjectByName('centrale'),
-            textContainer: "js-powerPlant"
+            textContainer: "js-powerPlant",
+            isClickable: true
         })
 
         // GreenHouse
@@ -91,7 +97,17 @@ export class ExplorePoi extends BaseScene {
             this.poiList.push(poi)
             const objectCSS = new CSS2DObject(poi)
             objectCSS.position.set(0, 0, 0)
-            poi.addEventListener("click", async () => {await this.openPoi(object, poi, i)})
+            poi.addEventListener("click", async () => {
+                // WIP Change Poi
+                if (object.isClickable) {
+                    this.setObjectsClickable(false)
+                    await this.openPoi(object, poi, i)
+                }
+                // if (this.currentPoiIndex) {
+                //     await this.changePoi(object, poi, i)
+                //     return
+                // }
+            })
             object.objInstance.add(objectCSS)
         })
 
@@ -104,7 +120,28 @@ export class ExplorePoi extends BaseScene {
         // this.controls = new OrbitControls( this.camera, this.labelRenderer.domElement );
     }
 
-    async openPoi(object, poi, index) {
+    // WIP Change Poi
+    setObjectsClickable(state: Boolean) {
+        this.poiObjects.forEach(object => {object.isClickable = state})
+    }
+    // async changePoi(object, poi, i) {
+    //     const previousPoiIndex = this.currentPoiIndex
+        // const objPos = object.objInstance.getWorldPosition(new Vector3())
+        // poi.classList.toggle('hidden')
+        // this.poiList[previousPoiIndex].classList.toggle('hidden')
+        // await this.camera.move({
+        //     x: object.camPos.x,
+        //     y: object.camPos.y,
+        //     z: object.camPos.z,
+        //     tx: objPos.x,
+        //     ty: objPos.y,
+        //     tz: objPos.z,
+        // })
+        // this.onSelectPoi?.(i)
+        // this.currentPoi = i
+    // }
+
+    async openPoi(object, poi, i) {
         const objPos = object.objInstance.getWorldPosition(new Vector3())
         poi.classList.toggle('hidden')
         await this.camera.move({
@@ -115,10 +152,11 @@ export class ExplorePoi extends BaseScene {
             ty: objPos.y,
             tz: objPos.z,
         })
-        this.onSelectPoi?.(index)
+        this.onSelectPoi?.(i)
+        this.currentPoiIndex = i
     }
 
-    async closePoi(index) {
+    async closePoi(i) {
         await this.camera.move({
             x: this.defaultCamPos.x,
             y: this.defaultCamPos.y,
@@ -127,7 +165,9 @@ export class ExplorePoi extends BaseScene {
             ty: this.defaultCamLookAt.y,
             tz: this.defaultCamLookAt.z,
         })
-        this.poiList[index].classList.toggle('hidden')
+        this.poiList[i].classList.toggle('hidden')
+        this.currentPoiIndex = null
+        this.setObjectsClickable(true)
     }
 
     animate() {
