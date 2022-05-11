@@ -11,6 +11,7 @@ export default defineConfig({
             },
             fontFamily: {
                 'core': ['dahlia'],
+                'display': ['cera'],
             }
         }
     }
