@@ -1,5 +1,6 @@
 import {createMachine, interpret} from 'xstate';
 import sequenceMachineJSON from './sequenceMachine.json'
+import {useMachine} from '@xstate/vue';
 
 const sequenceMachine = createMachine(sequenceMachineJSON)
 

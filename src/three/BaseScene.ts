@@ -2,6 +2,7 @@ import {Clock, MathUtils, Scene, WebGLRenderer} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
 import CustomCamera from './custom/CustomCamera';
+import {ref, Ref} from 'vue';
 
 export class BaseScene {
     protected scene: Scene | null = null
@@ -9,6 +10,8 @@ export class BaseScene {
     protected renderer: WebGLRenderer | null = null
     public canvas: HTMLCanvasElement | null = null
     protected clock: Clock | null = null
+
+    public isCameraMoving: Ref<boolean> = ref(false)
 
     protected controls?: OrbitControls
 
@@ -25,12 +28,18 @@ export class BaseScene {
 
         this.clock = new Clock()
         this.gui = new GUI()
+        if (import.meta.env.PROD) {
+            this.gui.hide()
+        }
 
         const gl = this.renderer.getContext()
         const aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
         this.camera = new CustomCamera(45, aspect, 0.01, 1000)
         this.camera.position.set(10, 10, 10)
         this.camera.lookAt(0, 0, 0)
+        this.camera.onMoveChange = isMoving => {
+            this.isCameraMoving.value = isMoving
+        }
 
         this.resizeRendererToDisplaySize()
         this.fixResize()

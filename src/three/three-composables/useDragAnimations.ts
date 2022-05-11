@@ -24,11 +24,17 @@ interface DragOptions {
     dragEventsSource: HTMLElement,
     camera: Camera,
 }
+interface DragHooks {
+    onDragStart?: () => any|void
+    onDrag?: () => any|void
+    onDragEnd?: () => any|void
+}
 
 export default function useDragAnimation(
     target: DragAnimatable,
     dragEventsSource: HTMLElement,
-    camera: Camera
+    camera: Camera,
+    hooks?: DragHooks
 ): DragAnimation {
     let dragging = false
     let mouseStart = 0
@@ -59,6 +65,7 @@ export default function useDragAnimation(
         startProgress = target.animationProgress
         startPoint = pointer.clone()
         dragEventsSource.style.cursor = 'grabbing'
+        hooks?.onDragStart?.()
     }
     const onMouseUp = () => {
         if (dragging) {
@@ -66,6 +73,7 @@ export default function useDragAnimation(
         }
         dragging = false
         target.snapAnimation?.()
+        hooks?.onDragEnd?.()
     }
     const onMouseMove = (e) => {
         if (dragging) {
@@ -78,6 +86,7 @@ export default function useDragAnimation(
             const offsetProgress = projectedDistance / movement.length()
 
             target.animationProgress = startProgress + offsetProgress
+            hooks?.onDrag?.()
         } else {
             const intersects = intersect(e)
             if (intersects.length) {

@@ -13,7 +13,8 @@ import {BaseScene} from '../BaseScene';
 import {getMetalMaterial} from '../materials/metalMaterials';
 import useDragAnimation, {DragAnimatable, DragAnimation} from '../three-composables/useDragAnimations';
 import {animate} from 'popmotion';
-import {animateAsync} from '../../utils';
+import {animateAsync, delay} from '../../utils';
+import useUiTip, {UiTip} from '../three-composables/useUiTip';
 
 
 export default class Fertilizer implements DragAnimatable {
@@ -35,6 +36,8 @@ export default class Fertilizer implements DragAnimatable {
     private dragThreshold = 0.7
     private hasEnded = false
     private bottleMesh: Mesh;
+
+    public ui: UiTip;
 
     constructor(object: Object3D, scene: BaseScene, animationClip: AnimationClip) {
         this.object = object
@@ -58,7 +61,14 @@ export default class Fertilizer implements DragAnimatable {
 
         this.progress = this.animationBounds[0]
 
-        this.fertilizerAnimation = useDragAnimation(this, this.scene.canvas, this.scene.camera)
+        this.ui = useUiTip(this.object, this.scene)
+
+        this.fertilizerAnimation = useDragAnimation(this, this.scene.canvas, this.scene.camera, {
+            onDragStart: async () => {
+                await delay(200)
+                this.ui.hide()
+            }
+        })
         // this.object.visible = false
         this.setVisibility(false)
         this.bottleMesh.material.opacity = 0
@@ -118,6 +128,7 @@ export default class Fertilizer implements DragAnimatable {
             duration: 400
         })
         this.setVisibility(true)
+        this.ui.show()
     }
 
     setVisibility(set: boolean) {

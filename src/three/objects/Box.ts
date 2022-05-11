@@ -1,4 +1,4 @@
-import {AnimationClip, AnimationMixer, Group, Mesh, Object3D, Vector3} from 'three';
+import {AnimationClip, AnimationMixer, Group, Mesh, Object3D, Vector2, Vector3} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
 import Door from './Door';
 import Bottle from './Bottle';
@@ -56,8 +56,8 @@ export class Box {
         waterBottle.material = glassMaterial('rgba(182,210,234,0.57)')
         this.waterBottle = new Bottle(waterBottle,
             this.model.getObjectByName('Tube_5') as Mesh,
-            this.scene,
-            500)
+            this.scene
+        )
 
         const pipe = this.model.getObjectByName('tuyeau').children[0] as Mesh
         pipe.material = glassMaterial()

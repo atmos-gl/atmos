@@ -4,6 +4,8 @@ import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 import sequenceManager from '../managers/sequenceManager';
 import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
+import {computed} from 'vue';
+
 
 export class TryGreenhouse extends BaseScene {
 
@@ -13,11 +15,11 @@ export class TryGreenhouse extends BaseScene {
     private xOffset: number;
     private openDoorInteraction: DragAnimation;
 
-
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
+        this.renderer.setClearAlpha(0.1)
         // this.enableControls()
         this.ambientLight = new AmbientLight('#b5c7ef', 0.4)
         this.scene.add(this.ambientLight)
@@ -43,7 +45,7 @@ export class TryGreenhouse extends BaseScene {
         this.camera.position.x = 4
         this.camera.position.y = 5
         this.camera.position.z = 25
-        this.camera.lookAt(0, 2, 0)
+        this.camera.lookAt(2, 2, 0)
 
         // this.scene.add(new Mesh(
         //     new BoxGeometry(5, 5),
@@ -56,7 +58,7 @@ export class TryGreenhouse extends BaseScene {
         this.openDoorInteraction.bind()
         this.box.door.onOpen = () => {
             this.openDoorInteraction.unbind()
-            sequenceManager.send('next')
+            sequenceManager.send('doorOk')
         }
 
 
@@ -67,19 +69,29 @@ export class TryGreenhouse extends BaseScene {
         }, 0)
     }
 
+    get co2BottleUi() {
+        return this.box.co2Bottle.ui.state
+    }
+    get waterBottleUi() {
+        return this.box.waterBottle.ui.state
+    }
+    get fertilizerUi() {
+        return this.box.fertilizer.ui.state
+    }
+
     async onStep(state: any) {
         if (state.value.setupPowerBlock === 'plugCO2') {
             const to = {
-                x: 2,
+                x: 3,
                 y: 0,
                 z: 12,
-                tx: 2,
+                tx: 3,
                 ty: 0,
                 tz: 0,
             }
             await this.camera.move(to)
             this.box.co2Bottle.onFinished = () => {
-                sequenceManager.send('next')
+                sequenceManager.send('co2Ok')
             }
             await this.box.co2Bottle.show()
             return
@@ -87,7 +99,7 @@ export class TryGreenhouse extends BaseScene {
 
         if (state.value.setupPowerBlock === 'plugWater') {
             this.box.waterBottle.onFinished = () => {
-                sequenceManager.send('next')
+                sequenceManager.send('waterOk')
             }
             await this.box.waterBottle.show()
             return

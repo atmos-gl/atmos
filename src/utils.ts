@@ -9,6 +9,13 @@ export function animateAsync<V>(params: AnimationOptions<V>) {
         animate(params)
     })
 }
+
+export function delay(duration: number) {
+    return new Promise<void>(resolve => {
+        setTimeout(resolve, duration)
+    })
+}
+
 export function normalizedToCanvasSpace(vec: Vector2, canvas: HTMLCanvasElement) {
 
 }
