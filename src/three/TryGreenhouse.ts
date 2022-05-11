@@ -75,6 +75,9 @@ export class TryGreenhouse extends BaseScene {
     get waterBottleUi() {
         return this.box.waterBottle.ui.state
     }
+    get fertilizerUi() {
+        return this.box.fertilizer.ui.state
+    }
 
     async onStep(state: any) {
         if (state.value.setupPowerBlock === 'plugCO2') {

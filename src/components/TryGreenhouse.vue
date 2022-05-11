@@ -45,6 +45,12 @@ onMounted(() => {
           <strong>100% naturel</strong> indispensable à votre santé.
         </p>
       </StepTip>
+      <StepTip :tip="app.fertilizerUi" :icon="localIcon">
+        <p>
+          Nos granules de fertilisant contiennent des produits utilisés pour la pousse des végétaux du monde entier. Vos produits sont créés
+          <strong>dans le respect des traditions locales</strong>.
+        </p>
+      </StepTip>
     </div>
   </main>
 </template>
