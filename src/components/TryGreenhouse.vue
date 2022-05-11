@@ -7,6 +7,8 @@ import StepTitle from './StepTitle.vue';
 import StepTip from './StepTip.vue';
 
 import co2Icon from '../assets/img/co2Icon.svg'
+import naturalIcon from '../assets/img/naturalIcon.svg'
+import localIcon from '../assets/img/localIcon.svg'
 
 const canvas = ref(null);
 const app = new TryGreenhouse()
@@ -31,12 +33,19 @@ onMounted(() => {
         <StepTitle v-show="showUi" :step="state.value.setupPowerBlock"/>
       </Transition>
     </div>
-      <div v-if="appReady">
-        <StepTip :tip="app.co2BottleUi" :icon="co2Icon">
-          <p>Le C02 est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé notamment une gamme de CO2 recyclé que l'on récupère des centrales à gaz pour réduire leur impact. </p>
-        </StepTip>
-        <StepTip :tip="app.waterBottleUi" />
-      </div>
+    <div v-if="appReady">
+      <StepTip :tip="app.co2BottleUi" :icon="co2Icon">
+        <p><strong>Le C02</strong> est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé
+          notamment
+          <strong>une gamme de CO2 recyclé</strong> que l'on récupère des centrales à gaz pour réduire leur impact. </p>
+      </StepTip>
+      <StepTip :tip="app.waterBottleUi" :icon="naturalIcon">
+        <p>
+          Les fruits et légumes sont <strong>composés d'environ 90% d'eau</strong>. Il est donc important de nourrir votre plantation avec la meilleure eau possible. C'est un ingrédient
+          <strong>100% naturel</strong> indispensable à votre santé.
+        </p>
+      </StepTip>
+    </div>
   </main>
 </template>
 

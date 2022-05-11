@@ -15,7 +15,7 @@ const {tip, icon} = toRefs(props)
         }">
       <div class="line"></div>
       <div class="tip flex flex-col">
-        <img :src="icon" alt="Icon" class="w-12 mb-2">
+        <img v-if="icon" :src="icon" alt="Icon" class="h-12 mb-2">
         <slot/>
       </div>
     </div>
@@ -40,7 +40,7 @@ const {tip, icon} = toRefs(props)
 }
 
 .tip {
-  @apply absolute -top-20 left-20 p-4 rounded-xl border border-white text-jade w-72 -xl:w-64;
+  @apply absolute -top-20 left-20 p-4 rounded-xl border border-white text-jade w-72 -xl:w-64 font-display;
   background-color: #ffffff33;
 }
 </style>
