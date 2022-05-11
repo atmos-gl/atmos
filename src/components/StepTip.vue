@@ -14,7 +14,7 @@ const {tip, icon} = toRefs(props)
           transform: `translate(${tip.position.x}px, ${tip.position.y}px)`
         }">
       <div class="line"></div>
-      <div class="tip flex flex-col">
+      <div class="tip flex flex-col items-start">
         <img v-if="icon" :src="icon" alt="Icon" class="h-12 mb-2">
         <slot/>
       </div>
