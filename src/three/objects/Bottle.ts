@@ -4,7 +4,8 @@ import {BaseScene} from '../BaseScene';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import {animateAsync, delay} from '../../utils';
 import CustomDragControls from '../custom/CustomDragControls';
-import {reactive, Ref, ref, UnwrapNestedRefs} from 'vue';
+import {UnwrapNestedRefs} from 'vue';
+import useUiTip, {UiTip} from '../three-composables/useUiTip';
 
 
 const createXtoZ = (start, end, amp, offset = 0) => {
@@ -31,8 +32,7 @@ export default class Bottle {
     private initialX: number;
 
     public onFinished?: () => void;
-    public showUi: Ref<boolean>;
-    public uiPosition: UnwrapNestedRefs<Vector2>;
+    public ui: UiTip
 
     constructor(object: Object3D, targetObjectMesh: Mesh, scene: BaseScene) {
         this.object = object
@@ -45,7 +45,6 @@ export default class Bottle {
         this.init()
         this.setupControls()
         this.setupPositions()
-        this.setupRefs()
     }
 
     init() {
@@ -56,6 +55,8 @@ export default class Bottle {
         })
         this.setOpacity(0)
         this.object.visible = false
+
+        this.ui = useUiTip(this.object, this.scene)
     }
 
     setupPositions() {
@@ -66,7 +67,7 @@ export default class Bottle {
         this.targetPosition = this.object.position.clone()
         this.targetPosition.y -= 20;
 
-        const initialPosition = new Vector2(500, -120)
+        const initialPosition = new Vector2(450, -120)
         this.initialX = initialPosition.x
 
         this.object.position.x = initialPosition.x + 200
@@ -86,21 +87,13 @@ export default class Bottle {
         this.controls.transformGroup = true
         this.controls.deactivate()
 
-        this.controls.addEventListener('dragstart', () => {
+        this.controls.addEventListener('dragstart', async () => {
             this.startHelper()
+            await delay(200)
+            this.ui.hide()
         })
         this.controls.addEventListener('drag', (e) => {
             this.onDrag()
-        })
-    }
-
-    private setupRefs() {
-        this.showUi = ref(false)
-        this.uiPosition = reactive(new Vector2(0, 0))
-
-        this.controls.addEventListener('dragstart', async () => {
-            await delay(200)
-            this.showUi.value = false
         })
     }
 
@@ -151,16 +144,7 @@ export default class Bottle {
             duration: 1000
         })
         this.controls.activate()
-        this.updateUiPosition()
-        this.showUi.value = true
-    }
-    private updateUiPosition() {
-        const vector = new Vector3()
-        this.object.getWorldPosition(vector)
-        vector.project(this.scene.camera)
-
-        this.uiPosition.x = ( vector.x + 1) * this.scene.canvas.clientWidth / 2;
-        this.uiPosition.y = - ( vector.y - 1) * this.scene.canvas.clientHeight / 2;
+        this.ui.show()
     }
 
     onDrag() {
@@ -214,5 +198,9 @@ export default class Bottle {
             duration: 1000
         })
         this.onFinished?.()
+    }
+
+    public dispose() {
+
     }
 }

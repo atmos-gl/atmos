@@ -4,11 +4,16 @@ import {TryGreenhouse} from '../three/TryGreenhouse';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
 import StepTitle from './StepTitle.vue';
+import StepTip from './StepTip.vue';
+
+import co2Icon from '../assets/img/co2Icon.svg'
 
 const canvas = ref(null);
 const app = new TryGreenhouse()
 
 const {state} = useActor(sequenceManager)
+
+const showUi = computed(() => !app.isCameraMoving.value)
 
 const appReady = ref(false)
 onMounted(() => {
@@ -21,18 +26,16 @@ onMounted(() => {
 <template>
   <main class="bg-gradient-to-b from-imperial to-anthracite">
     <canvas id="scene" ref="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
-    <div class="absolute right-0 top-0 pointer-events-none text-jade p-12 w-2/5">
+    <div class="absolute right-0 top-0 pointer-events-none text-jade px-12 pt-20 xl:pt-24 w-2/5">
       <Transition name="fade">
         <StepTitle v-show="showUi" :step="state.value.setupPowerBlock"/>
       </Transition>
     </div>
       <div v-if="appReady">
-        {{ app.co2BottleUi }}
-        <div class="w-2 h-2 bg-red-600 absolute top-0 left-0"
-             :class="{ hidden: !app.co2BottleUi.showUi }"
-             :style="{
-          transform: `translate(${app.co2BottleUi.uiPosition.x}px, ${app.co2BottleUi.uiPosition.y}px)`
-        }"></div>
+        <StepTip :tip="app.co2BottleUi" :icon="co2Icon">
+          <p>Le C02 est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé notamment une gamme de CO2 recyclé que l'on récupère des centrales à gaz pour réduire leur impact. </p>
+        </StepTip>
+        <StepTip :tip="app.waterBottleUi" />
       </div>
   </main>
 </template>

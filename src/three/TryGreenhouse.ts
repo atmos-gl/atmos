@@ -70,19 +70,19 @@ export class TryGreenhouse extends BaseScene {
     }
 
     get co2BottleUi() {
-        return {
-            showUi: this.box.co2Bottle.showUi,
-            uiPosition: this.box.co2Bottle.uiPosition,
-        }
+        return this.box.co2Bottle.ui.state
+    }
+    get waterBottleUi() {
+        return this.box.waterBottle.ui.state
     }
 
     async onStep(state: any) {
         if (state.value.setupPowerBlock === 'plugCO2') {
             const to = {
-                x: 2,
+                x: 3,
                 y: 0,
                 z: 12,
-                tx: 2,
+                tx: 3,
                 ty: 0,
                 tz: 0,
             }

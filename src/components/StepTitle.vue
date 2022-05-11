@@ -22,6 +22,6 @@ const {step} = toRefs(props)
 </template>
 <style>
 .stepTitle {
-  @apply font-core text-4xl font-bold;
+  @apply font-core text-4xl lg:text-5xl font-bold;
 }
 </style>
