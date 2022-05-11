@@ -8,4 +8,12 @@
   &.hidden {
     @apply hidden;
   }
+
+  &--close {
+    @apply w-10 h-10 flex items-center justify-center rounded-full text-3xl text-jade cursor-pointer border border-jade border absolute top-12 right-16;
+
+    &:hover {
+      @apply bg-jade text-imperial;
+    }
+  }
 }
