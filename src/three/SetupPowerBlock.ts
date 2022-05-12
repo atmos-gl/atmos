@@ -126,6 +126,10 @@ export class SetupPowerBlock extends BaseScene {
                     tz: 0.5,
                 }, null, 600, mirrorEasing(createExpoIn(3)))
                 this.box.fertilizer.show()
+                this.box.fertilizer.onFinished = () => {
+                    setupSequenceManager.send('fertilizerOk')
+                    setupSequenceManager.send('uraniumOk')
+                }
             }
         }
     }

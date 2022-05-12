@@ -95,11 +95,11 @@ export default class Fertilizer implements DragAnimatable {
         return this.object
     }
 
-    public snapAnimation() {
+    public async snapAnimation() {
         const shouldEnd = this.animationProgress > (this.dragThreshold - 0.1)
         const to = shouldEnd ? this.animationBounds[1] : 0;
         const duration = shouldEnd ? 2500 : 500
-        animate({
+        await animateAsync({
             from: this.animationProgress,
             to,
             onUpdate: val => {
@@ -107,6 +107,7 @@ export default class Fertilizer implements DragAnimatable {
             },
             duration
         })
+        this.onFinished?.()
     }
 
     async show() {
