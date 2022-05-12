@@ -5,7 +5,6 @@ const resources: ResourcesToLoad = {
         box: '/three-assets/fbx/box.fbx',
     },
     gltf: {
-        explore: '/three-assets/gltf/explore_v4.gltf'
         // box: '/three-assets/gltf/box.gltf'
     },
     texture: {},

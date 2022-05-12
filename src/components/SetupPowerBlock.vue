@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
-import {TryGreenhouse} from '../three/TryGreenhouse';
+import {SetupPowerBlock} from '../three/SetupPowerBlock';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
-import StepTitle from './StepTitle.vue';
-import StepTip from './StepTip.vue';
+import StepTitle from './Experience/StepTitle.vue';
+import StepTip from './Experience/StepTip.vue';
 
 import co2Icon from '../assets/img/co2Icon.svg'
 import naturalIcon from '../assets/img/naturalIcon.svg'
 import localIcon from '../assets/img/localIcon.svg'
 
 const canvas = ref(null);
-const app = new TryGreenhouse()
+const app = new SetupPowerBlock()
 
 const {state} = useActor(sequenceManager)
 

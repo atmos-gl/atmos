@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SetupTank from '../components/TryGreenhouse.vue';
+import SetupPowerBlock from '../components/SetupPowerBlock.vue';
 import useLoader from '../composables/useLoader';
-import resources from '../three/resources/tryResources';
+import resources from '../three/resources/powerBlockResources';
 import sequenceManager from '../managers/sequenceManager';
 
 const {loading, percentageProgress} = useLoader(resources)
@@ -9,7 +9,7 @@ sequenceManager.send('next')
 </script>
 <template>
   <div v-if="loading">Loading: {{ percentageProgress }}</div>
-  <SetupTank class="setupTank" v-else/>
+  <SetupPowerBlock class="setupTank" v-else/>
 </template>
 <style scoped>
 .setupTank {

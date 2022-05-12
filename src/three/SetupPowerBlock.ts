@@ -7,7 +7,7 @@ import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
 import {computed} from 'vue';
 
 
-export class TryGreenhouse extends BaseScene {
+export class SetupPowerBlock extends BaseScene {
 
     private ambientLight: AmbientLight
     private pointLight: PointLight;
