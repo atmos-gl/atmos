@@ -10,9 +10,9 @@ export default defineConfig({
                 'bg': '#001606',
             },
             fontFamily: {
-                'core': ['dahlia'],
-                'display': ['cera'],
+                'title': ['dahlia'],
+                'core': ['cera-pro'],
             }
         }
-    }
+    },
 })

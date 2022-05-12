@@ -22,6 +22,7 @@ export class BaseScene {
         this.scene = new Scene()
         this.renderer = new WebGLRenderer({
             canvas: this.canvas,
+            alpha: true
         })
         this.renderer.setPixelRatio(MathUtils.clamp(window.devicePixelRatio, 1, 2))
 

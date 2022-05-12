@@ -1,3 +1,19 @@
 .poi {
-  @apply bg-imperial w-12 h-12 flex items-center justify-center rounded-full text-3xl color-white cursor-pointer;
+  @apply w-12 h-12 flex items-center justify-center rounded-full text-3xl text-jade cursor-pointer border border-jade border-2;
+
+  &:hover {
+    @apply bg-jade text-imperial;
+  }
+
+  &.hidden {
+    @apply hidden;
+  }
+
+  &--close {
+    @apply w-10 h-10 flex items-center justify-center rounded-full text-3xl text-jade cursor-pointer border border-jade border absolute top-12 right-16;
+
+    &:hover {
+      @apply bg-jade text-imperial;
+    }
+  }
 }
