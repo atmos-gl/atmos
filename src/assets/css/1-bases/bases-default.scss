@@ -7,7 +7,16 @@ body {
   transition: opacity 0.4s ease;
 }
 
+.fade-quick-enter-from,
+.fade-quick-leave-to,
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
+
+
+.fade-quick-enter-active,
+.fade-quick-leave-active {
+  transition: opacity 0.2s ease;
+}
+

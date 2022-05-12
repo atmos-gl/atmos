@@ -6,11 +6,13 @@ import setupSequenceManager from '../managers/setupSequenceManager';
 import {useActor} from '@xstate/vue';
 import {ref} from 'vue';
 import PairPhone from '../components/Experience/PairPhone.vue';
+import Link from '@paapi/client/dist/Link';
 
 const {loading, percentageProgress} = useLoader(resources)
 const {state, send} = useActor(setupSequenceManager)
 
 const paired = ref(false)
+const link = ref<Link>(null)
 </script>
 <template>
   <div v-if="loading">Loading: {{ percentageProgress }}</div>
