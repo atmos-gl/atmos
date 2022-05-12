@@ -2,7 +2,7 @@ import {AmbientLight, PCFSoftShadowMap, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
-import sequenceManager from '../managers/sequenceManager';
+import setupSequenceManager from '../managers/setupSequenceManager';
 import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
 import {computed} from 'vue';
 
@@ -58,11 +58,11 @@ export class SetupPowerBlock extends BaseScene {
         this.openDoorInteraction.bind()
         this.box.door.onOpen = () => {
             this.openDoorInteraction.unbind()
-            sequenceManager.send('doorOk')
+            setupSequenceManager.send('doorOk')
         }
 
 
-        sequenceManager.onTransition(state => this.onStep(state))
+        setupSequenceManager.onTransition(state => this.onStep(state))
 
         setTimeout(() => {
             console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
@@ -91,7 +91,7 @@ export class SetupPowerBlock extends BaseScene {
             }
             await this.camera.move(to)
             this.box.co2Bottle.onFinished = () => {
-                sequenceManager.send('co2Ok')
+                setupSequenceManager.send('co2Ok')
             }
             await this.box.co2Bottle.show()
             return
@@ -99,7 +99,7 @@ export class SetupPowerBlock extends BaseScene {
 
         if (state.value.setupPowerBlock === 'plugWater') {
             this.box.waterBottle.onFinished = () => {
-                sequenceManager.send('waterOk')
+                setupSequenceManager.send('waterOk')
             }
             await this.box.waterBottle.show()
             return

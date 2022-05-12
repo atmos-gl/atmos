@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
 import {SetupPowerBlock} from '../three/SetupPowerBlock';
-import sequenceManager from '../managers/sequenceManager';
+import setupSequenceManager from '../managers/setupSequenceManager';
 import {useActor} from '@xstate/vue';
 import StepTitle from './Experience/StepTitle.vue';
 import StepTip from './Experience/StepTip.vue';
@@ -13,7 +13,7 @@ import localIcon from '../assets/img/localIcon.svg'
 const canvas = ref(null);
 const app = new SetupPowerBlock()
 
-const {state} = useActor(sequenceManager)
+const {state} = useActor(setupSequenceManager)
 
 const showUi = computed(() => !app.isCameraMoving.value)
 
@@ -26,7 +26,7 @@ onMounted(() => {
 })
 </script>
 <template>
-  <main class="bg-gradient-to-b from-imperial to-anthracite">
+  <main>
     <canvas id="scene" ref="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
     <div class="absolute right-0 top-0 pointer-events-none text-jade px-12 pt-20 xl:pt-24 w-2/5">
       <Transition name="fade">
