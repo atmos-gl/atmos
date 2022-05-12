@@ -5,7 +5,7 @@ import {useMachine} from '@xstate/vue';
 const sequenceMachine = createMachine({
     ...sequenceMachineJSON,
     // FOR DEV ONLY
-    initial: 'leaveWork'
+    // initial: 'leaveWork'
 })
 
 const setupSequenceManager = interpret(sequenceMachine)
