@@ -16,6 +16,9 @@ const app = new SetupPowerBlock()
 const {state} = useActor(setupSequenceManager)
 
 const showUi = computed(() => !app.isCameraMoving.value)
+const step = computed(() => {
+  return (state.value.value as any).setupPowerBlock
+})
 
 const appReady = ref(false)
 onMounted(() => {
@@ -30,7 +33,7 @@ onMounted(() => {
     <canvas id="scene" ref="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
     <div class="absolute right-0 top-0 pointer-events-none text-jade px-12 pt-20 xl:pt-24 w-2/5">
       <Transition name="fade">
-        <StepTitle v-show="showUi" :step="state.value.setupPowerBlock"/>
+        <StepTitle v-show="showUi" :step="step"/>
       </Transition>
     </div>
     <div v-if="appReady">

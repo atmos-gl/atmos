@@ -19,7 +19,8 @@ export class SetupPowerBlock extends BaseScene {
         super.init(canvas)
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
-        this.renderer.setClearAlpha(0.1)
+        // this.renderer.setClearAlpha(1)
+        // this.renderer.setClearColor('#9f2828')
         // this.enableControls()
         this.ambientLight = new AmbientLight('#b5c7ef', 0.4)
         this.scene.add(this.ambientLight)
