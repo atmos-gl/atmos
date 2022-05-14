@@ -1,3 +1,7 @@
 .o-container {
   @apply max-w-6xl px-4 mx-auto;
+
+  @screen sm {
+    @apply px-14;
+  }
 }
