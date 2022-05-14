@@ -2,6 +2,14 @@ body {
   @apply bg-bg font-core;
 }
 
+#app {
+  @apply h-full;
+}
+
+.theme-gradient {
+  @apply bg-gradient-to-b from-imperial to-anthracite;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.4s ease;

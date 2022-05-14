@@ -16,7 +16,7 @@ const link = ref<Link>(null)
 </script>
 <template>
   <div v-if="loading">Loading: {{ percentageProgress }}</div>
-  <div v-else class="experience-wrapper bg-gradient-to-b from-imperial to-anthracite h-full">
+  <div v-else class="experience-wrapper theme-gradient h-full">
     <div v-if="paired" class="h-full">
       Paired !
     </div>
