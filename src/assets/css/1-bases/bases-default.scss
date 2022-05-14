@@ -1,5 +1,9 @@
 body {
-  @apply bg-bg font-core;
+  @apply bg-bg font-core text-pearl;
+}
+
+section {
+  @apply py-32;
 }
 
 .fade-enter-active,
