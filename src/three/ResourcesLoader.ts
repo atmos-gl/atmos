@@ -78,6 +78,7 @@ export default class ResourcesLoader {
     }
 
     private loadResource<T>(key: string, url: string|string[], loader: ResourceLoader<T>, store: ResourceStore<T>) {
+        if (store[key]) return
         loader.load(url, (resource: T) => {
             store[key] = resource
         })
@@ -120,8 +121,31 @@ export default class ResourcesLoader {
         return this.getResource<CubeTexture>(key, this.cubeTextureResources)
     }
 
+    alreadyLoaded(resources: ResourcesToLoad) {
+        // TODO
+        if (resources.gltf) {
+            Object.keys(resources.gltf).forEach(key => {
+                this.loadGLTF(key, resources.gltf[key])
+            })
+        }
+        if (resources.fbx) {
+            Object.keys(resources.fbx).forEach(key => {
+                this.loadFBX(key, resources.fbx[key])
+            })
+        }
+        if (resources.texture) {
+            Object.keys(resources.texture).forEach(key => {
+                this.loadTexture(key, resources.texture[key])
+            })
+        }
+        if (resources.cubeTexture) {
+            Object.keys(resources.cubeTexture).forEach(key => {
+                this.loadCubeTexture(key, resources.cubeTexture[key])
+            })
+        }
+    }
+
     bulkLoad(resources: ResourcesToLoad) {
-        console.log('ask to load')
         if (resources.gltf) {
             Object.keys(resources.gltf).forEach(key => {
                 this.loadGLTF(key, resources.gltf[key])
