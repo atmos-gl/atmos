@@ -1,4 +1,4 @@
-import {Box3, Group, Object3D, Vector3} from 'three';
+import {Box3, Color, Group, Material, Mesh, MeshPhongMaterial, Object3D, Vector3} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
 
 enum TomatoColor {
@@ -6,6 +6,12 @@ enum TomatoColor {
     yellow = 'yellow',
     green = 'green',
     black = 'black',
+}
+const colorTable = {
+    red: '#771414',
+    yellow: '#816b00',
+    green: '#21500d',
+    black: '#0e1806',
 }
 
 export interface TomatoParams {
@@ -21,6 +27,7 @@ export class Tomato {
     private params: TomatoParams
 
     public boundingBox = new Box3()
+    private tomatoMaterial: MeshPhongMaterial;
 
 
     constructor(params: TomatoParams) {
@@ -48,6 +55,8 @@ export class Tomato {
         // model.scale.set(0.1, 0.1, 0.1)
         this.object = model
         this.tomatoBody = model.getObjectByName('body')
+        this.tomatoMaterial = (this.tomatoBody.getObjectByName('Sphere') as Mesh).material as MeshPhongMaterial
+        this.tomatoMaterial.shininess = 25
         // this.tomatoSphere = sphereParent
     }
 
@@ -61,10 +70,12 @@ export class Tomato {
 
     public animate(deltaTime: number) {
         // console.log(this.params)
-        const { long, size } = this.params
+        const { long, size, color } = this.params
         this.tomatoBody.scale.y = long * size
         this.tomatoBody.scale.x = size
         this.tomatoBody.scale.z = size
+
+        this.tomatoMaterial.color.lerp(new Color(colorTable[color]), 0.2)
 
         this.boundingBox.setFromObject(this.object)
         // this.tomatoSphere.scale.x = this.grow

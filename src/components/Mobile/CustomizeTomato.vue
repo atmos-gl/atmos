@@ -47,7 +47,7 @@ const { loading } = useLoader(tomatoResources)
         <span>Grosse</span>
       </div>
       <div class="font-light w-full text-jade mt-2">Couleur</div>
-      <ColorChooser />
+      <ColorChooser v-model="tomato.color" />
     </div>
   </div>
 </template>

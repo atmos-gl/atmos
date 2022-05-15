@@ -23,8 +23,7 @@ export class TomatoScene extends BaseScene {
         super.init(canvas)
         this.ambientLight = new AmbientLight('#ffffff', 1)
         this.scene.add(this.ambientLight)
-        this.renderer.setClearAlpha(1)
-    //
+
         this.scene.add(this.camera)
         this.pointLight = new PointLight(0xffffff, 1)
         this.pointLight.position.x = 30
@@ -57,14 +56,14 @@ export class TomatoScene extends BaseScene {
         this.tomato.mesh
         this.tomato.animate(deltaTime)
 
-        this.camera.fov = 40 + (this.params.long * 10)
+        this.camera.fov = 40 + (this.params.long * this.params.size * 10)
         this.camera.updateProjectionMatrix()
         this.camera.lookAt(this.tomato.center)
         this.controls.target = this.tomato.center
-        // this.camera.lookAt(this.tomato.center)
-        // this.tomatoWrapper.rotateY(deltaTime * 0.2)
-        // this.tomato.mesh.rotateX(deltaTime * 0.2)
-        // this.tomato.mesh.rotateY(deltaTime * 0.2)
+
+        this.tomatoWrapper.rotateY(deltaTime * 0.2)
+        this.tomato.mesh.rotateX(deltaTime * 0.2)
+        this.tomato.mesh.rotateY(deltaTime * 0.2)
 
 
         super.animate();
