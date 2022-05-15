@@ -26,7 +26,7 @@ tomatoLoader.load()
 link.pair(props.id)
 </script>
 <template>
-  <main class="theme-gradient h-full text-white">
+  <main class="theme-gradient min-h-full text-white">
     <Transition name="fade" mode="out-in">
       <TomatoExplanation v-if="state === 'tomatoExplanation'" @next="sendSequence('startTomato')" />
       <CustomizeTomato v-else-if="state === 'customizeTomato'" @confirm-tomato="sendSequence('tomatoOk')" />

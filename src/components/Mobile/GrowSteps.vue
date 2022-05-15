@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {delay} from '../../utils';
-import {reactive} from 'vue';
+import {onMounted, reactive} from 'vue';
 
 const emit = defineEmits(['animation-finished'])
 
@@ -31,14 +31,14 @@ const steps = reactive([
   },
 ])
 const animate = async () => {
+  await delay(200)
   for (const step of steps) {
-    await delay(500)
     step.active = true
+    await delay(500)
   }
   emit('animation-finished')
 }
-
-animate()
+onMounted(animate)
 </script>
 <template>
   <div class="flex flex-col w-full gap-3">
