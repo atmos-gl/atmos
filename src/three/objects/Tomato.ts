@@ -1,11 +1,4 @@
-import {
-    Group,
-    Mesh,
-    MeshStandardMaterial, Object3D,
-    SphereGeometry,
-    Vector3
-} from 'three';
-import {GLTF, GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import {Box3, Group, Object3D, Vector3} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
 
 enum TomatoColor {
@@ -23,10 +16,11 @@ export interface TomatoParams {
 
 export class Tomato {
     private object: Object3D
-    private tomatoSphere: Object3D
-    private tomatoOffset = -5.78
+    private tomatoBody: Object3D
 
     private params: TomatoParams
+
+    public boundingBox = new Box3()
 
 
     constructor(params: TomatoParams) {
@@ -53,6 +47,7 @@ export class Tomato {
         // model.add(sphereParent)
         // model.scale.set(0.1, 0.1, 0.1)
         this.object = model
+        this.tomatoBody = model.getObjectByName('body')
         // this.tomatoSphere = sphereParent
     }
 
@@ -65,7 +60,13 @@ export class Tomato {
     }
 
     public animate(deltaTime: number) {
-        console.log(this.params)
+        // console.log(this.params)
+        const { long, size } = this.params
+        this.tomatoBody.scale.y = long * size
+        this.tomatoBody.scale.x = size
+        this.tomatoBody.scale.z = size
+
+        this.boundingBox.setFromObject(this.object)
         // this.tomatoSphere.scale.x = this.grow
         // this.tomatoSphere.scale.y = this.long * this.grow
         // this.tomatoSphere.scale.z = this.grow
@@ -77,6 +78,12 @@ export class Tomato {
         // this.object.scale.x = this.size
         // this.object.scale.y = this.size
         // this.object.scale.z = this.size
+    }
+
+    get center(): Vector3 {
+        const result = new Vector3()
+        this.boundingBox.getCenter(result)
+        return result
     }
 
     destroy() {

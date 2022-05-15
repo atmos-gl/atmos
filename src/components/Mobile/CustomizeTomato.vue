@@ -16,7 +16,7 @@ const { loading } = useLoader(tomatoResources)
   <div class="h-full w-full flex flex-col items-center gap-4">
     <div class="flex flex-col flex-grow items-center gap-4 pt-10 w-full relative">
       <h1 class="font-title text-2xl px-10 relative z-10">Personnaliser votre tomate</h1>
-      <div class="w-full h-12/10 -my-1/10 text-white relative">
+      <div class="w-full h-14/10 -my-2/10 text-white relative">
         <TomatoScene v-if="!loading" :tomato="tomato" />
       </div>
     </div>
@@ -25,8 +25,8 @@ const { loading } = useLoader(tomatoResources)
       <input type="range"
              class="input-range w-full  my-1"
              v-model.number="tomato.long"
-             min="0.1"
-             max="2"
+             min="0.7"
+             max="1.5"
              step="0.01"
       />
       <div class="w-full flex justify-between text-xs font-light text-jade/50">
@@ -37,8 +37,8 @@ const { loading } = useLoader(tomatoResources)
       <input type="range"
              class="input-range w-full  my-1"
              v-model.number="tomato.size"
-             min="0.1"
-             max="2"
+             min="0.7"
+             max="1.5"
              step="0.01"
       />
       <div class="w-full flex justify-between text-xs font-light text-jade/50">
