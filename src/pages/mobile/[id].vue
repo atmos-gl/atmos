@@ -7,7 +7,7 @@ import {tomatoLoader} from '../../composables/useLoader';
 
 const props = defineProps(['id'])
 
-const state = ref('tomatoExplanation')
+const state = ref('customizeTomato')
 
 const {link} = usePair()
 

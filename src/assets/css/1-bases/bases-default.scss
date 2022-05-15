@@ -7,7 +7,7 @@ body {
 }
 
 .theme-gradient {
-  @apply bg-gradient-to-b from-imperial to-anthracite;
+  @apply bg-gradient-to-b from-imperial to-bg;
 }
 
 .fade-enter-active,
@@ -26,5 +26,18 @@ body {
 .fade-quick-enter-active,
 .fade-quick-leave-active {
   transition: opacity 0.2s ease;
+}
+
+.btn {
+  @apply
+    text-jade
+    border
+    border-jade
+    bg-white/10
+    rounded-full
+    px-6
+    py-2
+    text-center
+  ;
 }
 

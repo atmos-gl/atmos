@@ -64,9 +64,9 @@ const resetTomato = () => {
       </div>
       <div class="font-light w-full text-jade mt-4">Couleur</div>
       <ColorChooser v-model="tomato.color" />
-      <div class="flex justify-between mt-6">
-        <button @click="resetTomato">Réinitialiser</button>
-        <button>Valider</button>
+      <div class="flex flex-col justify-between mt-8 gap-2">
+        <button class="btn" @click="resetTomato">Réinitialiser</button>
+        <button class="btn">Valider</button>
       </div>
     </div>
   </div>
