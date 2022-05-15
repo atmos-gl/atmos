@@ -8,8 +8,8 @@ export const goldMat = new MeshStandardMaterial({
         transparent: true
     })
 
-export function getMetalMaterial(color = '#ffffff') {
-    const envMap = ResourcesLoader.getInstance().getCubeTexture('envmap')
+export function getMetalMaterial(loader: ResourcesLoader, color = '#ffffff') {
+    const envMap = loader.getCubeTexture('envmap')
     return new MeshStandardMaterial({
         color: '#c9d1d9',
         roughness: 0.5,

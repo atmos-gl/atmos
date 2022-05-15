@@ -5,6 +5,7 @@ import {ref} from 'vue';
 import TomatoExplanation from '../../components/Mobile/TomatoExplanation.vue';
 import ResourcesLoader from '../../three/ResourcesLoader';
 import tomatoResources from '../../three/resources/tomatoResources';
+import {tomatoLoader} from '../../composables/useLoader';
 
 const props = defineProps(['id'])
 
@@ -19,7 +20,8 @@ const sendSequence = event => {
   link.emit('sequence:send', event)
 }
 
-ResourcesLoader.getInstance().bulkLoad(tomatoResources)
+// Start loading resources for tomato in background
+tomatoLoader.load()
 
 link.pair(props.id)
 </script>

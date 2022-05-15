@@ -8,6 +8,7 @@ import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
 import Fertilizer from './Fertilizer';
 import {mix} from 'popmotion';
+import {powerBlockLoader} from '../../composables/useLoader';
 
 export class Box {
     public model: Object3D
@@ -25,7 +26,7 @@ export class Box {
     }
 
     public init() {
-        const model = ResourcesLoader.getInstance().getFBX('box')
+        const model = powerBlockLoader.loader.getFBX('box')
         this.importFBX(model)
         this.setupChildren()
     }
@@ -44,7 +45,8 @@ export class Box {
 
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
-        ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial()
+        const {loader} = powerBlockLoader
+        ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial(loader)
         ;(co2Bottle.getObjectByName('parvis_c02') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
             co2Bottle,
@@ -53,14 +55,14 @@ export class Box {
         )
 
         const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
-        waterBottle.material = glassMaterial('rgba(182,210,234,0.57)')
+        waterBottle.material = glassMaterial(loader, 'rgba(182,210,234,0.57)')
         this.waterBottle = new Bottle(waterBottle,
             this.model.getObjectByName('Tube_5') as Mesh,
             this.scene
         )
 
         const pipe = this.model.getObjectByName('tuyeau').children[0] as Mesh
-        pipe.material = glassMaterial()
+        pipe.material = glassMaterial(loader)
 
         this.tray = new Tray(this.model.getObjectByName('Tiroir'), this.scene)
 

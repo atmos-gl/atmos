@@ -1,5 +1,6 @@
 import {Box3, Color, Group, Material, Mesh, MeshPhongMaterial, Object3D, Vector3} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
+import {tomatoLoader} from '../../composables/useLoader';
 
 enum TomatoColor {
     red = 'red',
@@ -37,7 +38,8 @@ export class Tomato {
 
     public init() {
         // this.buildBody()
-        const model = ResourcesLoader.getInstance().getFBX('tomato')
+        const {loader} = tomatoLoader
+        const model = loader.getFBX('tomato')
         console.log(model)
         this.importModel(model)
     }

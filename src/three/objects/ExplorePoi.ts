@@ -2,6 +2,7 @@ import {Group, Object3D, Vector3} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
 import {DragAnimatable} from '../three-composables/useDragAnimations';
 import Door from './Door';
+import {exploreLoader} from '../../composables/useLoader';
 
 export class ExplorePoiObject {
     public scene: Object3D
@@ -13,9 +14,10 @@ export class ExplorePoiObject {
     }
 
     public init() {
-        const gltf = ResourcesLoader.getInstance().getGLTF('explore')
+        const {loader} = exploreLoader
+        const gltf = loader.getGLTF('explore')
         this.importModel(gltf.scene)
-        // const fbx = ResourcesLoader.getInstance().getFBX('explore')
+        // const fbx = loader.getFBX('explore')
         // this.importModel(fbx)
         // console.log(gltf)
     }

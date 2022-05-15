@@ -23,7 +23,6 @@ export interface ResourcesToLoad {
 }
 
 export default class ResourcesLoader {
-    private static instance: ResourcesLoader;
 
     private readonly manager: LoadingManager;
     private textureLoader: TextureLoader;
@@ -36,7 +35,7 @@ export default class ResourcesLoader {
     private fbxResources: ResourceStore<Group> = {}
     private cubeTextureLoader: CubeTextureLoader;
 
-    private constructor() {
+    constructor() {
         this.manager = new LoadingManager()
 
         this.textureLoader = new TextureLoader(this.manager)
@@ -175,14 +174,5 @@ export default class ResourcesLoader {
                 this.loadCubeTexture(key, resources.cubeTexture[key])
             })
         }
-    }
-
-    // Singleton
-    public static getInstance(): ResourcesLoader {
-        if (!ResourcesLoader.instance) {
-            ResourcesLoader.instance = new ResourcesLoader();
-        }
-
-        return ResourcesLoader.instance;
     }
 }

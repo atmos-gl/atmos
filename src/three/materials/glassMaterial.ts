@@ -1,8 +1,8 @@
 import {MeshPhysicalMaterial, MeshStandardMaterial} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
 
-export default function getGlassMaterial(color = '#ffffff') {
-    const envMap = ResourcesLoader.getInstance().getCubeTexture('envmap')
+export default function getGlassMaterial(loader: ResourcesLoader, color = '#ffffff') {
+    const envMap = loader.getCubeTexture('envmap')
     const mat = new MeshPhysicalMaterial({
         color: '#ffffff',
         transparent: true,

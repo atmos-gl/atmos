@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SetupPowerBlock from '../components/SetupPowerBlock.vue';
-import useLoader from '../composables/useLoader';
-import resources from '../three/resources/powerBlockResources';
+import {powerBlockLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
 import {ref} from 'vue';
@@ -9,7 +8,8 @@ import PairPhone from '../components/Experience/PairPhone.vue';
 import Link from '@paapi/client/dist/Link';
 import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
 
-const {loading, percentageProgress} = useLoader(resources)
+const {loading, percentageProgress, load} = powerBlockLoader
+load()
 const {state, send} = useActor(sequenceManager)
 
 const link = ref<Link>(null)

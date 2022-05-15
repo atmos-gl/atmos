@@ -15,6 +15,7 @@ import useDragAnimation, {DragAnimatable, DragAnimation} from '../three-composab
 import {animate} from 'popmotion';
 import {animateAsync, delay} from '../../utils';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
+import {powerBlockLoader} from '../../composables/useLoader';
 
 
 export default class Fertilizer implements DragAnimatable {
@@ -51,8 +52,9 @@ export default class Fertilizer implements DragAnimatable {
     init() {
         this.object.getObjectByName('reservoir_pillule').visible = false
 
+        const {loader} = powerBlockLoader
         this.bottleMesh = this.object.getObjectByName('Bouteille_ouverte') as Mesh
-        this.bottleMesh.material = getMetalMaterial()
+        this.bottleMesh.material = getMetalMaterial(loader)
         //
         this.mixer = new AnimationMixer(this.object)
         this.action = this.mixer.clipAction(this.animClip)
@@ -107,7 +109,9 @@ export default class Fertilizer implements DragAnimatable {
             },
             duration
         })
-        this.onFinished?.()
+        if (shouldEnd) {
+            this.onFinished?.()
+        }
     }
 
     async show() {
