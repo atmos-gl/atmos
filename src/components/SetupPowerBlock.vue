@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
 import {SetupPowerBlock} from '../three/SetupPowerBlock';
-import setupSequenceManager from '../managers/setupSequenceManager';
+import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
 import StepTitle from './Experience/StepTitle.vue';
 import StepTip from './Experience/StepTip.vue';
@@ -13,7 +13,7 @@ import localIcon from '../assets/img/localIcon.svg'
 const canvas = ref(null);
 const app = new SetupPowerBlock()
 
-const {state} = useActor(setupSequenceManager)
+const {state} = useActor(sequenceManager)
 
 const showUi = computed(() => !app.isCameraMoving.value)
 const step = computed(() => {

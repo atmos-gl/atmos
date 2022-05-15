@@ -8,7 +8,7 @@ const emit = defineEmits(['pair'])
 const {link, id} = usePair()
 link.pair(null)
 link.onPair(() => {
-  emit('pair')
+  emit('pair', link)
 })
 
 const pairUrl = computed(() => {

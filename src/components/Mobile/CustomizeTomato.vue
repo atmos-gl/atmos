@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TomatoScene from './TomatoScene.vue';
-import {reactive} from 'vue';
+import {reactive, watch} from 'vue';
 import useLoader from '../../composables/useLoader';
 import tomatoResources from '../../three/resources/tomatoResources';
 import ColorChooser from './ColorChooser.vue';

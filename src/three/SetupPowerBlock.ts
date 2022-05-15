@@ -2,7 +2,7 @@ import {AmbientLight, PCFSoftShadowMap, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
-import setupSequenceManager from '../managers/setupSequenceManager';
+import sequenceManager from '../managers/sequenceManager';
 import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
 import {computed} from 'vue';
 
@@ -59,11 +59,11 @@ export class SetupPowerBlock extends BaseScene {
         this.openDoorInteraction.bind()
         this.box.door.onOpen = () => {
             this.openDoorInteraction.unbind()
-            setupSequenceManager.send('doorOk')
+            sequenceManager.send('doorOk')
         }
 
 
-        setupSequenceManager.onTransition(state => this.onStep(state))
+        sequenceManager.onTransition(state => this.onStep(state))
 
         setTimeout(() => {
             console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
@@ -92,7 +92,7 @@ export class SetupPowerBlock extends BaseScene {
             }
             await this.camera.move(to)
             this.box.co2Bottle.onFinished = () => {
-                setupSequenceManager.send('co2Ok')
+                sequenceManager.send('co2Ok')
             }
             await this.box.co2Bottle.show()
             return
@@ -100,7 +100,7 @@ export class SetupPowerBlock extends BaseScene {
 
         if (state.value.setupPowerBlock === 'plugWater') {
             this.box.waterBottle.onFinished = () => {
-                setupSequenceManager.send('waterOk')
+                sequenceManager.send('waterOk')
             }
             await this.box.waterBottle.show()
             return
@@ -128,8 +128,8 @@ export class SetupPowerBlock extends BaseScene {
                 }, null, 600, mirrorEasing(createExpoIn(3)))
                 this.box.fertilizer.show()
                 this.box.fertilizer.onFinished = () => {
-                    setupSequenceManager.send('fertilizerOk')
-                    setupSequenceManager.send('uraniumOk')
+                    sequenceManager.send('fertilizerOk')
+                    sequenceManager.send('uraniumOk')
                 }
             }
         }

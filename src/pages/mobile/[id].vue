@@ -1,14 +1,29 @@
 <script setup lang="ts">
 import usePair from '../../composables/usePair';
 import CustomizeTomato from '../../components/Mobile/CustomizeTomato.vue';
+import {ref} from 'vue';
+import TomatoExplanation from '../../components/Mobile/TomatoExplanation.vue';
+
 const props = defineProps(['id'])
 
-// const {link, paired} = usePair()
-// link.pair(props.id)
-const paired = true
+const state = ref('tomatoExplanation')
+
+const {link} = usePair()
+
+link.on('update:state', newVal => {
+  state.value = newVal
+})
+const sendSequence = event => {
+  link.emit('sequence:send', event)
+}
+
+link.pair(props.id)
 </script>
 <template>
-  <main v-if="paired" class="theme-gradient h-full text-white">
-    <CustomizeTomato />
+  <main class="theme-gradient h-full text-white">
+    <Transition name="fade" mode="out-in">
+      <TomatoExplanation v-if="state === 'tomatoExplanation'" @next="sendSequence('startTomato')" />
+      <CustomizeTomato v-else-if="state === 'customizeTomato'"/>
+    </Transition>
   </main>
 </template>
