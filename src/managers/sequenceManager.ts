@@ -3,7 +3,7 @@ import sequenceMachineJSON from './sequenceMachine.json'
 const sequenceMachine = createMachine({
     ...sequenceMachineJSON,
     // FOR DEV ONLY
-    // initial: 'leaveWork'
+    initial: 'leaveWork'
 })
 
 const sequenceManager = interpret(sequenceMachine)
