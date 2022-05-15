@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import TomatoScene from './TomatoScene.vue';
-import {reactive, watch} from 'vue';
-import useLoader, {tomatoLoader} from '../../composables/useLoader';
-import tomatoResources from '../../three/resources/tomatoResources';
+import {reactive} from 'vue';
+import {tomatoLoader} from '../../composables/useLoader';
 import ColorChooser from './ColorChooser.vue';
 import {animate} from 'popmotion';
+import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
 
-const tomato = reactive({
+const tomato: TomatoParams = reactive({
   long: 1,
   size: 1,
-  color: 'red'
+  color: TomatoColor.red
 })
 const { loading } = tomatoLoader
 
 const resetTomato = () => {
-  tomato.color = 'red'
+  tomato.color = TomatoColor.red
   animate({
     from: tomato,
     to: {
       long: 1,
       size: 1,
-      color: 'red'
+      color: TomatoColor.red
     },
     onUpdate: v => {
       tomato.long = v.long

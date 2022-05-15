@@ -3,8 +3,6 @@ import usePair from '../../composables/usePair';
 import CustomizeTomato from '../../components/Mobile/CustomizeTomato.vue';
 import {ref} from 'vue';
 import TomatoExplanation from '../../components/Mobile/TomatoExplanation.vue';
-import ResourcesLoader from '../../three/ResourcesLoader';
-import tomatoResources from '../../three/resources/tomatoResources';
 import {tomatoLoader} from '../../composables/useLoader';
 
 const props = defineProps(['id'])

@@ -2,7 +2,7 @@ import {Box3, Color, Group, Material, Mesh, MeshPhongMaterial, Object3D, Vector3
 import ResourcesLoader from '../ResourcesLoader';
 import {tomatoLoader} from '../../composables/useLoader';
 
-enum TomatoColor {
+export enum TomatoColor {
     red = 'red',
     yellow = 'yellow',
     green = 'green',
