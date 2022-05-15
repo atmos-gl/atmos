@@ -4,10 +4,12 @@ import CustomizeTomato from '../../components/Mobile/CustomizeTomato.vue';
 import {ref} from 'vue';
 import TomatoExplanation from '../../components/Mobile/TomatoExplanation.vue';
 import {tomatoLoader} from '../../composables/useLoader';
+import GrowTomatoes from '../../components/Mobile/GrowTomatoes.vue';
 
 const props = defineProps(['id'])
 
-const state = ref('customizeTomato')
+// const state = ref('tomatoExplanation')
+const state = ref('grow')
 
 const {link} = usePair()
 
@@ -27,7 +29,8 @@ link.pair(props.id)
   <main class="theme-gradient h-full text-white">
     <Transition name="fade" mode="out-in">
       <TomatoExplanation v-if="state === 'tomatoExplanation'" @next="sendSequence('startTomato')" />
-      <CustomizeTomato v-else-if="state === 'customizeTomato'"/>
+      <CustomizeTomato v-else-if="state === 'customizeTomato'" @confirm-tomato="sendSequence('tomatoOk')" />
+      <GrowTomatoes v-else-if="state === 'grow'" />
     </Transition>
   </main>
 </template>

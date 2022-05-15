@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@iconscout/unicons": "^4.0.1",
     "@paapi/client": "^1.0.2",
     "@types/three": "^0.139.0",
     "@vueuse/core": "^8.3.1",
@@ -19,6 +20,7 @@
     "three": "^0.139.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14",
+    "vue-unicons": "^3.3.1",
     "xstate": "^4.31.0"
   },
   "devDependencies": {

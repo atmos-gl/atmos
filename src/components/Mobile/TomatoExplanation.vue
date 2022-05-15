@@ -32,7 +32,7 @@ const plants = [
           v-for="plant in plants"
           :key="plant.name"
           class="block
-          flex items-center font-light text-jade border border-white bg-white/10 rounded-lg disabled:(opacity-50)
+          flex items-center font-light text-jade border border-white bg-black/10 rounded-lg disabled:(opacity-50)
           h-16 px-4 gap-3"
           :disabled="plant.disabled"
           @click="$emit('next')">

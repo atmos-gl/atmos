@@ -6,6 +6,8 @@ import ColorChooser from './ColorChooser.vue';
 import {animate} from 'popmotion';
 import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
 
+const emit = defineEmits(['confirm-tomato'])
+
 const tomato: TomatoParams = reactive({
   long: 1,
   size: 1,
@@ -66,7 +68,7 @@ const resetTomato = () => {
       <ColorChooser v-model="tomato.color" />
       <div class="flex flex-col justify-between mt-8 gap-2">
         <button class="btn" @click="resetTomato">Réinitialiser</button>
-        <button class="btn">Valider</button>
+        <button class="btn" @click="emit('confirm-tomato')">Valider</button>
       </div>
     </div>
   </div>
