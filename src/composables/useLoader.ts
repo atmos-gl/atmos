@@ -12,7 +12,13 @@ export default function useLoader(toLoad?: ResourcesToLoad) {
     })
 
     if (toLoad) {
-        loader.bulkLoad(toLoad)
+        console.log(loader.alreadyLoaded(toLoad))
+        if (loader.alreadyLoaded(toLoad)) {
+            progress.value = 1
+            loading.value = false
+        } else {
+            loader.bulkLoad(toLoad)
+        }
     }
 
     // loader.onStart = function (url, itemsLoaded, itemsTotal) {

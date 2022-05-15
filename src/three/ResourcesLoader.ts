@@ -121,28 +121,37 @@ export default class ResourcesLoader {
         return this.getResource<CubeTexture>(key, this.cubeTextureResources)
     }
 
-    alreadyLoaded(resources: ResourcesToLoad) {
-        // TODO
+    alreadyLoaded(resources: ResourcesToLoad): boolean {
+        // Si on trouve une ressource pas encore chargée, on retourne false, sinon à la fin true
         if (resources.gltf) {
-            Object.keys(resources.gltf).forEach(key => {
-                this.loadGLTF(key, resources.gltf[key])
-            })
+            for (const key of Object.keys(resources.gltf)) {
+                if (!this.gltfResources[key]) {
+                    return false
+                }
+            }
         }
         if (resources.fbx) {
-            Object.keys(resources.fbx).forEach(key => {
-                this.loadFBX(key, resources.fbx[key])
-            })
+            for (const key of Object.keys(resources.fbx)) {
+                if (!this.fbxResources[key]) {
+                    return false
+                }
+            }
         }
         if (resources.texture) {
-            Object.keys(resources.texture).forEach(key => {
-                this.loadTexture(key, resources.texture[key])
-            })
+            for (const key of Object.keys(resources.texture)) {
+                if (!this.textureResources[key]) {
+                    return false
+                }
+            }
         }
         if (resources.cubeTexture) {
-            Object.keys(resources.cubeTexture).forEach(key => {
-                this.loadCubeTexture(key, resources.cubeTexture[key])
-            })
+            for (const key of Object.keys(resources.cubeTexture)) {
+                if (!this.cubeTextureResources[key]) {
+                    return false
+                }
+            }
         }
+        return true
     }
 
     bulkLoad(resources: ResourcesToLoad) {

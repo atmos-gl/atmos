@@ -3,6 +3,8 @@ import usePair from '../../composables/usePair';
 import CustomizeTomato from '../../components/Mobile/CustomizeTomato.vue';
 import {ref} from 'vue';
 import TomatoExplanation from '../../components/Mobile/TomatoExplanation.vue';
+import ResourcesLoader from '../../three/ResourcesLoader';
+import tomatoResources from '../../three/resources/tomatoResources';
 
 const props = defineProps(['id'])
 
@@ -16,6 +18,8 @@ link.on('update:state', newVal => {
 const sendSequence = event => {
   link.emit('sequence:send', event)
 }
+
+ResourcesLoader.getInstance().bulkLoad(tomatoResources)
 
 link.pair(props.id)
 </script>
