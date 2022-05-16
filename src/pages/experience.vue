@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SetupPowerBlock from '../components/SetupPowerBlock.vue';
+import SetupPowerBlock from '../components/Experience/SetupPowerBlock.vue';
 import {powerBlockLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
@@ -7,6 +7,7 @@ import {ref} from 'vue';
 import PairPhone from '../components/Experience/PairPhone.vue';
 import Link from '@paapi/client/dist/Link';
 import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
+import Grow from '../components/Experience/Grow.vue';
 
 const {loading, percentageProgress, load} = powerBlockLoader
 load()
@@ -41,6 +42,7 @@ const onPair = (l: Link) => {
       </div>
       <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair" />
       <WhenOnMobile v-else-if=" ['tomatoExplanation', 'customizeTomato'].includes(state.value)" :step="state.value" />
+      <Grow v-else-if="state.value === 'grow'" />
       <SetupPowerBlock v-else class="w-full h-full"/>
     </Transition>
   </div>

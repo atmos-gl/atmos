@@ -39,9 +39,6 @@ export default class Bottle {
         this.targetObject = targetObjectMesh
         this.scene = scene
 
-        const mat = (this.targetObject.material as Material).clone()
-        this.targetObject.material = mat
-
         this.init()
         this.setupControls()
         this.setupPositions()
@@ -98,6 +95,7 @@ export default class Bottle {
     }
 
     startHelper() {
+        return true
         if (this.helperAnimation !== null) return
         this.helperAnimation = animate({
             from: '#000',
@@ -112,6 +110,7 @@ export default class Bottle {
     }
 
     stopHelper() {
+        return false
         this.helperAnimation.stop()
         this.helperAnimation = null
         const currentColor = (this.targetObject.material as MeshPhongMaterial).emissive.getHexString()

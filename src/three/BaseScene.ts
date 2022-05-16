@@ -3,6 +3,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
 import CustomCamera from './custom/CustomCamera';
 import {ref, Ref} from 'vue';
+import {disposeFullObject} from './utils/cleanup';
 
 export class BaseScene {
     protected scene: Scene | null = null
@@ -10,6 +11,8 @@ export class BaseScene {
     protected renderer: WebGLRenderer | null = null
     public canvas: HTMLCanvasElement | null = null
     protected clock: Clock | null = null
+
+    protected disposed = false
 
     public isCameraMoving: Ref<boolean> = ref(false)
 
@@ -73,6 +76,7 @@ export class BaseScene {
     }
 
     animate() {
+        if (this.disposed) return
         window.requestAnimationFrame(this.animate.bind(this))
 
         if (this.resizeRendererToDisplaySize()) {
@@ -103,9 +107,12 @@ export class BaseScene {
 
     // Memory management
     destroy() {
+        disposeFullObject(this.scene)
+        this.renderer.dispose()
         this.scene = null
         this.camera = null
         this.renderer = null
         this.canvas = null
+        this.disposed = true
     }
 }

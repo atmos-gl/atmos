@@ -22,7 +22,7 @@ export class SetupPowerBlock extends BaseScene {
         // this.renderer.setClearAlpha(1)
         // this.renderer.setClearColor('#9f2828')
         // this.enableControls()
-        this.ambientLight = new AmbientLight('#b5c7ef', 0.4)
+        this.ambientLight = new AmbientLight('#b5c7ef', 0.3)
         this.scene.add(this.ambientLight)
 
         // const pointLight = new PointLight('#fff', 0.4)
@@ -30,7 +30,7 @@ export class SetupPowerBlock extends BaseScene {
         // pointLight.position.y = 10
         // pointLight.position.z = 10
         // this.scene.add(pointLight)
-        this.pointLight = new PointLight('#c4a8a8', 1.2)
+        this.pointLight = new PointLight('#cbbebe', 1.2)
         this.pointLight.position.x = 7
         this.pointLight.position.y = 12
         this.pointLight.position.z = 14
@@ -143,5 +143,6 @@ export class SetupPowerBlock extends BaseScene {
     // Memory management
     destroy() {
         super.destroy()
+        console.log(this.box)
     }
 }

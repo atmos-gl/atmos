@@ -1,14 +1,14 @@
 import ResourcesLoader, {ResourcesToLoad} from '../three/ResourcesLoader';
 import {computed, ComputedRef, Ref, ref, UnwrapRef} from 'vue';
 import exploreResources from '../three/resources/exploreResources';
-import powerBlockResources from '../three/resources/powerBlockResources';
+import experienceResources from '../three/resources/experienceResources';
 import tomatoResources from '../three/resources/tomatoResources';
 import homePageResources from '../three/resources/homePageResources';
 
 const loaders = {
     homepage: createLoader(homePageResources),
     explore: createLoader(exploreResources),
-    powerBlock: createLoader(powerBlockResources),
+    powerBlock: createLoader(experienceResources),
     tomato: createLoader(tomatoResources),
 }
 

@@ -1,5 +1,4 @@
-import {AnimationClip, AnimationMixer, Group, Mesh, Object3D, Vector2, Vector3} from 'three';
-import ResourcesLoader from '../ResourcesLoader';
+import {AnimationClip, AnimationMixer, Group, Mesh, Object3D, Vector3} from 'three';
 import Door from './Door';
 import Bottle from './Bottle';
 import {BaseScene} from '../BaseScene';
@@ -7,8 +6,8 @@ import glassMaterial from '../materials/glassMaterial';
 import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
 import Fertilizer from './Fertilizer';
-import {mix} from 'popmotion';
 import {powerBlockLoader} from '../../composables/useLoader';
+import {disposeFullObject} from '../utils/cleanup';
 
 export class Box {
     public model: Object3D
@@ -55,7 +54,7 @@ export class Box {
         )
 
         const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
-        waterBottle.material = glassMaterial(loader, 'rgba(182,210,234,0.57)')
+        waterBottle.material = glassMaterial(loader, 'rgba(112,170,220,0.57)')
         this.waterBottle = new Bottle(waterBottle,
             this.model.getObjectByName('Tube_5') as Mesh,
             this.scene
@@ -91,8 +90,6 @@ export class Box {
     }
 
     destroy() {
-        // this.scene.dispose()
-        // this.scene.material.dispose()
         this.model = null
     }
 }
