@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
-import {ExplorePoi} from '../three/ExplorePoi';
-import Card from '../components/Explore/Card.vue';
-import data from "../data/poiData";
+import {ExplorePoi} from '../../three/ExplorePoi';
+import Card from './Card.vue';
+import data from "../../data/poiData";
 
 const poiDesc = ref('Atmos')
 const showBg = ref(true)
