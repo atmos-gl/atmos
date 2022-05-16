@@ -1,6 +1,7 @@
 import {AmbientLight, PointLight, Vector3} from 'three';
 import {BaseScene} from './BaseScene';
 import {GreenHouse} from "./objects/GreenHouse";
+import {headerLoader} from "../composables/useLoader";
 
 export class Header extends BaseScene {
 

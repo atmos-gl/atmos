@@ -4,8 +4,11 @@ import {ExplorePoi} from '../three/ExplorePoi';
 import Card from '../components/Explore/Card.vue';
 import data from "../data/poiData";
 
+const poiDesc = ref('Atmos')
+const showBg = ref(true)
+
 const canvas = ref(null);
-const app = new ExplorePoi()
+const app = new ExplorePoi(poiDesc, showBg)
 
 const currentPoi = ref(null)
 app.onSelectPoi = index => {
@@ -23,7 +26,11 @@ onMounted(() => {
 })
 </script>
 <template>
-  <div class="explore-container">
+  <div class="explore-container snake">
+    <transition name="fade" >
+      <p v-if="showBg" :key="poiDesc" class="absolute font-title text-white absolute-center -z-1 text-customWide text-pearl font-bold opacity-15 -mt-10 js-poiDesc">
+      {{ poiDesc }}</p>
+    </transition>
     <canvas id="scene" ref="canvas"/>
     <div class="explore-labels js-explore-labels"></div>
 

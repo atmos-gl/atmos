@@ -7,7 +7,7 @@ headerLoader.load()
 </script>
 
 <template>
-  <header class="h-screen text-white font-core radial-bg mb-32 flex flex-col">
+  <header class="h-screen text-white font-core snake mb-32 flex flex-col">
     <nav class="o-container flex items-center w-full py-8">
       <h1 class="text-3xl">Atmos</h1>
       <ul class="flex ml-auto">

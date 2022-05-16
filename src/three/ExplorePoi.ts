@@ -2,6 +2,7 @@ import {AmbientLight, Object3D, PointLight, Vector3} from 'three';
 import {BaseScene} from './BaseScene';
 import {ExplorePoiObject} from './objects/ExplorePoi';
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
+import {Ref} from "vue";
 
 export class ExplorePoi extends BaseScene {
 
@@ -12,8 +13,9 @@ export class ExplorePoi extends BaseScene {
     private poiObjects: Array<{
         camPos: Vector3,
         objInstance: Object3D
-        textContainer: String
+        textContainer: string
         isClickable: Boolean
+        poiDesc: string
     }> = []
 
     private defaultCamPos: Vector3 = new Vector3(4, 5, 15)
@@ -21,8 +23,19 @@ export class ExplorePoi extends BaseScene {
 
     private poiList: Array<HTMLElement> = []
 
+    private poiDescDefault: string
+    private poiDesc: Ref<string>
+
     public onSelectPoi?: (poiIndex: number) => void;
     public currentPoiIndex?: number = null
+    private showBg: Ref<boolean>
+
+    constructor(poiDesc: Ref<string>, showBg: Ref<boolean>) {
+        super();
+        this.poiDesc = poiDesc
+        this.poiDescDefault = poiDesc.value
+        this.showBg = showBg
+    }
 
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
@@ -56,7 +69,8 @@ export class ExplorePoi extends BaseScene {
             camPos: new Vector3(1.4540604173045868, 1.2172741970719216, 1.7441767779243642),
             objInstance: this.explorePoiObject.mesh.getObjectByName('Serre').getObjectByName('spray_2'),
             textContainer: "js-watering",
-            isClickable: true
+            isClickable: true,
+            poiDesc: 'Arrosage'
         })
 
         // Speakers
@@ -64,7 +78,8 @@ export class ExplorePoi extends BaseScene {
             camPos: new Vector3(-0.7083525562764238, 1.2927609887630331, 1.1327723884841376),
             objInstance: this.explorePoiObject.mesh.getObjectByName('Serre').getObjectByName('enceinte_1'),
             textContainer: "js-speaker",
-            isClickable: true
+            isClickable: true,
+            poiDesc: 'Enceinte'
         })
 
         // Pipe
@@ -72,7 +87,8 @@ export class ExplorePoi extends BaseScene {
             camPos: new Vector3(2.4472711249308396, -2.9288871737952995, 1.931505296936661),
             objInstance: this.explorePoiObject.mesh.getObjectByName('pipe'),
             textContainer: "js-pipe",
-            isClickable: true
+            isClickable: true,
+            poiDesc: 'Tuyau'
         })
 
         // Power Plant
@@ -80,7 +96,8 @@ export class ExplorePoi extends BaseScene {
             camPos: new Vector3(1.9319959043329842, -2.1286130154035687, 6.3185349634937085),
             objInstance: this.explorePoiObject.mesh.getObjectByName('centrale'),
             textContainer: "js-powerPlant",
-            isClickable: true
+            isClickable: true,
+            poiDesc: 'Centrale'
         })
 
         // GreenHouse
@@ -100,6 +117,7 @@ export class ExplorePoi extends BaseScene {
             poi.addEventListener("click", async () => {
                 // WIP Change Poi
                 if (object.isClickable) {
+                    this.showBg.value = false
                     this.setObjectsClickable(false)
                     await this.openPoi(object, poi, i)
                 }
@@ -107,6 +125,12 @@ export class ExplorePoi extends BaseScene {
                 //     await this.changePoi(object, poi, i)
                 //     return
                 // }
+            })
+            poi.addEventListener('mouseenter', () => {
+                this.poiDesc.value = object.poiDesc
+            })
+            poi.addEventListener('mouseleave', () => {
+                this.poiDesc.value = this.poiDescDefault
             })
             object.objInstance.add(objectCSS)
         })
@@ -168,6 +192,7 @@ export class ExplorePoi extends BaseScene {
         this.poiList[i].classList.toggle('hidden')
         this.currentPoiIndex = null
         this.setObjectsClickable(true)
+        this.showBg.value = true
     }
 
     animate() {

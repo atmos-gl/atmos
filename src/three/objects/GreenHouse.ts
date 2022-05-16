@@ -1,5 +1,6 @@
 import {Group, Object3D} from 'three';
-import {exploreLoader} from '../../composables/useLoader';
+import { headerLoader} from '../../composables/useLoader';
+import ResourcesLoader from "../ResourcesLoader";
 
 export class GreenHouse {
     public scene: Object3D
@@ -9,7 +10,7 @@ export class GreenHouse {
     }
 
     public init() {
-        const {loader} = exploreLoader
+        const {loader} = headerLoader
         const gltf = loader.getGLTF('explore')
         this.importModel(gltf.scene)
     }

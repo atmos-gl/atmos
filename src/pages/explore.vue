@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ExplorePoi from '../components/ExplorePoi.vue';
-import useLoader, {exploreLoader} from '../composables/useLoader';
-import resources from '../three/resources/exploreResources';
+import {exploreLoader} from '../composables/useLoader';
 
 const {loading, percentageProgress} = exploreLoader
 exploreLoader.load()
