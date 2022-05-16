@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {exploreLoader} from "../composables/useLoader";
+import {headerLoader} from "../composables/useLoader";
 import HeaderScene from '../components/HeaderScene.vue';
 
-const {loading, percentageProgress} = exploreLoader
-exploreLoader.load()
+const {loading, percentageProgress} = headerLoader
+headerLoader.load()
 </script>
 
 <template>

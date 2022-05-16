@@ -1,14 +1,12 @@
 import {AmbientLight, PointLight, Vector3} from 'three';
 import {BaseScene} from './BaseScene';
-import {CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {GreenHouse} from "./objects/GreenHouse";
 
-export class Homepage extends BaseScene {
+export class Header extends BaseScene {
 
     private ambientLight: AmbientLight
     private pointLight: PointLight;
     private greenHouse: GreenHouse;
-    private labelRenderer: CSS2DRenderer;
 
     private defaultCamPos: Vector3 = new Vector3(4, 5, 15)
     private defaultCamLookAt: Vector3 = new Vector3()
@@ -43,8 +41,6 @@ export class Homepage extends BaseScene {
 
     animate() {
         this.greenHouse.animate()
-
-        this.labelRenderer.render( this.scene, this.camera );
 
         super.animate()
     }

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {Homepage} from "../three/Homepage";
+import {Header} from "../three/Header";
 
 const canvas = ref(null);
-const app = new Homepage()
+const app = new Header()
 
 onMounted(() => {
   app.init(canvas.value)
