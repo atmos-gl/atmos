@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
-import {TryGreenhouse} from '../three/TryGreenhouse';
+import {SetupPowerBlock} from '../three/SetupPowerBlock';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
-import StepTitle from './StepTitle.vue';
-import StepTip from './StepTip.vue';
+import StepTitle from './Experience/StepTitle.vue';
+import StepTip from './Experience/StepTip.vue';
 
 import co2Icon from '../assets/img/co2Icon.svg'
 import naturalIcon from '../assets/img/naturalIcon.svg'
 import localIcon from '../assets/img/localIcon.svg'
 
 const canvas = ref(null);
-const app = new TryGreenhouse()
+const app = new SetupPowerBlock()
 
 const {state} = useActor(sequenceManager)
 
 const showUi = computed(() => !app.isCameraMoving.value)
+const step = computed(() => {
+  return (state.value.value as any).setupPowerBlock
+})
 
 const appReady = ref(false)
 onMounted(() => {
@@ -26,11 +29,11 @@ onMounted(() => {
 })
 </script>
 <template>
-  <main class="bg-gradient-to-b from-imperial to-anthracite">
+  <main>
     <canvas id="scene" ref="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
     <div class="absolute right-0 top-0 pointer-events-none text-jade px-12 pt-20 xl:pt-24 w-2/5">
       <Transition name="fade">
-        <StepTitle v-show="showUi" :step="state.value.setupPowerBlock"/>
+        <StepTitle v-show="showUi" :step="step"/>
       </Transition>
     </div>
     <div v-if="appReady">

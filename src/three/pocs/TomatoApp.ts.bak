@@ -1,5 +1,5 @@
 import {AmbientLight, Clock, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three'
-import {Tomato} from './Tomato';
+import {Tomato} from '../objects/Tomato';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
 

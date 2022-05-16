@@ -12,6 +12,7 @@ export default defineConfig({
             fontFamily: {
                 'title': ['dahlia'],
                 'core': ['cera-pro'],
+                'sans': ['cera-pro'],
             }
         }
     },

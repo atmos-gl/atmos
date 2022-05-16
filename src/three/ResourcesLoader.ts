@@ -23,7 +23,6 @@ export interface ResourcesToLoad {
 }
 
 export default class ResourcesLoader {
-    private static instance: ResourcesLoader;
 
     private readonly manager: LoadingManager;
     private textureLoader: TextureLoader;
@@ -36,7 +35,7 @@ export default class ResourcesLoader {
     private fbxResources: ResourceStore<Group> = {}
     private cubeTextureLoader: CubeTextureLoader;
 
-    private constructor() {
+    constructor() {
         this.manager = new LoadingManager()
 
         this.textureLoader = new TextureLoader(this.manager)
@@ -78,6 +77,7 @@ export default class ResourcesLoader {
     }
 
     private loadResource<T>(key: string, url: string|string[], loader: ResourceLoader<T>, store: ResourceStore<T>) {
+        if (store[key]) return
         loader.load(url, (resource: T) => {
             store[key] = resource
         })
@@ -120,8 +120,40 @@ export default class ResourcesLoader {
         return this.getResource<CubeTexture>(key, this.cubeTextureResources)
     }
 
+    alreadyLoaded(resources: ResourcesToLoad): boolean {
+        // Si on trouve une ressource pas encore chargée, on retourne false, sinon à la fin true
+        if (resources.gltf) {
+            for (const key of Object.keys(resources.gltf)) {
+                if (!this.gltfResources[key]) {
+                    return false
+                }
+            }
+        }
+        if (resources.fbx) {
+            for (const key of Object.keys(resources.fbx)) {
+                if (!this.fbxResources[key]) {
+                    return false
+                }
+            }
+        }
+        if (resources.texture) {
+            for (const key of Object.keys(resources.texture)) {
+                if (!this.textureResources[key]) {
+                    return false
+                }
+            }
+        }
+        if (resources.cubeTexture) {
+            for (const key of Object.keys(resources.cubeTexture)) {
+                if (!this.cubeTextureResources[key]) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
     bulkLoad(resources: ResourcesToLoad) {
-        console.log('ask to load')
         if (resources.gltf) {
             Object.keys(resources.gltf).forEach(key => {
                 this.loadGLTF(key, resources.gltf[key])
@@ -142,14 +174,5 @@ export default class ResourcesLoader {
                 this.loadCubeTexture(key, resources.cubeTexture[key])
             })
         }
-    }
-
-    // Singleton
-    public static getInstance(): ResourcesLoader {
-        if (!ResourcesLoader.instance) {
-            ResourcesLoader.instance = new ResourcesLoader();
-        }
-
-        return ResourcesLoader.instance;
     }
 }

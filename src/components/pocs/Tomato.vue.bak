@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TomatoScene from './TomatoScene.vue';
+import TomatoScene from '../Mobile/TomatoScene.vue';
 import useLoader from '../../composables/useLoader';
 import resources from '../../three/pocs/ressourcesTomato';
 

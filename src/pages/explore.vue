@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import ExplorePoi from '../components/ExplorePoi.vue';
-import useLoader from '../composables/useLoader';
-import resources from '../three/resources/tryResources';
+import useLoader, {exploreLoader} from '../composables/useLoader';
+import resources from '../three/resources/exploreResources';
 
-const {loading, percentageProgress} = useLoader(resources)
+const {loading, percentageProgress} = exploreLoader
+exploreLoader.load()
 </script>
 <template>
   <div v-if="loading">Loading: {{ percentageProgress }}</div>

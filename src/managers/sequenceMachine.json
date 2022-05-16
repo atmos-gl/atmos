@@ -49,6 +49,41 @@
         }
       }
     },
-    "leaveWork": {}
+    "leaveWork": {
+      "on": {
+        "phonePaired": {
+          "target": "tomatoExplanation"
+        }
+      }
+    },
+    "tomatoExplanation": {
+      "on": {
+        "startTomato": {
+          "target": "customizeTomato"
+        }
+      }
+    },
+    "customizeTomato": {
+      "on": {
+        "tomatoOk": {
+          "target": "grow"
+        }
+      }
+    },
+    "grow": {
+      "on": {
+        "growOk": {
+          "target": "collect"
+        }
+      }
+    },
+    "collect": {
+      "on": {
+        "collected": {
+          "target": "shpwBowl"
+        }
+      }
+    },
+    "shpwBowl": {}
   }
 }

@@ -1,0 +1,48 @@
+<script setup lang="ts">
+import usePair from '../../composables/usePair'
+import { computed, ref } from 'vue'
+import { useQRCode } from '@vueuse/integrations/useQRCode'
+
+const emit = defineEmits(['pair'])
+
+const {link, id} = usePair()
+link.pair(null)
+link.onPair(() => {
+  emit('pair', link)
+})
+
+const pairUrl = computed(() => {
+  return `${window.location.protocol}//${window.location.host}/mobile/${id.value}`
+})
+const qrCode = useQRCode(pairUrl, {
+  color: {
+    dark: "#fff",
+    light: "#00000000",
+  }
+})
+
+const hasPhone = ref(false)
+</script>
+<template>
+  <div class="text-white h-full flex flex-col items-center justify-center p-12">
+    <Transition name="fade-quick" mode="out-in">
+      <div class="flex flex-col items-center justify-center" v-if="hasPhone">
+        {{pairUrl}}
+        <img :src="qrCode" alt="Pair with id">
+      </div>
+      <div class="flex flex-col items-center justify-center" v-else>
+        <h2 class="text-5xl font-title font-bold mb-8">Vous êtes en retard...</h2>
+        <section class="max-w-172">
+          <p class="text-center font-light leading-8">En retard pour le travail, vous quittez précipitemment votre
+            domicile.
+            Vous n'avez pas eu le temps de lancer l'étape de pousse, mais ce n'est pas grave car cela peut se faire à
+            distance, grâce à l'application de gestion Atmos.</p>
+          <div class="flex justify-center gap-4 mt-8">
+            <button @click="hasPhone = true">J'ai mon téléphone !</button>
+            <button>Je reviendrai plus tard, promis !</button>
+          </div>
+        </section>
+      </div>
+    </Transition>
+  </div>
+</template>

@@ -7,7 +7,7 @@ import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
 import {computed} from 'vue';
 
 
-export class TryGreenhouse extends BaseScene {
+export class SetupPowerBlock extends BaseScene {
 
     private ambientLight: AmbientLight
     private pointLight: PointLight;
@@ -19,7 +19,8 @@ export class TryGreenhouse extends BaseScene {
         super.init(canvas)
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
-        this.renderer.setClearAlpha(0.1)
+        // this.renderer.setClearAlpha(1)
+        // this.renderer.setClearColor('#9f2828')
         // this.enableControls()
         this.ambientLight = new AmbientLight('#b5c7ef', 0.4)
         this.scene.add(this.ambientLight)
@@ -126,6 +127,10 @@ export class TryGreenhouse extends BaseScene {
                     tz: 0.5,
                 }, null, 600, mirrorEasing(createExpoIn(3)))
                 this.box.fertilizer.show()
+                this.box.fertilizer.onFinished = () => {
+                    sequenceManager.send('fertilizerOk')
+                    sequenceManager.send('uraniumOk')
+                }
             }
         }
     }

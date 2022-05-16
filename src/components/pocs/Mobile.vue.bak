@@ -3,7 +3,7 @@ import useLoader from '../../composables/useLoader';
 import resources from '../../three/pocs/ressourcesTomato';
 import usePair from '../../composables/usePair';
 import {useQRCode} from '@vueuse/integrations/useQRCode';
-import TomatoScene from './TomatoScene.vue';
+import TomatoScene from '../Mobile/TomatoScene.vue';
 import {computed, ref, toRef} from 'vue';
 import {useUrlSearchParams} from '@vueuse/core';
 
