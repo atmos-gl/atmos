@@ -41,13 +41,13 @@ export class ExplorePoi extends BaseScene {
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
         // this.enableControls()
-        this.ambientLight = new AmbientLight('#ffffff', 0.6)
+        this.ambientLight = new AmbientLight('#ffffff', 0.5)
         this.scene.add(this.ambientLight)
 
         this.pointLight = new PointLight('#fff', 0.9)
-        this.pointLight.position.x = 0
-        this.pointLight.position.y = 2
-        this.pointLight.position.z = 10
+        this.pointLight.position.x = 2
+        this.pointLight.position.y = 3
+        this.pointLight.position.z = 8
         const helper = new PointLightHelper(this.pointLight)
         this.scene.add(this.pointLight)
         this.scene.add(helper)
@@ -119,7 +119,7 @@ export class ExplorePoi extends BaseScene {
             poi.addEventListener('mouseleave', () => {
                 this.poiDesc.value = this.poiDescDefault
             })
-            object.objInstance.add(objectCSS)
+            // object.objInstance.add(objectCSS)
         })
 
         this.labelRenderer = new CSS2DRenderer();

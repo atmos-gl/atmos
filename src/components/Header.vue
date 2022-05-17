@@ -20,6 +20,49 @@ const {loading, percentageProgress} = headerLoader
     </nav>
 
   <div class="o-container flex text-jade flex-1 py-32">
+    <div class="absolute-y-center text-customBig font-title font-bold uppercase leading-none flex flex-col opacity-15">
+      <div class="scrolling-text">
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+      </div>
+      <div class="scrolling-text">
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+      </div>
+      <div class="scrolling-text">
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+      </div>
+      <div class="scrolling-text">
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+        <span>Atmos</span>
+      </div>
+    </div>
+
     <div class="w-2/5">
       <h2 class="font-title font-bold text-8xl">Atmos</h2>
       <h3 class="my-6 text-4xl">La serre qui réduit l'effet de serre</h3>
@@ -33,3 +76,39 @@ const {loading, percentageProgress} = headerLoader
   </div>
   </header>
 </template>
+
+<style scoped lang="scss">
+.scrolling-text {
+  &:nth-child(odd) {
+    animation: title 24s infinite linear;
+    transform: translateX(-25%);
+  }
+
+  &:nth-child(even) {
+    animation: title-reversed 24s infinite linear;
+    transform: translateX(-50%);
+  }
+
+  span {
+    @apply mr-28;
+  }
+}
+
+@keyframes title {
+  from {
+    transform: translateX(-25%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes title-reversed {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+</style>

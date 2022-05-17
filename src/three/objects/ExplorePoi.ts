@@ -25,6 +25,8 @@ export class ExplorePoiObject {
     private importModel(fbx: Group) {
         fbx.scale.set(0.01, 0.01, 0.01)
         this.scene = fbx
+        // this.scene.getObjectByName('sol').material.color.set('#fff')
+        // this.scene.getObjectByName('sol').material.emissive.set('#1d1a12')
 
         // this.door = new Door(this.scene.children.find(obj => obj.name === 'porte'))
 

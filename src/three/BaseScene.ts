@@ -1,4 +1,4 @@
-import {Clock, MathUtils, Scene, WebGLRenderer} from 'three';
+import {Clock, MathUtils, Scene, sRGBEncoding, WebGLRenderer} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
 import CustomCamera from './custom/CustomCamera';
@@ -22,8 +22,9 @@ export class BaseScene {
         this.scene = new Scene()
         this.renderer = new WebGLRenderer({
             canvas: this.canvas,
-            alpha: true
+            alpha: true,
         })
+        this.renderer.outputEncoding = sRGBEncoding
         this.renderer.setPixelRatio(MathUtils.clamp(window.devicePixelRatio, 1, 2))
 
         this.clock = new Clock()

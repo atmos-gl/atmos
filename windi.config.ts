@@ -15,6 +15,7 @@ export default defineConfig({
                 'sans': ['cera-pro'],
             },
             fontSize: {
+                customBig: '150px',
                 customWide: '257px'
             },
             opacity: {
