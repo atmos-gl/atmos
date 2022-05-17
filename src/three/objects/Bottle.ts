@@ -1,11 +1,10 @@
-import {Color, Material, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3} from 'three';
+import {Color, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3} from 'three';
 import {animate, createExpoIn, reverseEasing} from 'popmotion';
-import {BaseScene} from '../BaseScene';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import {animateAsync, delay} from '../../utils';
 import CustomDragControls from '../custom/CustomDragControls';
-import {UnwrapNestedRefs} from 'vue';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
+import {SetupPowerBlock} from '../SetupPowerBlock';
 
 
 const createXtoZ = (start, end, amp, offset = 0) => {
@@ -20,7 +19,7 @@ const createXtoZ = (start, end, amp, offset = 0) => {
 export default class Bottle {
     public object: Object3D;
 
-    private scene: BaseScene;
+    private scene: SetupPowerBlock;
     private controls: DragControls;
     private targetPosition: Vector3;
     private xToZ: (x) => number;
@@ -34,13 +33,10 @@ export default class Bottle {
     public onFinished?: () => void;
     public ui: UiTip
 
-    constructor(object: Object3D, targetObjectMesh: Mesh, scene: BaseScene) {
+    constructor(object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlock) {
         this.object = object
         this.targetObject = targetObjectMesh
         this.scene = scene
-
-        const mat = (this.targetObject.material as Material).clone()
-        this.targetObject.material = mat
 
         this.init()
         this.setupControls()
@@ -98,31 +94,11 @@ export default class Bottle {
     }
 
     startHelper() {
-        if (this.helperAnimation !== null) return
-        this.helperAnimation = animate({
-            from: '#000',
-            to: '#484848',
-            repeat: Infinity,
-            repeatType: "mirror",
-            onUpdate: v => {
-                (this.targetObject.material as MeshPhongMaterial).emissive = new Color(v)
-            },
-            duration: 600
-        })
+        this.scene.setSelection(this.targetObject)
     }
 
     stopHelper() {
-        this.helperAnimation.stop()
-        this.helperAnimation = null
-        const currentColor = (this.targetObject.material as MeshPhongMaterial).emissive.getHexString()
-        animate({
-            from: '#' + currentColor,
-            to: '#000',
-            onUpdate: v => {
-                const mat = this.targetObject.material as MeshPhongMaterial
-                mat.emissive = new Color(v)
-            }
-        })
+       this.scene.clearSelection()
     }
 
     async show() {

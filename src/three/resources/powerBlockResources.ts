@@ -4,9 +4,7 @@ const resources: ResourcesToLoad = {
     fbx: {
         box: '/three-assets/fbx/box.fbx',
     },
-    gltf: {
-        // box: '/three-assets/gltf/box.gltf'
-    },
+    gltf: {},
     texture: {},
     cubeTexture: {
         envmap:[

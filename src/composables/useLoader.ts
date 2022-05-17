@@ -10,6 +10,7 @@ const loaders = {
     explore: createLoader(exploreResources),
     powerBlock: createLoader(powerBlockResources),
     tomato: createLoader(tomatoResources),
+    grow: createLoader(tomatoResources),
 }
 
 type LoaderComposable = { percentageProgress: ComputedRef<string>; load: () => void; loader: ResourcesLoader; ready: ComputedRef<boolean>; progress: Ref<UnwrapRef<number>>; loading: Ref<UnwrapRef<boolean>> };
@@ -61,6 +62,7 @@ export const exploreLoader = loaders.explore
 export const powerBlockLoader = loaders.powerBlock
 export const tomatoLoader = loaders.tomato
 export const headerLoader = loaders.header
+export const growLoader = loaders.grow
 
 export default function useLoader(name): LoaderComposable {
     return loaders[name]

@@ -3,6 +3,8 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
 import {BaseScene} from '../BaseScene';
 import {Tomato, TomatoParams} from '../objects/Tomato';
+import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
+import {tomatoLoader} from '../../composables/useLoader';
 
 export class TomatoScene extends BaseScene {
 
@@ -21,11 +23,11 @@ export class TomatoScene extends BaseScene {
 
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
-        this.ambientLight = new AmbientLight('#ffffff', 1)
+        this.ambientLight = new AmbientLight('#ffffff', 0.2)
         this.scene.add(this.ambientLight)
 
         this.scene.add(this.camera)
-        this.pointLight = new PointLight(0xffffff, 1)
+        this.pointLight = new PointLight(0xffffff, 0.9)
         this.pointLight.position.x = 30
         this.pointLight.position.y = 20
         this.pointLight.position.z = -10
@@ -33,7 +35,7 @@ export class TomatoScene extends BaseScene {
 
         // Controls
         this.tomatoWrapper = new Group()
-        this.tomato = new Tomato(this.params)
+        this.tomato = new Tomato(this.params, tomatoLoader.loader.getFBX('tomato'))
         this.tomato.mesh.rotation.set(0, 0, this.inclination)
         this.tomatoWrapper.add(this.tomato.mesh)
         this.scene.add(this.tomatoWrapper)
@@ -41,19 +43,19 @@ export class TomatoScene extends BaseScene {
         this.camera.position.set(15, 15, 15)
         this.camera.lookAt(this.tomato.mesh.position)
 
-        this.enableControls()
-        this.controls.enablePan = false
-        this.controls.enableZoom = false
-        this.controls.dampingFactor = 0.05
+        this.controls = new TrackballControls(this.camera, this.canvas)
+        this.controls.noPan = true
+        this.controls.noZoom = true
+        this.controls.staticMoving = false
+        this.controls.dynamicDampingFactor = 0.05
 
-        this.gui.hide()
+        this.setupPostProcessing()
     }
 
     animate() {
         // hey
         const deltaTime = this.clock.getDelta()
 
-        this.tomato.mesh
         this.tomato.animate(deltaTime)
 
         this.camera.fov = 40 + (this.params.long * this.params.size * 10)

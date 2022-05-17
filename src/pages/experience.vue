@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import SetupPowerBlock from '../components/SetupPowerBlock.vue';
-import {powerBlockLoader} from '../composables/useLoader';
+import SetupPowerBlock from '../components/Experience/SetupPowerBlock.vue';
+import {growLoader, powerBlockLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
 import PairPhone from '../components/Experience/PairPhone.vue';
 import Link from '@paapi/client/dist/Link';
 import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
 
-const {loading, percentageProgress, load} = powerBlockLoader
-load()
+const {loading, percentageProgress} = powerBlockLoader
+if (!powerBlockLoader.ready.value) {
+  powerBlockLoader.load()
+}
 const {state, send} = useActor(sequenceManager)
 
 const link = ref<Link>(null)
@@ -28,6 +30,15 @@ const onPair = (l: Link) => {
   })
   updateStateToLink()
 }
+
+
+
+// Preload further resources
+watch(loading, newVal => {
+  if (!newVal) {
+    growLoader.load()
+  }
+})
 </script>
 <template>
   <div v-if="loading">Loading: {{ percentageProgress }}</div>
@@ -40,8 +51,8 @@ const onPair = (l: Link) => {
         <button @click="send('next')">Next</button>
       </div>
       <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair" />
-      <WhenOnMobile v-else-if=" ['tomatoExplanation', 'customizeTomato'].includes(state.value)" :step="state.value" />
-      <SetupPowerBlock v-else class="w-full h-full"/>
+      <WhenOnMobile v-else-if=" ['tomatoExplanation', 'customizeTomato', 'grow'].includes(state.value)" :step="state.value" />
+      <SetupPowerBlock v-else class="w-full h-full" />
     </Transition>
   </div>
 </template>

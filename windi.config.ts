@@ -8,6 +8,7 @@ export default defineConfig({
                 'jade': '#CDE4D5',
                 'pearl': '#F5F7F6',
                 'bg': '#001606',
+                'anthracite': '#272727',
             },
             fontFamily: {
                 'title': ['dahlia'],

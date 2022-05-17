@@ -5,6 +5,7 @@ const resources: ResourcesToLoad = {
     },
     fbx: {
         tomato: '/three-assets/fbx/tomato.fbx',
+        greenhouse: '/three-assets/fbx/greenhouse.fbx',
     },
     texture: {}
 }

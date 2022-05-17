@@ -1,0 +1,89 @@
+{
+  "id": "Experience",
+  "initial": "introduction",
+  "states": {
+    "introduction": {
+      "on": {
+        "next": {
+          "target": "setupPowerBlock"
+        }
+      }
+    },
+    "setupPowerBlock": {
+      "initial": "openDoor",
+      "states": {
+        "openDoor": {
+          "on": {
+            "doorOk": {
+              "target": "plugCO2"
+            }
+          }
+        },
+        "plugCO2": {
+          "on": {
+            "co2Ok": {
+              "target": "plugWater"
+            }
+          }
+        },
+        "plugWater": {
+          "on": {
+            "waterOk": {
+              "target": "pourFertilizer"
+            }
+          }
+        },
+        "pourFertilizer": {
+          "on": {
+            "fertilizerOk": {
+              "target": "putUranium"
+            }
+          }
+        },
+        "putUranium": {
+          "on": {
+            "uraniumOk": {
+              "target": "#Experience.leaveWork"
+            }
+          }
+        }
+      }
+    },
+    "leaveWork": {
+      "on": {
+        "phonePaired": {
+          "target": "tomatoExplanation"
+        }
+      }
+    },
+    "tomatoExplanation": {
+      "on": {
+        "startTomato": {
+          "target": "customizeTomato"
+        }
+      }
+    },
+    "customizeTomato": {
+      "on": {
+        "tomatoOk": {
+          "target": "grow"
+        }
+      }
+    },
+    "grow": {
+      "on": {
+        "growOk": {
+          "target": "collect"
+        }
+      }
+    },
+    "collect": {
+      "on": {
+        "collected": {
+          "target": "shpwBowl"
+        }
+      }
+    },
+    "shpwBowl": {}
+  }
+}
