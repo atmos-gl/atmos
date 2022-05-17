@@ -4,6 +4,7 @@ import GUI from 'lil-gui';
 import {BaseScene} from '../BaseScene';
 import {Tomato, TomatoParams} from '../objects/Tomato';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
+import {tomatoLoader} from '../../composables/useLoader';
 
 export class TomatoScene extends BaseScene {
 
@@ -34,7 +35,7 @@ export class TomatoScene extends BaseScene {
 
         // Controls
         this.tomatoWrapper = new Group()
-        this.tomato = new Tomato(this.params)
+        this.tomato = new Tomato(this.params, tomatoLoader.loader.getFBX('tomato'))
         this.tomato.mesh.rotation.set(0, 0, this.inclination)
         this.tomatoWrapper.add(this.tomato.mesh)
         this.scene.add(this.tomatoWrapper)
@@ -48,7 +49,6 @@ export class TomatoScene extends BaseScene {
         this.controls.staticMoving = false
         this.controls.dynamicDampingFactor = 0.05
 
-        this.gui.hide()
         this.setupPostProcessing()
     }
 
@@ -56,7 +56,6 @@ export class TomatoScene extends BaseScene {
         // hey
         const deltaTime = this.clock.getDelta()
 
-        this.tomato.mesh
         this.tomato.animate(deltaTime)
 
         this.camera.fov = 40 + (this.params.long * this.params.size * 10)

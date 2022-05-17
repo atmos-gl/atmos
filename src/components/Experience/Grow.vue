@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
 import {GrowScene} from '../../three/GrowScene';
 import useScene from '../../composables/useScene';
+import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
+import {reactive} from 'vue';
+import sequenceManager from '../../managers/sequenceManager';
 
-const { scene, canvas } = useScene(new GrowScene())
+const tomato: TomatoParams = reactive({
+  long: 1,
+  size: 1,
+  color: TomatoColor.red
+})
+const { scene, canvas } = useScene(new GrowScene(tomato))
+
+sequenceManager.send('tomatoOk')
 
 </script>
 <template>

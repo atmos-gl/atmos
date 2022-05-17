@@ -1,11 +1,11 @@
 import {ResourcesToLoad} from '../ResourcesLoader';
 
 const resources: ResourcesToLoad = {
-    fbx: {
-        box: '/three-assets/fbx/box.fbx',
-    },
     gltf: {
         plant: '/three-assets/gltf/plant.gltf',
+    },
+    fbx: {
+        tomato: '/three-assets/fbx/tomato.fbx',
     },
     texture: {},
     cubeTexture: {

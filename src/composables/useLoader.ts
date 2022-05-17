@@ -1,15 +1,16 @@
 import ResourcesLoader, {ResourcesToLoad} from '../three/ResourcesLoader';
 import {computed, ComputedRef, Ref, ref, UnwrapRef} from 'vue';
 import exploreResources from '../three/resources/exploreResources';
-import experienceResources from '../three/resources/experienceResources';
+import powerBlockResources from '../three/resources/powerBlockResources';
 import tomatoResources from '../three/resources/tomatoResources';
 import headerResources from '../three/resources/headerResources';
 
 const loaders = {
     header: createLoader(headerResources),
     explore: createLoader(exploreResources),
-    powerBlock: createLoader(experienceResources),
+    powerBlock: createLoader(powerBlockResources),
     tomato: createLoader(tomatoResources),
+    grow: createLoader(tomatoResources),
 }
 
 type LoaderComposable = { percentageProgress: ComputedRef<string>; load: () => void; loader: ResourcesLoader; ready: ComputedRef<boolean>; progress: Ref<UnwrapRef<number>>; loading: Ref<UnwrapRef<boolean>> };
@@ -61,6 +62,7 @@ export const exploreLoader = loaders.explore
 export const powerBlockLoader = loaders.powerBlock
 export const tomatoLoader = loaders.tomato
 export const headerLoader = loaders.header
+export const growLoader = loaders.grow
 
 export default function useLoader(name): LoaderComposable {
     return loaders[name]

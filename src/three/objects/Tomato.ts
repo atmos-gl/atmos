@@ -31,17 +31,14 @@ export class Tomato {
     private tomatoMaterial: MeshPhongMaterial;
 
 
-    constructor(params: TomatoParams) {
+    constructor(params: TomatoParams, model: Group) {
         this.params = params
-        this.init()
+        this.init(model)
     }
 
-    public init() {
-        // this.buildBody()
-        const {loader} = tomatoLoader
-        const model = loader.getFBX('tomato')
-        console.log(model)
+    public init(model: Group) {
         this.importModel(model)
+        this.updateParams()
     }
 
     private importModel(model: Group) {
@@ -71,26 +68,23 @@ export class Tomato {
     }
 
     public animate(deltaTime: number) {
-        // console.log(this.params)
+        this.updateParams(true)
+    }
+
+    public updateParams(lerpColor = false) {
         const { long, size, color } = this.params
         this.tomatoBody.scale.y = long * size
         this.tomatoBody.scale.x = size
         this.tomatoBody.scale.z = size
 
-        this.tomatoMaterial.color.lerp(new Color(colorTable[color]), 0.2)
-
         this.boundingBox.setFromObject(this.object)
-        // this.tomatoSphere.scale.x = this.grow
-        // this.tomatoSphere.scale.y = this.long * this.grow
-        // this.tomatoSphere.scale.z = this.grow
-        //
-        // this.tomatoSphere.children[0].position.y = (
-        //     this.tomatoOffset + (this.long / 10)
-        // )
-        //
-        // this.object.scale.x = this.size
-        // this.object.scale.y = this.size
-        // this.object.scale.z = this.size
+
+        if (lerpColor) {
+            this.tomatoMaterial.color.lerp(new Color(colorTable[color]), 0.2)
+        } else {
+            this.tomatoMaterial.color.set(colorTable[color])
+
+        }
     }
 
     get center(): Vector3 {

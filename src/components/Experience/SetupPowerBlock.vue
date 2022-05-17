@@ -9,7 +9,6 @@ import StepTip from './StepTip.vue';
 import co2Icon from '../../assets/img/co2Icon.svg'
 import naturalIcon from '../../assets/img/naturalIcon.svg'
 import localIcon from '../../assets/img/localIcon.svg'
-import {delay} from '../../utils';
 import useScene from '../../composables/useScene';
 
 const {scene, canvas, appReady} = useScene(new SetupPowerBlock())
