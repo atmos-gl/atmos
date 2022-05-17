@@ -5,6 +5,7 @@ import CustomCamera from './custom/CustomCamera';
 import {ref, Ref} from 'vue';
 import {disposeFullObject} from './utils/cleanup';
 import {EffectComposer, EffectPass, RenderPass, SMAAEffect} from 'postprocessing';
+import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
 
 export class BaseScene {
     protected scene: Scene | null = null
@@ -17,7 +18,7 @@ export class BaseScene {
 
     public isCameraMoving: Ref<boolean> = ref(false)
 
-    protected controls?: OrbitControls
+    protected controls?: OrbitControls|TrackballControls
 
     public gui: GUI;
     protected composer: EffectComposer
