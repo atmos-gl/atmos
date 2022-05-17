@@ -92,7 +92,7 @@ createMachine({
 }
   )
 
+sequenceMachine.initial = 'grow'
 const sequenceManager = interpret(sequenceMachine)
-sequenceManager.send('next')
 sequenceManager.start()
 export default sequenceManager
