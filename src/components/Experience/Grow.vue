@@ -12,7 +12,7 @@ const tomato: TomatoParams = reactive({
 })
 const { scene, canvas } = useScene(new GrowScene(tomato))
 
-sequenceManager.send('tomatoOk')
+// sequenceManager.send('tomatoOk')
 
 </script>
 <template>
@@ -21,7 +21,7 @@ sequenceManager.send('tomatoOk')
   </main>
 </template>
 
-<style>
+<style scoped>
 .scene {
   height: 100%;
   width: 100%;

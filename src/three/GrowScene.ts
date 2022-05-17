@@ -34,7 +34,7 @@ export class GrowScene extends BaseScene {
         this.camera.position.set(25, 20, 30)
         this.camera.lookAt(0, 0, 0)
         // Temporary test
-        // const {loader} = powerBlockLoader
+        const {loader} = growLoader
         // const gltf = loader.getGLTF('plant')
         // console.log(gltf)
         // this.scene.add(gltf.scene)
@@ -53,6 +53,11 @@ export class GrowScene extends BaseScene {
 
         sequenceManager.onTransition(state => this.onStep(state))
 
+        // tmp
+        const greenhouse = loader.getFBX('greenhouse')
+        this.scene.add(greenhouse)
+
+        this.enableControls()
         this.setupPostProcessing()
     }
 
