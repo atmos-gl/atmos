@@ -1,5 +1,17 @@
+body, html {
+  @apply overflow-auto m-0 p-0 h-full;
+}
+
 body {
-  @apply bg-bg font-core;
+  @apply bg-bg font-core text-pearl;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+section {
+  @apply py-52;
 }
 
 #app {

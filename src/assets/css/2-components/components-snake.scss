@@ -1,0 +1,11 @@
+.snake {
+  @apply relative;
+
+  &::before {
+    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-1;
+    width: 800px;
+    height: 800px;
+    content: '';
+    background: radial-gradient(circle, theme('colors.imperial') 0%, rgba(0,0,0,0) 60%);
+  }
+}

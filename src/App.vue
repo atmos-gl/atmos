@@ -10,14 +10,3 @@ const currentPoc = ref(params.id ? 'mobile' : '')
 <template>
   <RouterView></RouterView>
 </template>
-
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-* {
-  box-sizing: border-box;
-}
-</style>

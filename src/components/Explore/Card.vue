@@ -8,22 +8,27 @@
 </script>
 
 <template>
-  <div v-show="visible"
-       class="border border-px border-white absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-3 bg-imperial text-jade px-16 py-12 w-md rounded-xl z-5">
-    <h2 class="font-title text-4xl mb-8 font-bold">{{ data.title }}</h2>
+  <transition name="fade">
+    <div v-show="visible" class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-3 h-full bg-bg flex items-center pl-64 gradient z-5">
+      <div class="border border-px border-white bg-imperial text-jade px-16 py-12 w-md rounded-xl relative">
+        <h2 class="font-title text-4xl mb-8 font-bold">{{ data.title }}</h2>
 
-    <div class="font-light">
-      <p v-for="content in data.content" class="mb-4">{{ content.text }}</p>
+        <div class="font-light">
+          <p v-for="content in data.content" class="mb-4">{{ content.text }}</p>
+        </div>
+
+        <div class="flex mt-8">
+          <p v-for="content in data.features" class="mr-6 text-lg font-bold">{{ content.text }}</p>
+        </div>
+
+        <div class="poi--close" @click="emit('close')"><i class="icon-close text-base"></i></div>
+      </div>
     </div>
-
-    <div class="flex mt-8">
-      <p v-for="content in data.features" class="mr-6 text-lg font-bold">{{ content.text }}</p>
-    </div>
-
-    <div class="poi--close" @click="emit('close')"><i class="icon-close text-base"></i></div>
-  </div>
+  </transition>
 </template>
 
 <style scoped>
-
+.gradient {
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, theme('colors.bg') 50%);
+}
 </style>

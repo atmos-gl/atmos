@@ -3,10 +3,10 @@ import {computed, ComputedRef, Ref, ref, UnwrapRef} from 'vue';
 import exploreResources from '../three/resources/exploreResources';
 import experienceResources from '../three/resources/experienceResources';
 import tomatoResources from '../three/resources/tomatoResources';
-import homePageResources from '../three/resources/homePageResources';
+import headerResources from '../three/resources/headerResources';
 
 const loaders = {
-    homepage: createLoader(homePageResources),
+    header: createLoader(headerResources),
     explore: createLoader(exploreResources),
     powerBlock: createLoader(experienceResources),
     tomato: createLoader(tomatoResources),
@@ -60,7 +60,7 @@ function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
 export const exploreLoader = loaders.explore
 export const powerBlockLoader = loaders.powerBlock
 export const tomatoLoader = loaders.tomato
-export const homepageLoader = loaders.homepage
+export const headerLoader = loaders.header
 
 export default function useLoader(name): LoaderComposable {
     return loaders[name]

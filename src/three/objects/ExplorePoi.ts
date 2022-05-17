@@ -15,11 +15,11 @@ export class ExplorePoiObject {
 
     public init() {
         const {loader} = exploreLoader
-        const gltf = loader.getGLTF('explore')
-        this.importModel(gltf.scene)
-        // const fbx = loader.getFBX('explore')
-        // this.importModel(fbx)
-        // console.log(gltf)
+        // const gltf = loader.getGLTF('explore')
+        // this.importModel(gltf.scene)
+        const fbx = loader.getFBX('explore')
+        this.importModel(fbx)
+        console.log(fbx)
     }
 
     private importModel(fbx: Group) {

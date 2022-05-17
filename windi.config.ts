@@ -14,6 +14,12 @@ export default defineConfig({
                 'title': ['dahlia'],
                 'core': ['cera-pro'],
                 'sans': ['cera-pro'],
+            },
+            fontSize: {
+                customWide: '257px'
+            },
+            opacity: {
+                '15': '0.15'
             }
         }
     },
