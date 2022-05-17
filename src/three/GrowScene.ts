@@ -32,6 +32,7 @@ export class GrowScene extends BaseScene {
         // mat.metalness = 0
         // console.log(mat)
         // action.play()
+        this.setupPostProcessing()
     }
 
     animate() {

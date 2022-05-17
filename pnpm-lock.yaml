@@ -11,6 +11,7 @@ specifiers:
   '@xstate/vue': ^2.0.0
   lil-gui: ^0.16.1
   popmotion: ^11.0.3
+  postprocessing: ^6.26.4
   qrcode: ^1.5.0
   sass: ^1.51.0
   three: ^0.139.2
@@ -35,6 +36,7 @@ dependencies:
   '@xstate/vue': 2.0.0_vue@3.2.33+xstate@4.31.0
   lil-gui: 0.16.1
   popmotion: 11.0.3
+  postprocessing: 6.26.4_three@0.139.2
   qrcode: 1.5.0
   three: 0.139.2
   vue: 3.2.33
@@ -1705,6 +1707,15 @@ packages:
       nanoid: 3.3.3
       picocolors: 1.0.0
       source-map-js: 1.0.2
+
+  /postprocessing/6.26.4_three@0.139.2:
+    resolution: {integrity: sha512-8u3ERu8va0bhJ3E97r33tAqhMgOdX9ndSTQnL2KlNNOeO9L5h2w3Qi8UGzrU+R7s/Kwz51KxcB90XODcrpa0SA==}
+    engines: {node: '>= 0.13.2'}
+    peerDependencies:
+      three: '>= 0.107.0 < 0.141.0'
+    dependencies:
+      three: 0.139.2
+    dev: false
 
   /prismjs/1.28.0:
     resolution: {integrity: sha512-8aaXdYvl1F7iC7Xm1spqSaY/OJBpYW3v+KJ+F17iYxvdc8sfjW194COK5wVhMZX45tGteiBQgdvD/nhxcRwylw==}

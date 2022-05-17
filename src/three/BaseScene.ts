@@ -4,6 +4,8 @@ import GUI from 'lil-gui';
 import CustomCamera from './custom/CustomCamera';
 import {ref, Ref} from 'vue';
 import {disposeFullObject} from './utils/cleanup';
+import {Effect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAImageLoader} from 'postprocessing';
+import {SMAAPass} from 'three/examples/jsm/postprocessing/SMAAPass';
 
 export class BaseScene {
     protected scene: Scene | null = null
@@ -19,13 +21,19 @@ export class BaseScene {
     protected controls?: OrbitControls
 
     public gui: GUI;
+    protected composer: EffectComposer
 
     public init(canvas: HTMLCanvasElement) {
         this.canvas = canvas
         this.scene = new Scene()
         this.renderer = new WebGLRenderer({
             canvas: this.canvas,
-            alpha: true
+            alpha: true,
+            powerPreference: "high-performance",
+            antialias: false,
+            stencil: false,
+            depth: false,
+            logarithmicDepthBuffer: true,
         })
         this.renderer.setPixelRatio(MathUtils.clamp(window.devicePixelRatio, 1, 2))
 
@@ -48,6 +56,23 @@ export class BaseScene {
         this.fixResize()
     }
 
+    protected setupPostProcessing() {
+        // Post processing
+        this.composer = new EffectComposer(this.renderer, {
+
+        })
+        this.composer.addPass(new RenderPass(this.scene, this.camera))
+        this.postProcessingPasses()
+    }
+
+    protected postProcessingPasses() {
+        const  smaaEffect = new SMAAEffect(
+            {}
+        )
+        const smaaPass = new EffectPass(this.camera, smaaEffect)
+        this.composer.addPass(smaaPass)
+    }
+
     protected enableControls(damping = 0.2) {
         this.controls = new OrbitControls(this.camera, this.canvas)
         this.controls.enableDamping = !!damping
@@ -65,7 +90,8 @@ export class BaseScene {
     }
 
     protected render() {
-        this.renderer!.render(this.scene!, this.camera!)
+        // this.renderer!.render(this.scene!, this.camera!)
+        this.composer.render()
     }
 
     protected fixResize() {

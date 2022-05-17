@@ -1,10 +1,12 @@
-import {AmbientLight, PCFSoftShadowMap, PointLight} from 'three';
+import {AmbientLight, Color, Object3D, PCFSoftShadowMap, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 import sequenceManager from '../managers/sequenceManager';
-import {createExpoIn, easeInOut, mirrorEasing} from 'popmotion';
-import {computed} from 'vue';
+import {createExpoIn, mirrorEasing} from 'popmotion';
+import {EffectPass, OutlineEffect} from 'postprocessing';
+import {animate} from 'popmotion';
+import {animateAsync} from '../utils';
 
 
 export class SetupPowerBlock extends BaseScene {
@@ -14,6 +16,7 @@ export class SetupPowerBlock extends BaseScene {
     private box: Box;
     private xOffset: number;
     private openDoorInteraction: DragAnimation;
+    private outlineEffect: OutlineEffect
 
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
@@ -68,6 +71,26 @@ export class SetupPowerBlock extends BaseScene {
         setTimeout(() => {
             console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
         }, 0)
+
+        this.setupPostProcessing()
+    }
+
+    protected postProcessingPasses() {
+        this.outlineEffect = new OutlineEffect(
+            this.scene, this.camera, {
+
+            }
+        )
+
+        this.outlineEffect.blurPass.enabled = true
+        this.outlineEffect.blurPass.kernelSize = 2
+        this.outlineEffect.pulseSpeed = 0.5
+        this.outlineEffect.edgeStrength = 0
+        this.outlineEffect.hiddenEdgeColor = new Color( '#fff')
+        // this.outlineEffect.edgeStrength
+
+        this.composer.addPass(new EffectPass(this.camera, this.outlineEffect))
+        super.postProcessingPasses();
     }
 
     get co2BottleUi() {
@@ -78,6 +101,40 @@ export class SetupPowerBlock extends BaseScene {
     }
     get fertilizerUi() {
         return this.box.fertilizer.ui.state
+    }
+
+    public showOutline() {
+        return animateAsync({
+            from: 0,
+            to: 8,
+            duration: 500,
+            onUpdate: v => {
+                this.outlineEffect.edgeStrength = v
+            }
+        })
+    }
+
+    public async hideOutline() {
+        return animateAsync({
+            from: 8,
+            to: 0,
+            duration: 500,
+            onUpdate: v => {
+                this.outlineEffect.edgeStrength = v
+            }
+        })
+    }
+
+    public async setSelection(selection: Object3D|Object3D[]) {
+        if (!Array.isArray(selection)) {
+            selection = [selection]
+        }
+        this.outlineEffect.selection.set(selection)
+        await this.showOutline()
+    }
+    public async clearSelection () {
+        await this.hideOutline()
+        this.outlineEffect.selection.clear()
     }
 
     async onStep(state: any) {

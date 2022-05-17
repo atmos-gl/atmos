@@ -7,19 +7,19 @@ import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
 import Fertilizer from './Fertilizer';
 import {powerBlockLoader} from '../../composables/useLoader';
-import {disposeFullObject} from '../utils/cleanup';
+import {SetupPowerBlock} from '../SetupPowerBlock';
 
 export class Box {
     public model: Object3D
     public door: Door;
     public co2Bottle: Bottle;
-    private scene: BaseScene;
+    private scene: SetupPowerBlock;
     public waterBottle: Bottle;
     public tray: Tray;
     public fertilizer: Fertilizer;
 
 
-    constructor(scene: BaseScene) {
+    constructor(scene: SetupPowerBlock) {
         this.scene = scene
         this.init()
     }

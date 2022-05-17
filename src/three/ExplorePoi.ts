@@ -117,7 +117,7 @@ export class ExplorePoi extends BaseScene {
         this.labelRenderer.domElement.style.top = '0px';
         document.querySelector(".js-explore-labels").appendChild( this.labelRenderer.domElement );
 
-        // this.controls = new OrbitControls( this.camera, this.labelRenderer.domElement );
+        this.setupPostProcessing()
     }
 
     // WIP Change Poi
