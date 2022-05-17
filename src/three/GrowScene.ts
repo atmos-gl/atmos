@@ -1,9 +1,5 @@
-import {AmbientLight, AnimationClip, AnimationMixer, Color, Mesh, PCFSoftShadowMap, PointLight} from 'three';
+import {AmbientLight, AnimationClip, AnimationMixer, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
-import {Box} from './objects/Box';
-import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
-import sequenceManager from '../managers/sequenceManager';
-import {createExpoIn, mirrorEasing} from 'popmotion';
 import {powerBlockLoader} from '../composables/useLoader';
 
 export class GrowScene extends BaseScene {
@@ -30,12 +26,12 @@ export class GrowScene extends BaseScene {
         this.scene.add(gltf.scene)
         this.mixer = new AnimationMixer(gltf.scene)
         const action = this.mixer.clipAction(AnimationClip.findByName(gltf.animations, 'animation_0'))
-
-        const mat = gltf.scene.getObjectByName("Plant_tomate_Feuille_(Copy)").material
-        ;mat.color = new Color('#fff');
-        mat.metalness = 0
-        console.log(mat)
-        action.play()
+        //
+        // const mat = gltf.scene.getObjectByName("Plant_tomate_Feuille_(Copy)").material
+        // ;mat.color = new Color('#fff');
+        // mat.metalness = 0
+        // console.log(mat)
+        // action.play()
     }
 
     animate() {

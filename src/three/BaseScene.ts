@@ -31,9 +31,9 @@ export class BaseScene {
 
         this.clock = new Clock()
         this.gui = new GUI()
-        if (import.meta.env.PROD) {
-            this.gui.hide()
-        }
+        // if (import.meta.env.PROD) {
+        // }
+        this.gui.hide()
 
         const gl = this.renderer.getContext()
         const aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
@@ -92,6 +92,7 @@ export class BaseScene {
         const gl = this.renderer!.getContext()
         return gl.drawingBufferWidth
     }
+
     get height() {
         const gl = this.renderer!.getContext()
         return gl.drawingBufferHeight

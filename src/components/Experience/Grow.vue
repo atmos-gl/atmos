@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
 import {GrowScene} from '../../three/GrowScene';
+import useScene from '../../composables/useScene';
 
-const canvas = ref(null);
-const app = new GrowScene()
+const { scene, canvas } = useScene(new GrowScene())
 
-onMounted(() => {
-  app.init(canvas.value)
-  app.gui.hide()
-  app.run()
-})
 </script>
 <template>
   <main>

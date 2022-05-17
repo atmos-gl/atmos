@@ -10,26 +10,15 @@ import co2Icon from '../../assets/img/co2Icon.svg'
 import naturalIcon from '../../assets/img/naturalIcon.svg'
 import localIcon from '../../assets/img/localIcon.svg'
 import {delay} from '../../utils';
+import useScene from '../../composables/useScene';
 
-const canvas = ref(null);
-const app = new SetupPowerBlock()
+const {scene, canvas, appReady} = useScene(new SetupPowerBlock())
 
 const {state} = useActor(sequenceManager)
 
-const showUi = computed(() => !app.isCameraMoving.value)
+const showUi = computed(() => !scene.isCameraMoving.value)
 const step = computed(() => {
   return (state.value.value as any).setupPowerBlock
-})
-
-const appReady = ref(false)
-onMounted( () => {
-  app.init(canvas.value)
-  app.gui.hide()
-  app.run()
-  appReady.value = true
-})
-onBeforeUnmount(() => {
-  app.destroy()
 })
 </script>
 <template>
@@ -41,18 +30,18 @@ onBeforeUnmount(() => {
       </Transition>
     </div>
     <div v-if="appReady">
-      <StepTip :tip="app.co2BottleUi" :icon="co2Icon">
+      <StepTip :tip="scene.co2BottleUi" :icon="co2Icon">
         <p><strong>Le C02</strong> est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé
           notamment
           <strong>une gamme de CO2 recyclé</strong> que l'on récupère des centrales à gaz pour réduire leur impact. </p>
       </StepTip>
-      <StepTip :tip="app.waterBottleUi" :icon="naturalIcon">
+      <StepTip :tip="scene.waterBottleUi" :icon="naturalIcon">
         <p>
           Les fruits et légumes sont <strong>composés d'environ 90% d'eau</strong>. Il est donc important de nourrir votre plantation avec la meilleure eau possible. C'est un ingrédient
           <strong>100% naturel</strong> indispensable à votre santé.
         </p>
       </StepTip>
-      <StepTip :tip="app.fertilizerUi" :icon="localIcon">
+      <StepTip :tip="scene.fertilizerUi" :icon="localIcon">
         <p>
           Nos granules de fertilisant contiennent des produits utilisés pour la pousse des végétaux du monde entier. Vos produits sont créés
           <strong>dans le respect des traditions locales</strong>.
