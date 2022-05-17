@@ -9,9 +9,9 @@ export enum TomatoColor {
     black = 'black',
 }
 const colorTable = {
-    red: '#771414',
-    yellow: '#816b00',
-    green: '#21500d',
+    red: '#b20000',
+    yellow: '#e0bb00',
+    green: '#339b07',
     black: '#0e1806',
 }
 

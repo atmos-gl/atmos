@@ -21,11 +21,11 @@ export class TomatoScene extends BaseScene {
 
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
-        this.ambientLight = new AmbientLight('#ffffff', 1)
+        this.ambientLight = new AmbientLight('#ffffff', 0.2)
         this.scene.add(this.ambientLight)
 
         this.scene.add(this.camera)
-        this.pointLight = new PointLight(0xffffff, 1)
+        this.pointLight = new PointLight(0xffffff, 0.9)
         this.pointLight.position.x = 30
         this.pointLight.position.y = 20
         this.pointLight.position.z = -10
@@ -47,6 +47,7 @@ export class TomatoScene extends BaseScene {
         this.controls.dampingFactor = 0.05
 
         this.gui.hide()
+        this.setupPostProcessing()
     }
 
     animate() {

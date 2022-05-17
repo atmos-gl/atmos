@@ -8,8 +8,8 @@ import GrowTomatoes from '../../components/Mobile/GrowTomatoes.vue';
 
 const props = defineProps(['id'])
 
-const state = ref('tomatoExplanation')
-// const state = ref('customizeTomato')
+// const state = ref('tomatoExplanation')
+const state = ref('customizeTomato')
 
 const {link} = usePair()
 

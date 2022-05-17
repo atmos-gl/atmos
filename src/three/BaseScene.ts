@@ -1,11 +1,10 @@
-import {Clock, MathUtils, Scene, WebGLRenderer} from 'three';
+import {Clock, MathUtils, Scene, sRGBEncoding, WebGLRenderer} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import GUI from 'lil-gui';
 import CustomCamera from './custom/CustomCamera';
 import {ref, Ref} from 'vue';
 import {disposeFullObject} from './utils/cleanup';
-import {Effect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAImageLoader} from 'postprocessing';
-import {SMAAPass} from 'three/examples/jsm/postprocessing/SMAAPass';
+import {EffectComposer, EffectPass, RenderPass, SMAAEffect} from 'postprocessing';
 
 export class BaseScene {
     protected scene: Scene | null = null
@@ -35,6 +34,7 @@ export class BaseScene {
             depth: false,
             logarithmicDepthBuffer: true,
         })
+        this.renderer.outputEncoding = sRGBEncoding
         this.renderer.setPixelRatio(MathUtils.clamp(window.devicePixelRatio, 1, 2))
 
         this.clock = new Clock()
