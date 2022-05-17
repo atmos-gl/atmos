@@ -1,8 +1,9 @@
-import {AmbientLight, Object3D, PointLight, Vector3} from 'three';
+import {AmbientLight, Object3D, PointLight, PointLightHelper, Vector3} from 'three';
 import {BaseScene} from './BaseScene';
 import {ExplorePoiObject} from './objects/ExplorePoi';
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Ref} from "vue";
+import {createExpoIn, easeOut, mirrorEasing} from "popmotion";
 
 export class ExplorePoi extends BaseScene {
 
@@ -28,37 +29,35 @@ export class ExplorePoi extends BaseScene {
 
     public onSelectPoi?: (poiIndex: number) => void;
     public currentPoiIndex?: number = null
-    private showBg: Ref<boolean>
+    private showBgText: Ref<boolean>
 
-    constructor(poiDesc: Ref<string>, showBg: Ref<boolean>) {
+    constructor(poiDesc: Ref<string>, showBgText: Ref<boolean>) {
         super();
         this.poiDesc = poiDesc
         this.poiDescDefault = poiDesc.value
-        this.showBg = showBg
+        this.showBgText = showBgText
     }
 
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
         // this.enableControls()
-        this.ambientLight = new AmbientLight('#ffffff', 0.3)
+        this.ambientLight = new AmbientLight('#ffffff', 0.6)
         this.scene.add(this.ambientLight)
 
-        const pointLight = new PointLight('#4453b2', 0.9)
-        pointLight.position.x = -10
-        pointLight.position.y = 10
-        pointLight.position.z = 10
-        this.scene.add(pointLight)
-        this.pointLight = new PointLight('#99e1cb', 0.9)
-        this.pointLight.position.x = 10
-        this.pointLight.position.y = 10
+        this.pointLight = new PointLight('#fff', 0.9)
+        this.pointLight.position.x = 0
+        this.pointLight.position.y = 2
         this.pointLight.position.z = 10
+        const helper = new PointLightHelper(this.pointLight)
         this.scene.add(this.pointLight)
+        this.scene.add(helper)
+        this.enableControls()
 
         this.explorePoiObject = new ExplorePoiObject()
         this.explorePoiObject.mesh.rotateY(Math.PI)
         this.scene.add(this.explorePoiObject.mesh)
 
-        this.camera.position.set(this.defaultCamPos.x, this.defaultCamPos.y, this.defaultCamPos.z)
+        this.camera.position.set(this.defaultCamPos.x, this.defaultCamPos.y, 35)
         this.camera.lookAt(this.defaultCamLookAt)
 
         this.resizeRendererToDisplaySize()
@@ -100,13 +99,6 @@ export class ExplorePoi extends BaseScene {
             poiDesc: 'Centrale'
         })
 
-        // GreenHouse
-        // this.poiObjects.push({
-        //     camPos: new Vector3(),
-        //     objInstance: this.explorePoiObject.mesh.getObjectByName('Serre').getObjectByName('spray_2')
-        // })
-        // this.poiObjects.push(this.explorePoiObject.mesh.getObjectByName('Serre'))
-
         this.poiObjects.forEach((object, i) => {
             const poi = document.createElement('div')
             poi.innerHTML = '+'
@@ -115,16 +107,11 @@ export class ExplorePoi extends BaseScene {
             const objectCSS = new CSS2DObject(poi)
             objectCSS.position.set(0, 0, 0)
             poi.addEventListener("click", async () => {
-                // WIP Change Poi
                 if (object.isClickable) {
-                    this.showBg.value = false
+                    this.showBgText.value = false
                     this.setObjectsClickable(false)
                     await this.openPoi(object, poi, i)
                 }
-                // if (this.currentPoiIndex) {
-                //     await this.changePoi(object, poi, i)
-                //     return
-                // }
             })
             poi.addEventListener('mouseenter', () => {
                 this.poiDesc.value = object.poiDesc
@@ -144,26 +131,20 @@ export class ExplorePoi extends BaseScene {
         // this.controls = new OrbitControls( this.camera, this.labelRenderer.domElement );
     }
 
-    // WIP Change Poi
+    processExplore() {
+        this.camera.move({
+            x: this.defaultCamPos.x,
+            y: this.defaultCamPos.y,
+            z: this.defaultCamPos.z,
+            tx: this.defaultCamLookAt.x,
+            ty: this.defaultCamLookAt.y,
+            tz: this.defaultCamLookAt.z,
+        }, null, 1200, mirrorEasing(createExpoIn(4)))
+    }
+
     setObjectsClickable(state: Boolean) {
         this.poiObjects.forEach(object => {object.isClickable = state})
     }
-    // async changePoi(object, poi, i) {
-    //     const previousPoiIndex = this.currentPoiIndex
-        // const objPos = object.objInstance.getWorldPosition(new Vector3())
-        // poi.classList.toggle('hidden')
-        // this.poiList[previousPoiIndex].classList.toggle('hidden')
-        // await this.camera.move({
-        //     x: object.camPos.x,
-        //     y: object.camPos.y,
-        //     z: object.camPos.z,
-        //     tx: objPos.x,
-        //     ty: objPos.y,
-        //     tz: objPos.z,
-        // })
-        // this.onSelectPoi?.(i)
-        // this.currentPoi = i
-    // }
 
     async openPoi(object, poi, i) {
         const objPos = object.objInstance.getWorldPosition(new Vector3())
@@ -192,7 +173,7 @@ export class ExplorePoi extends BaseScene {
         this.poiList[i].classList.toggle('hidden')
         this.currentPoiIndex = null
         this.setObjectsClickable(true)
-        this.showBg.value = true
+        this.showBgText.value = true
     }
 
     animate() {

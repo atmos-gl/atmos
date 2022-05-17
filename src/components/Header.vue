@@ -3,7 +3,7 @@ import {headerLoader} from "../composables/useLoader";
 import HeaderScene from '../components/HeaderScene.vue';
 
 const {loading, percentageProgress} = headerLoader
-headerLoader.load()
+// headerLoader.load()
 </script>
 
 <template>
@@ -24,9 +24,9 @@ headerLoader.load()
       <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
     </div>
     <div class="w-3/5">
-      <div v-if="loading">Loading: {{ percentageProgress }}</div>
+<!--      <div v-if="loading">Loading: {{ percentageProgress }}</div>-->
 
-      <HeaderScene v-else/>
+<!--      <HeaderScene v-else/>-->
     </div>
   </div>
   </header>
