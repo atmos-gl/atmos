@@ -3,11 +3,10 @@ import {BaseScene} from './BaseScene';
 import {ExploreGreenHouse} from './objects/ExploreGreenHouse';
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Ref} from "vue";
-import {createExpoIn, mirrorEasing} from "popmotion";
+import {createExpoIn, mirrorEasing, animate} from "popmotion";
 
 export class ExplorePoi extends BaseScene {
 
-    private ambientLight: AmbientLight
     private pointLight: PointLight;
     private explorePoiObject: ExploreGreenHouse;
     private labelRenderer: CSS2DRenderer;
@@ -30,6 +29,10 @@ export class ExplorePoi extends BaseScene {
     public onSelectPoi?: (poiIndex: number) => void;
     public currentPoiIndex?: number = null
     private showBgText: Ref<boolean>
+    private secondGreenHouse: Object3D;
+    private secondGreenHouseInitialPos: Vector3;
+    private secondPipe: Object3D;
+    private secondPipeInitialPos: Vector3;
 
     constructor(poiDesc: Ref<string>, showBgText: Ref<boolean>) {
         super();
@@ -41,8 +44,8 @@ export class ExplorePoi extends BaseScene {
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
 
-        this.ambientLight = new AmbientLight('#ffffff', 0.5)
-        this.scene.add(this.ambientLight)
+        // this.ambientLight = new AmbientLight('#ffffff', 0)
+        // this.scene.add(this.ambientLight)
 
         this.pointLight = new PointLight('#fff', 0.9)
         this.pointLight.position.x = 2
@@ -100,13 +103,24 @@ export class ExplorePoi extends BaseScene {
         })
 
         // Second GreenHouse
+        this.secondGreenHouse = this.explorePoiObject.mesh.getObjectByName('Serre')
+        this.secondPipe = this.explorePoiObject.mesh.getObjectByName('cable_2')
+        this.secondGreenHouseInitialPos = this.secondGreenHouse.position.clone()
+        this.secondPipeInitialPos = this.secondPipe.position.clone()
+        const anchor = new Object3D()
+        anchor.name = 'secondGreenHouse'
+        anchor.position.set(-5, -1, 0)
+        this.scene.add(anchor)
         this.poiObjects.push({
             camPos: new Vector3(-0.7253531798032511, 1.0134429123948978, 13.979589377261162),
-            objInstance: this.explorePoiObject.mesh.getObjectByName('Serre'),
+            objInstance: anchor,
             textContainer: "js-powerPlant",
             isClickable: true,
-            poiDesc: 'Centrale'
+            poiDesc: 'Serre'
         })
+
+        this.secondGreenHouse.position.setY(2000)
+        this.secondPipe.position.setY(2000)
 
         this.poiObjects.forEach((object, i) => {
             const poi = document.createElement('div')
@@ -116,6 +130,24 @@ export class ExplorePoi extends BaseScene {
             const objectCSS = new CSS2DObject(poi)
             objectCSS.position.set(0, 0, 0)
             poi.addEventListener("click", async () => {
+                if (object.objInstance.name === "secondGreenHouse") {
+                    animate({
+                        from: this.secondGreenHouse.position,
+                        to: this.secondGreenHouseInitialPos,
+                        duration: 1000,
+                        onUpdate: v => {
+                            this.secondGreenHouse.position.copy(v)
+                        }
+                    })
+                    animate({
+                        from: this.secondPipe.position,
+                        to: this.secondPipeInitialPos,
+                        duration: 1000,
+                        onUpdate: v => {
+                            this.secondPipe.position.copy(v)
+                        }
+                    })
+                }
                 if (object.isClickable) {
                     this.showBgText.value = false
                     this.setObjectsClickable(false)
