@@ -4,13 +4,14 @@ import exploreResources from '../three/resources/exploreResources';
 import powerBlockResources from '../three/resources/powerBlockResources';
 import tomatoResources from '../three/resources/tomatoResources';
 import headerResources from '../three/resources/headerResources';
+import growResources from '../three/resources/growResources';
 
 const loaders = {
     header: createLoader(headerResources),
     explore: createLoader(exploreResources),
     powerBlock: createLoader(powerBlockResources),
     tomato: createLoader(tomatoResources),
-    grow: createLoader(tomatoResources),
+    grow: createLoader(growResources),
 }
 
 type LoaderComposable = { percentageProgress: ComputedRef<string>; load: () => void; loader: ResourcesLoader; ready: ComputedRef<boolean>; progress: Ref<UnwrapRef<number>>; loading: Ref<UnwrapRef<boolean>> };

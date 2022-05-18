@@ -1,10 +1,11 @@
-import {AmbientLight, AnimationMixer, PointLight, Vector3} from 'three';
+import {AmbientLight, AnimationMixer, PointLight, PointLightHelper, Vector3} from 'three';
 import {BaseScene} from './BaseScene';
 import {Tomato, TomatoParams} from './objects/Tomato';
 import {growLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {animateAsync} from '../utils';
-import {createExpoIn} from 'popmotion';
+import {createExpoIn, mirrorEasing} from 'popmotion';
+import {Greenhouse} from './objects/Greenhouse';
 
 export class GrowScene extends BaseScene {
 
@@ -13,6 +14,7 @@ export class GrowScene extends BaseScene {
     private mixer: AnimationMixer;
     private tomatoParams: TomatoParams;
     private tomato: Tomato;
+    private greenhouse: Greenhouse;
 
     constructor(tomatoParams: TomatoParams) {
         super();
@@ -26,12 +28,13 @@ export class GrowScene extends BaseScene {
         this.scene.add(this.ambientLight)
 
         this.pointLight = new PointLight('#ffffff', 0.9)
-        this.pointLight.position.x = 30
-        this.pointLight.position.y = 20
-        this.pointLight.position.z = -10
+        this.pointLight.position.x = 3
+        this.pointLight.position.y = 2
+        this.pointLight.position.z = 2
         this.scene.add(this.pointLight)
+        this.scene.add(new PointLightHelper(this.pointLight))
 
-        this.camera.position.set(25, 20, 30)
+        this.camera.position.set(-5, 4, 6)
         this.camera.lookAt(0, 0, 0)
         // Temporary test
         const {loader} = growLoader
@@ -48,14 +51,15 @@ export class GrowScene extends BaseScene {
         // action.play()
 
         this.tomato = new Tomato(this.tomatoParams, growLoader.loader.getFBX('tomato'))
-
+        this.tomato.mesh.scale.set(0.3, 0.3, 0.3)
         this.scene.add(this.tomato.mesh)
 
         sequenceManager.onTransition(state => this.onStep(state))
 
-        // tmp
-        const greenhouse = loader.getFBX('greenhouse')
-        this.scene.add(greenhouse)
+        this.greenhouse = new Greenhouse(loader, this)
+        this.scene.add(this.greenhouse.mesh)
+        this.greenhouse.mesh.scale.set(0, 0, 0)
+        this.greenhouse.mesh.visible = false
 
         this.enableControls()
         this.setupPostProcessing()
@@ -68,13 +72,37 @@ export class GrowScene extends BaseScene {
     }
 
     private async transitionToGrow() {
+        const easing = createExpoIn(4)
+        this.camera.move({
+            x: 0,
+            y: 2,
+            z: 12,
+            tx: 0,
+            ty: -1,
+            tz: 0,
+        })
         await animateAsync({
             from: this.tomato.mesh.scale,
             to: new Vector3(0, 0, 0),
-            ease: createExpoIn(4),
+            ease: easing,
             duration: 500,
             onUpdate: v => {
                 this.tomato.mesh.scale.set(
+                    v.x,
+                    v.y,
+                    v.z,
+                )
+            }
+        })
+        this.tomato.mesh.visible = false
+        this.greenhouse.mesh.visible = true
+        await animateAsync({
+            from: this.greenhouse.mesh.scale,
+            to: new Vector3(0.01, 0.01, 0.01),
+            ease: mirrorEasing(easing),
+            duration: 500,
+            onUpdate: v => {
+                this.greenhouse.mesh.scale.set(
                     v.x,
                     v.y,
                     v.z,
@@ -88,10 +116,14 @@ export class GrowScene extends BaseScene {
         const deltaTime = this.clock.getDelta()
         if (this.tomato.mesh.visible) {
             this.tomato.animate(deltaTime)
+            this.tomato.mesh.rotateX(deltaTime * 0.2)
+            this.tomato.mesh.rotateY(deltaTime * 0.2)
         }
 
-        this.tomato.mesh.rotateX(deltaTime * 0.2)
-        this.tomato.mesh.rotateY(deltaTime * 0.2)
+        if (this.greenhouse.mesh.visible) {
+            this.greenhouse.animate(deltaTime)
+        }
+
         super.animate()
     }
 
