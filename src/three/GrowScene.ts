@@ -38,17 +38,6 @@ export class GrowScene extends BaseScene {
         this.camera.fov = 30
         // Temporary test
         const {loader} = growLoader
-        // const gltf = loader.getGLTF('plant')
-        // console.log(gltf)
-        // this.scene.add(gltf.scene)
-        // this.mixer = new AnimationMixer(gltf.scene)
-        // const action = this.mixer.clipAction(AnimationClip.findByName(gltf.animations, 'animation_0'))
-        // //
-        // const mat = gltf.scene.getObjectByName("Plant_tomate_Feuille_(Copy)").material
-        // ;mat.color = new Color('#fff');
-        // mat.metalness = 0
-        // // console.log(mat)
-        // action.play()
 
         this.tomato = new Tomato(this.tomatoParams, growLoader.loader.getFBX('tomato'))
         this.tomato.mesh.scale.set(0.3, 0.3, 0.3)
@@ -61,7 +50,6 @@ export class GrowScene extends BaseScene {
         this.greenhouse.mesh.scale.set(0, 0, 0)
         this.greenhouse.mesh.visible = false
 
-        // this.enableControls()
         this.setupPostProcessing()
     }
 
