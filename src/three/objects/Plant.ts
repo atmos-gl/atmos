@@ -1,6 +1,8 @@
 import {AnimationAction, AnimationClip, AnimationMixer, LoopOnce, Mesh, MeshStandardMaterial, Object3D} from 'three';
 import {BaseScene} from '../BaseScene';
 import {GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
+import {Tomato, TomatoParams} from './Tomato';
+import {growLoader} from '../../composables/useLoader';
 
 export default class Plant {
     public object: Object3D;
@@ -9,14 +11,21 @@ export default class Plant {
     private model: GLTF;
     private mixer: AnimationMixer;
     private animationAction: AnimationAction;
+    private tomatoParams: TomatoParams;
 
-    constructor(model: GLTF, scene: BaseScene) {
+    private tomatoes: Tomato[] = []
+
+    constructor(model: GLTF, scene: BaseScene, tomatoParams: TomatoParams) {
         this.model = model
         this.scene = scene
 
         this.object = model.scene.clone()
+        console.log(this.model)
+
+        this.tomatoParams = tomatoParams
 
         this.init()
+        this.initTomatoes()
     }
 
     init() {
@@ -31,6 +40,30 @@ export default class Plant {
         this.animationAction.clampWhenFinished = true
         this.animationAction.play()
         this.animationAction.paused = true
+    }
+
+    initTomatoes() {
+        const tomatoModel = growLoader.loader.getFBX('tomato')
+        for (const object of this.object.children) {
+            if (
+                object.name.includes('Groupe_Tomate')
+            ) {
+                for (const child of object.children) {
+                    object.remove(child)
+                }
+                const model = tomatoModel.clone(true)
+                model.scale.set(0.7, 0.7, 0.7)
+                model.position.set(0, -4, 0)
+                const tomato = new Tomato(this.tomatoParams, model)
+                tomato.updateParams()
+                object.add(tomato.mesh)
+                this.tomatoes.push(tomato)
+            }
+        }
+    }
+
+    updateTomatoes() {
+        this.tomatoes.forEach(tomato => tomato.updateParams())
     }
 
     grow() {

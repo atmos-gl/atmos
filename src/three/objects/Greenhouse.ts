@@ -1,9 +1,11 @@
 import {DoubleSide, Group, Mesh, Object3D} from 'three';
-import {growLoader, headerLoader} from '../../composables/useLoader';
+import {growLoader} from '../../composables/useLoader';
 import ResourcesLoader from "../ResourcesLoader";
 import getGlassMaterial from '../materials/glassMaterial';
 import Plant from './Plant';
 import {BaseScene} from '../BaseScene';
+import {TomatoColor, TomatoParams} from './Tomato';
+import {animateAsync} from '../../utils';
 
 export class Greenhouse {
     public object: Object3D
@@ -13,9 +15,15 @@ export class Greenhouse {
 
     private plant1: Plant;
     private plant2: Plant;
+    private tomatoParams: TomatoParams;
 
-    constructor(loader: ResourcesLoader, scene: BaseScene) {
+    constructor(loader: ResourcesLoader, scene: BaseScene, tomatoParams: TomatoParams = {
+        long: 1,
+        size: 1,
+        color: TomatoColor.red
+    }) {
         this.scene = scene
+        this.tomatoParams = tomatoParams
         this.init(loader)
     }
 
@@ -52,19 +60,39 @@ export class Greenhouse {
 
         // Add plant
         const plantModel = growLoader.loader.getGLTF('plant')
-        this.plant1 = new Plant(plantModel, this.scene)
+        this.plant1 = new Plant(plantModel, this.scene, this.tomatoParams)
         this.plant1.object.position.set(90, 70, 0)
+        this.plant1.object.rotation.y = -4
         this.object.add(this.plant1.object)
-        this.plant2 = new Plant(plantModel, this.scene)
+        this.plant2 = new Plant(plantModel, this.scene, this.tomatoParams)
         this.plant2.object.position.set(-90, 70, 0)
+        this.plant2.object.rotation.y = 4
         this.object.add(this.plant2.object)
-
-        this.plant1.grow().then(() => console.log('fiiin'))
     }
 
     get mesh() {
         return this.object
     }
+
+    async onShow() {
+        this.plant1.updateTomatoes()
+        this.plant2.updateTomatoes()
+    }
+     async grow() {
+        this.plant1.grow()
+        await this.plant2.grow()
+     }
+
+     async openDoor () {
+        await animateAsync({
+            from: 0,
+            to: Math.PI * 3 / 4,
+            duration: 500,
+            onUpdate: v => {
+                this.setDoorsAngle(v)
+            }
+        })
+     }
 
     setDoorsAngle(angle: number) {
         this.leftDoor.rotation.y = -angle

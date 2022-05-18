@@ -11,7 +11,6 @@ export class GrowScene extends BaseScene {
 
     private ambientLight: AmbientLight
     private pointLight: PointLight;
-    private mixer: AnimationMixer;
     private tomatoParams: TomatoParams;
     private tomato: Tomato;
     private greenhouse: Greenhouse;
@@ -34,8 +33,9 @@ export class GrowScene extends BaseScene {
         this.scene.add(this.pointLight)
         this.scene.add(new PointLightHelper(this.pointLight))
 
-        this.camera.position.set(-5, 4, 6)
+        this.camera.position.set(-5, 4, 10)
         this.camera.lookAt(0, 0, 0)
+        this.camera.fov = 30
         // Temporary test
         const {loader} = growLoader
         // const gltf = loader.getGLTF('plant')
@@ -56,12 +56,12 @@ export class GrowScene extends BaseScene {
 
         sequenceManager.onTransition(state => this.onStep(state))
 
-        this.greenhouse = new Greenhouse(loader, this)
+        this.greenhouse = new Greenhouse(loader, this, this.tomatoParams)
         this.scene.add(this.greenhouse.mesh)
         this.greenhouse.mesh.scale.set(0, 0, 0)
         this.greenhouse.mesh.visible = false
 
-        this.enableControls()
+        // this.enableControls()
         this.setupPostProcessing()
     }
 
@@ -76,9 +76,9 @@ export class GrowScene extends BaseScene {
         this.camera.move({
             x: 0,
             y: 2,
-            z: 12,
+            z: 15,
             tx: 0,
-            ty: -1,
+            ty: 0,
             tz: 0,
         })
         await animateAsync({
@@ -95,6 +95,7 @@ export class GrowScene extends BaseScene {
             }
         })
         this.tomato.mesh.visible = false
+        this.greenhouse.onShow()
         this.greenhouse.mesh.visible = true
         await animateAsync({
             from: this.greenhouse.mesh.scale,
@@ -108,6 +109,16 @@ export class GrowScene extends BaseScene {
                     v.z,
                 )
             }
+        })
+        await this.greenhouse.grow()
+        this.greenhouse.openDoor()
+        this.camera.move({
+            x: 0,
+            y: 1,
+            z: 8,
+            tx: 0,
+            ty: 0.5,
+            tz: 0,
         })
     }
 
