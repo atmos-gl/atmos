@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {Header} from "../three/Header";
+import {Header} from "../../three/Header";
 
 const canvas = ref(null);
 const app = new Header()

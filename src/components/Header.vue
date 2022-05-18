@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import {headerLoader} from "../composables/useLoader";
-import HeaderScene from '../components/HeaderScene.vue';
+import HeaderScene from './Header/HeaderScene.vue';
+import ScrollingText from './Header/ScrollingText.vue';
 
 const {loading, percentageProgress} = headerLoader
 // headerLoader.load()
+
+const scrollingLines = 4
 </script>
 
 <template>
@@ -21,46 +24,7 @@ const {loading, percentageProgress} = headerLoader
 
   <div class="o-container flex text-jade flex-1 py-32">
     <div class="absolute-y-center text-customBig font-title font-bold uppercase leading-none flex flex-col opacity-15">
-      <div class="scrolling-text">
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-      </div>
-      <div class="scrolling-text">
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-      </div>
-      <div class="scrolling-text">
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-      </div>
-      <div class="scrolling-text">
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-        <span>Atmos</span>
-      </div>
+      <ScrollingText v-for="line in scrollingLines"/>
     </div>
 
     <div class="w-2/5">
@@ -76,39 +40,3 @@ const {loading, percentageProgress} = headerLoader
   </div>
   </header>
 </template>
-
-<style scoped lang="scss">
-.scrolling-text {
-  &:nth-child(odd) {
-    animation: title 24s infinite linear;
-    transform: translateX(-25%);
-  }
-
-  &:nth-child(even) {
-    animation: title-reversed 24s infinite linear;
-    transform: translateX(-50%);
-  }
-
-  span {
-    @apply mr-28;
-  }
-}
-
-@keyframes title {
-  from {
-    transform: translateX(-25%);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes title-reversed {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(-25%);
-  }
-}
-</style>
