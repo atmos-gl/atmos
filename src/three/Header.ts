@@ -33,10 +33,16 @@ export class Header extends BaseScene {
 
         this.resizeRendererToDisplaySize()
         this.camera.updateMatrixWorld()
+        // this.canvas.addEventListener(this.onMousemove())
 
         // this.greenHouse.openDoor()
         this.setupPostProcessing()
     }
+
+    onMousemove(e: MouseEvent) {
+        console.log(e)
+    }
+
 
     animate() {
         // this.greenHouse.animate()

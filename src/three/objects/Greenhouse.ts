@@ -96,6 +96,17 @@ export class Greenhouse {
         })
      }
 
+     async closeDoor () {
+        await animateAsync({
+            from: Math.PI * 3 / 4,
+            to: 0,
+            duration: 500,
+            onUpdate: v => {
+                this.setDoorsAngle(v)
+            }
+        })
+     }
+
     setDoorsAngle(angle: number) {
         this.leftDoor.rotation.y = -angle
         this.rightDoor.rotation.y = angle
