@@ -52,7 +52,7 @@ export class Tomato {
         // sphereParent.add(sphere)
         // model.add(sphereParent)
         // model.scale.set(0.1, 0.1, 0.1)
-        console.log(model)
+        // console.log(model)
         this.object = model
         this.tomatoBody = model.getObjectByName('body')
         this.tomatoMaterial = (this.tomatoBody.getObjectByName('Sphere') as Mesh).material as MeshPhongMaterial

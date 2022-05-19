@@ -3,6 +3,7 @@ import {ResourcesToLoad} from '../ResourcesLoader';
 const resources: ResourcesToLoad = {
     gltf: {
         plant: '/three-assets/gltf/plant.gltf',
+        cart: '/three-assets/gltf/cart.gltf',
     },
     fbx: {
         tomato: '/three-assets/fbx/tomato.fbx',

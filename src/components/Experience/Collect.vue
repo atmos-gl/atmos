@@ -6,7 +6,7 @@ import {reactive} from 'vue';
 import {CollectScene} from '../../three/CollectScene';
 
 const tomato: TomatoParams = reactive({
-  long: 0.8,
+  long: 1,
   size: 1,
   color: TomatoColor.red
 })

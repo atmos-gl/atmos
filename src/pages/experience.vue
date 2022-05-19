@@ -32,7 +32,6 @@ const onPair = (l: Link) => {
   updateStateToLink()
 }
 
-
 // Preload further resources
 watch(loading, newVal => {
   if (!newVal) {

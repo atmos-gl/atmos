@@ -4,7 +4,7 @@ import {reactive, UnwrapNestedRefs} from 'vue';
 
 export type UiTip = { hide: () => void; show: () => void; state: UnwrapNestedRefs<{ show: boolean; position: Vector2 }> }
 
-export default function useUiTip(object: Object3D, scene: BaseScene): UiTip {
+export default function useUiTip(object: Object3D, scene: BaseScene, offset = new Vector2(0, 0)): UiTip {
     const state = reactive({
         show: false,
         position: new Vector2(0, 0),
@@ -21,7 +21,7 @@ export default function useUiTip(object: Object3D, scene: BaseScene): UiTip {
         state.position = new Vector2(
             (vector.x + 1) * scene.canvas.clientWidth / 2,
             -(vector.y - 1) * scene.canvas.clientHeight / 2
-        )
+        ).add(offset)
     }
 
     const show = () => {

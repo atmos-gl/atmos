@@ -8,13 +8,13 @@ import GrowTomatoes from '../../components/Mobile/GrowTomatoes.vue';
 
 const props = defineProps(['id'])
 
-// const state = ref('tomatoExplanation')
-const state = ref('customizeTomato')
+// const step = ref('tomatoExplanation')
+const step = ref('growReady')
 
 const {link} = usePair()
 
 link.on('update:state', newVal => {
-  state.value = newVal
+  step.value = newVal
 })
 const sendSequence = event => {
   link.emit('sequence:send', event)
@@ -28,9 +28,9 @@ link.pair(props.id)
 <template>
   <main class="theme-gradient min-h-full text-white">
     <Transition name="fade" mode="out-in">
-      <TomatoExplanation v-if="state === 'tomatoExplanation'" @next="sendSequence('startTomato')" />
-      <CustomizeTomato v-else-if="state === 'customizeTomato'" @confirm-tomato="sendSequence('tomatoOk')" />
-      <GrowTomatoes v-else-if="state === 'grow'" />
+      <TomatoExplanation v-if="step === 'tomatoExplanation'" @next="sendSequence('startTomato')" />
+      <CustomizeTomato v-else-if="step === 'customizeTomato'" @confirm-tomato="sendSequence('tomatoOk')" />
+      <GrowTomatoes v-else-if="['grow', 'growReady'].includes(step)" @grow="sendSequence('startGrow')" />
     </Transition>
   </main>
 </template>

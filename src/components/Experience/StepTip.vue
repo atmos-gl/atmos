@@ -25,13 +25,14 @@ const {tip, icon} = toRefs(props)
 .line::before, .line::after {
   content: '';
   @apply
-  absolute
-  -top-7
-  left-8
-  h-px
-  w-12
-  bg-white
+    absolute
+    -top-7
+    left-8
+    h-px
+    w-12
+    bg-white
   ;
+  backdrop-filter: blur(10px);
   transform-origin: left;
 }
 
@@ -41,6 +42,7 @@ const {tip, icon} = toRefs(props)
 
 .tip {
   @apply absolute -top-20 left-20 p-4 rounded-xl border border-white text-jade w-72 -xl:w-64 font-core;
+  backdrop-filter: blur(3px);
   background-color: #ffffff33;
 }
 </style>
