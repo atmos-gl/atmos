@@ -32,7 +32,6 @@ const onPair = (l: Link) => {
 }
 
 
-
 // Preload further resources
 watch(loading, newVal => {
   if (!newVal) {
@@ -50,9 +49,10 @@ watch(loading, newVal => {
         </p>
         <button @click="send('next')">Next</button>
       </div>
-      <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair" />
-      <WhenOnMobile v-else-if=" ['tomatoExplanation', 'customizeTomato', 'grow'].includes(state.value)" :step="state.value" />
-      <SetupPowerBlock v-else class="w-full h-full" />
+      <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair"/>
+      <WhenOnMobile v-else-if=" ['tomatoExplanation', 'customizeTomato', 'growReady','grow', 'collect'].includes(state.value)"
+                    :step="state.value"/>
+      <SetupPowerBlock v-else class="w-full h-full"/>
     </Transition>
   </div>
 </template>

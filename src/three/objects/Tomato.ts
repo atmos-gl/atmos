@@ -1,4 +1,4 @@
-import {Box3, Color, Group, Material, Mesh, MeshPhongMaterial, Object3D, Vector3} from 'three';
+import {Box3, Color, Group, Material, Mesh, MeshPhongMaterial, Object3D, Sphere, Vector3} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
 import {tomatoLoader} from '../../composables/useLoader';
 
@@ -52,6 +52,7 @@ export class Tomato {
         // sphereParent.add(sphere)
         // model.add(sphereParent)
         // model.scale.set(0.1, 0.1, 0.1)
+        console.log(model)
         this.object = model
         this.tomatoBody = model.getObjectByName('body')
         this.tomatoMaterial = (this.tomatoBody.getObjectByName('Sphere') as Mesh).material as MeshPhongMaterial
@@ -61,6 +62,41 @@ export class Tomato {
 
     get mesh() {
         return this.object
+    }
+
+    get bodyMesh(): Mesh {
+        return this.tomatoBody.children[0] as Mesh
+    }
+
+    get bodyWorldGeometry() {
+        const geoClone = this.bodyMesh.geometry.clone() // really bad for memory, but it's simple/easy
+        geoClone.applyMatrix4( this.bodyMesh.matrixWorld )
+        // geoClone.applyMatrix4( this.bodyMesh.modelViewMatrix )
+        // const scale = this.body.localToWorld(this.appliedScale.clone())
+        return geoClone
+    }
+
+    get appliedScale() {
+        return this.tomatoBody.scale
+    }
+
+    get body() {
+        return this.tomatoBody
+    }
+
+    get bodyBoundingSphere() {
+        const geoClone = this.bodyMesh.geometry.clone() // really bad for memory, but it's simple/easy
+        geoClone.applyMatrix4( this.bodyMesh.matrixWorld )
+// Convert the vertices into Vector3s (also bad for memeory)
+        const vertices = []
+        const pos = geoClone.attributes.position.array
+        for( let i = 0, l = pos.length; i < l; i += 3 ){
+            vertices.push( new Vector3( pos[i], pos[i+1], pos[i+2] ) )
+        }
+
+        const result = new Sphere()
+        result.setFromPoints( vertices )
+        return result
     }
 
     public aim(position: Vector3) {

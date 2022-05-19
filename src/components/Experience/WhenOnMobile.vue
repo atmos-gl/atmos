@@ -4,6 +4,7 @@ import {StateValue} from 'xstate';
 import Grow from './Grow.vue'
 import {growLoader} from '../../composables/useLoader';
 import sequenceManager from '../../managers/sequenceManager';
+import Collect from './Collect.vue';
 
 const props = defineProps<{
   step: StateValue
@@ -13,14 +14,16 @@ const { loading, percentageProgress } = growLoader
 </script>
 <template>
   <div class="flex-col flex h-full w-full">
-    Ca se passe sur votre application ! Consultez votre téléphone.
     <button v-if="step === 'customizeTomato'"
-            @click=" sequenceManager.send('tomatoOk')"
-            class="relative z-1000">Bonjour la tomate
+            @click="sequenceManager.send('tomatoOk')"
+            class="relative z-1000">
+    Ca se passe sur votre application ! Consultez votre téléphone.
+      Bonjour la tomate
     </button>
-    <div v-if="['grow', 'customizeTomato'].includes(step)">
+    <div v-if="['grow', 'growReady', 'customizeTomato', 'collect'].includes(step)" class="">
       <div v-if="loading">Loading: {{ percentageProgress }}</div>
-      <Grow v-else />
+      <Grow v-else-if="['customizeTomato', 'growReady', 'grow'].includes(step)" />
+      <Collect v-else-if="['collect'].includes(step)" />
     </div>
   </div>
 </template>

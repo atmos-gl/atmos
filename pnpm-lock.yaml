@@ -9,6 +9,7 @@ specifiers:
   '@vueuse/core': ^8.3.1
   '@vueuse/integrations': ^8.3.1
   '@xstate/vue': ^2.0.0
+  cannon-es: ^0.19.0
   lil-gui: ^0.16.1
   popmotion: ^11.0.3
   postprocessing: ^6.26.4
@@ -34,6 +35,7 @@ dependencies:
   '@vueuse/core': 8.3.1_vue@3.2.33
   '@vueuse/integrations': 8.3.1_qrcode@1.5.0+vue@3.2.33
   '@xstate/vue': 2.0.0_vue@3.2.33+xstate@4.31.0
+  cannon-es: 0.19.0
   lil-gui: 0.16.1
   popmotion: 11.0.3
   postprocessing: 6.26.4_three@0.139.2
@@ -504,6 +506,10 @@ packages:
   /camelcase/5.3.1:
     resolution: {integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==}
     engines: {node: '>=6'}
+    dev: false
+
+  /cannon-es/0.19.0:
+    resolution: {integrity: sha512-fu9UXrjFmAQXq3JyBVPbtyc53suX+QHzikZEJykxroVNnIx1xHq0jZenK8qwhdwbBAtDL9n/47TyPELuSQwZuA==}
     dev: false
 
   /chainsaw/0.1.0:

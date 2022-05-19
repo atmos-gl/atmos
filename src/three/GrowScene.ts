@@ -36,7 +36,6 @@ export class GrowScene extends BaseScene {
         this.camera.position.set(-5, 4, 10)
         this.camera.lookAt(0, 0, 0)
         this.camera.fov = 30
-        // Temporary test
         const {loader} = growLoader
 
         this.tomato = new Tomato(this.tomatoParams, growLoader.loader.getFBX('tomato'))
@@ -54,8 +53,12 @@ export class GrowScene extends BaseScene {
     }
 
     private onStep(state: any) {
-        if (state.value === 'grow') {
+        console.log(state.value)
+        if (state.value === 'growReady') {
             this.transitionToGrow()
+        }
+        if (state.value === 'grow') {
+            this.growTomatoes()
         }
     }
 
@@ -98,6 +101,9 @@ export class GrowScene extends BaseScene {
                 )
             }
         })
+    }
+
+    async growTomatoes() {
         await this.greenhouse.grow()
         this.greenhouse.openDoor()
         this.camera.move({

@@ -1,6 +1,6 @@
 import {createMachine, interpret} from 'xstate';
 const sequenceMachine =
-/** @xstate-layout N4IgpgJg5mDOIC5QFEAeAHMAnAlmAdgMZgB0O+ALlgPYQCuhFO1+AxPmKhYqOtbDiYseIVIgBMARgCsJcQGYALPIAckxeMUB2afPkAaEAE9EM+SQCcVi1snjpWgGwrxjxwF93htJlwFiJLBgFHToAArUAO7YAEIANtSEANYk1Jj4ACLU1FisENlYAPJJInwCQvgiYgiKKiokkvLiKgAMCtLSjtLiToYmCJI6ltaOtU0W4haqnt4Y2HhEpEEh4VGxCckk6HF0UADCheKshNTixaX8gsyVSKKIWoqOJC1aauLvFrWKLSp9pkPWCyjFTjSbTLwgHzzfxLYKhCLRLDxRIpba7ADqAEMKNhWJFsdhzrcyldhLdqpIWi0ni0plolIpFLolJI-gMASMxpMwSoZpC5n5FoE4atEcjNnw6FgAGLYJhxHAAL1xADM5TgFcqiiViZcKlVTJMtM8tG0HkDpBYZGzBrJAcDQVNeRCoYKAst4WskRtUXQKABVLCY-A4OgAW1YUuDobDRN4euuBoGjnkLRIDpslpUFipjhtHKsDu5Tr5roWATiYExADcwOicklWOgABYsMBhTE4LCQC7lRPkxDdNnaO3WaSSCwgjTNUsC8ukCjUMPY6g+OLB7HXViwCiYrAUAAqS5XvdJN1A1UUkkkJBUjlsU+njmvw4LFnHk6U72ds1885IhB0DuS5KmAR7LourCLhB1BxiAJL6gOCCuE8kgqDodiDE0kj3nmxj3EywxWPIVp6FaKazn+MIkFANCRKwtFRHBCH9heg7iDaLQyEREyOM0jK0j+-JUUKJxxJWjDHNQ4lgIwPa6n2ZJsch77poME5tC046WgY+EDFxo5WK4-HfJOngQvgtBwCIZbUeQVC0AwiHxop553DUHF6eoxqAq0Wj2A8XHyJR0JCh6orrCiqTpFkOSns57njGptgTA4Uj0loNqOBYPEPKmgnONIIVurCKwIpFEo7Pshzxax7mWoozx0iRgxTCmWU5YCeVUpOhXFf+4Xld6UVolAWI4lgtVKe5KiEa0jxqFeZE4R1uXKD1d4qEVLpztRg1euKqLUFKsr7hqoGTQpZ5JtegwkHolotPlEwTp5-Q4Z11jdQVW39XtIpDYdWx+oG0bhlNbkUhosjXrYjzSLNjx4e92Vrc9m3bb+oXugDB0+hDSaprIz4pQF6XyJlelAjx6EyC0ihTBof1CpWNZ1g2BNIYMjhpqmjw9A646rV160-eIzMBNBK5rhuCUsdNFKfHISgU8yi0M8OqP2uo461E9EukIBwFhqB4EnldCXVA4bL0p9Vi1DzE70kJtlCoxkSc8pqj1K1zivKo6ga3pts8Q7XE2OCWMlQB0kSdwFt1RSlokEy8h2PNej029pg9Tx8gON0jz+QbgTNugkQxFEcSe+5V6NRoNj0w8ug5oynG0nnBeaPe4s7SJxA1xSvx6QoPEOPSaF3j05nuEAA */
+/** @xstate-layout N4IgpgJg5mDOIC5QFEAeAHMAnAlmAdgMZgB0O+ALlgPYQCuhFO1+AxPmKhYqOtbDiYseIVIgBMARgCsJcQGYALPIAci8dOniA7ADZNAGhABPRDMUkADNcuTt26ZYfjL4gL5ujaTLgLESsGAUdOgACtQA7tgAQgA21IQA1iTUmPgAItTUWKwQWVgA8okifAJC+CJiCIoqKiSS8jr68pLitQ1Gpgh2ulY2OgCcigMqWloeXhjYeESkgcFhkTHxSSTosXRQAMIF4qyE1OJFJfyCzBVIoojair1OKq2W0najurqdZnp91oPDoxruTwgbzTPxzIIhcJRLBxBLJdabADqAEMKNhWBFUdhjpdSmdhJcqpJrHcBqpxIplLoVNoBtoPt0vjZXLS-mNAZMfDN-PNIUsYSt4dQ6FgAGLYJixHAAL3RADMJTgpbLCsVcadypUzOI6VZtJZ5NodA0nooGT1vrZahS1C0VBNgVNfLMAhDFtDYat0HQKABVLDI-A4OgAW1YIsDwZDON4GvOWu6unklhIuhqmjJUlpMnNTJskmtNWUqgdIOd-liYGRADcwIjsolWOgABYsMChZE4LCQE5leOExBaBmKPM-Fo1fWU0tO7mkCjUEOo6jeWKB1HnViwCjIrAUAAqC6XvfxF1AVUUkkkJBUum0kgGD5qtkNw9HrnHNMsU6BZdnJEIdBbguMpgAei7zqw87gdQMYgHimoDgg4hvPUNKOBSDS3to8gMjcdw2Ia4gaFoAzTlyYIkFANARAASlWEDGJu267gA4tRx4IWeg7iOatj4dYKhtNIAySBekhkaCLoHLElaMPs1AyWAjA9uqfYElxCBDiY2o3t8l7mM86j2j+M4UVRkSsOZESwfB-YaTqvQqPIwmPLSQyONIvGSPxX6XtIoxDNoHhAvgtBwCIv4UeQVC0AwnFwXG6lXNUPHad0NSWpYTnWNISa1BJ5bggsULLHCKRpJk2QcXZyWNAMqZ2HY6hGjcxL0mldgpsyyZaFlrUFX+vLuqVXobNsuzVUlVTCRYlhkjctRqL1qVdJ1lo9S4NIXgNFFDSVAplQiUAomiWCTaeyVLdeX76vIuiuPdt65l1+aODcNSjIoO0unt-KekKIriruSogWdqkngm+naCQ8h3a9qhZThHX6utTybf1JnkT9br7f9aw+v6kahudkPqLIl5GoorhUwWbTPajvVbeJmOSTyON-YKJOIT1DV3jcOg6BeTgMrqzK2FobzyGSxmcqzpCVjWdYNlzGk9CmybDER0g3CMNz091aN9Re8jff4UFLiua7xbZU1mEMchKKosPaCoj5Gq+L3WM5I7Ia7Jss4V-6AVBIFgUe4PxdN7VdDcnvvkaRHEqRAd-lZdHIgxKu1bU9S0tSUiYcM2G4VTloUo0gkPqbpDSbJ3ARzV55fnIrsGhOSYDPdZodbYccNERehU7o1cBK2ETRJEsRZ0SKMPBoxIPGSD7mm0nsmk4Ba0tII9WdPnzyCQijSC0lhJllxHSN3q295a9iOC0sP+7LhV790KgMgoJAPt-P8-0RwVuCAA */
 createMachine({
   id: "Experience",
   initial: "introduction",
@@ -69,10 +69,25 @@ createMachine({
     customizeTomato: {
       on: {
         tomatoOk: {
+          target: "growReady",
+        },
+      },
+    },
+    growReady: {
+      on: {
+        startGrow: {
           target: "grow",
         },
       },
     },
+    collect: {
+      on: {
+        collected: {
+          target: "showBowl",
+        },
+      },
+    },
+    showBowl: {},
     grow: {
       on: {
         growOk: {
@@ -80,19 +95,11 @@ createMachine({
         },
       },
     },
-    collect: {
-      on: {
-        collected: {
-          target: "shpwBowl",
-        },
-      },
-    },
-    shpwBowl: {},
   },
 }
   )
 
-sequenceMachine.initial = 'customizeTomato'
+sequenceMachine.initial = 'collect'
 const sequenceManager = interpret(sequenceMachine)
 sequenceManager.start()
 export default sequenceManager

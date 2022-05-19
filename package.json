@@ -14,6 +14,7 @@
     "@vueuse/core": "^8.3.1",
     "@vueuse/integrations": "^8.3.1",
     "@xstate/vue": "^2.0.0",
+    "cannon-es": "^0.19.0",
     "lil-gui": "^0.16.1",
     "popmotion": "^11.0.3",
     "postprocessing": "^6.26.4",
