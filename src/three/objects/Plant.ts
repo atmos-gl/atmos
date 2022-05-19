@@ -1,4 +1,13 @@
-import {AnimationAction, AnimationClip, AnimationMixer, LoopOnce, Mesh, MeshStandardMaterial, Object3D} from 'three';
+import {
+    AnimationAction,
+    AnimationClip,
+    AnimationMixer,
+    Group,
+    LoopOnce,
+    Mesh,
+    MeshStandardMaterial,
+    Object3D
+} from 'three';
 import {BaseScene} from '../BaseScene';
 import {GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
 import {Tomato, TomatoParams} from './Tomato';
@@ -14,9 +23,11 @@ export default class Plant {
     private tomatoParams: TomatoParams;
 
     private tomatoes: Tomato[] = []
+    private tomatoModel: Group;
 
-    constructor(model: GLTF, scene: BaseScene, tomatoParams: TomatoParams) {
+    constructor(model: GLTF, tomatoModel: Group, scene: BaseScene, tomatoParams: TomatoParams) {
         this.model = model
+        this.tomatoModel = tomatoModel
         this.scene = scene
 
         this.object = model.scene.clone()
@@ -43,7 +54,6 @@ export default class Plant {
     }
 
     initTomatoes() {
-        const tomatoModel = growLoader.loader.getFBX('tomato')
         for (const object of this.object.children) {
             if (
                 object.name.includes('Groupe_Tomate')
@@ -51,7 +61,7 @@ export default class Plant {
                 for (const child of object.children) {
                     object.remove(child)
                 }
-                const model = tomatoModel.clone(true)
+                const model = this.tomatoModel.clone(true)
                 model.scale.set(0.7, 0.7, 0.7)
                 model.position.set(0, -4, 0)
                 const tomato = new Tomato(this.tomatoParams, model)

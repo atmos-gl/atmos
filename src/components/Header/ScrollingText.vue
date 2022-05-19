@@ -15,6 +15,7 @@
 
 <style scoped lang="scss">
 .scrolling-text {
+  pointer-events: none;
   &:nth-child(1) {
     animation: title__first 24s infinite linear;
     transform: translateX(-25%);

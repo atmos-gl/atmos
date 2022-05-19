@@ -1,5 +1,4 @@
 import {DoubleSide, Group, Mesh, Object3D} from 'three';
-import {growLoader} from '../../composables/useLoader';
 import ResourcesLoader from "../ResourcesLoader";
 import getGlassMaterial from '../materials/glassMaterial';
 import Plant from './Plant';
@@ -16,6 +15,7 @@ export class Greenhouse {
     private plant1: Plant;
     private plant2: Plant;
     private tomatoParams: TomatoParams;
+    private loader: ResourcesLoader;
 
     constructor(loader: ResourcesLoader, scene: BaseScene, tomatoParams: TomatoParams = {
         long: 1,
@@ -24,6 +24,7 @@ export class Greenhouse {
     }) {
         this.scene = scene
         this.tomatoParams = tomatoParams
+        this.loader = loader
         this.init(loader)
     }
 
@@ -38,7 +39,7 @@ export class Greenhouse {
         this.object = fbx
 
         // Vitres
-        const glassMat = getGlassMaterial(growLoader.loader, {
+        const glassMat = getGlassMaterial(this.loader, {
             side: DoubleSide,
             roughness: 0.01,
             transmission: 0.99,
@@ -59,12 +60,13 @@ export class Greenhouse {
         // this.setDoorsAngle(Math.PI * 3 / 4)
 
         // Add plant
-        const plantModel = growLoader.loader.getGLTF('plant')
-        this.plant1 = new Plant(plantModel, this.scene, this.tomatoParams)
+        const plantModel = this.loader.getGLTF('plant')
+        const tomatoModel = this.loader.getFBX('tomato')
+        this.plant1 = new Plant(plantModel, tomatoModel, this.scene, this.tomatoParams)
         this.plant1.object.position.set(90, 70, 0)
         this.plant1.object.rotation.y = -4
         this.object.add(this.plant1.object)
-        this.plant2 = new Plant(plantModel, this.scene, this.tomatoParams)
+        this.plant2 = new Plant(plantModel, tomatoModel, this.scene, this.tomatoParams)
         this.plant2.object.position.set(-90, 70, 0)
         this.plant2.object.rotation.y = 4
         this.object.add(this.plant2.object)
