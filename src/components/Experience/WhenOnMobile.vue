@@ -75,9 +75,9 @@ onBeforeUnmount(() => (
 
     <Transition name="fade" mode="out-in">
       <div v-if="loading">Loading: {{ percentageProgress }}</div>
-      <Grow v-else-if="['customizeTomato', 'growReady', 'grow', 'collectReady'].includes(step)"
+      <Grow v-else-if="['customizeTomato', 'growReady', 'grow', 'collectReady'].includes(step.toString())"
             :tomato-params="props.tomatoParams"/>
-      <Collect v-else-if="['collect', 'collected', 'share'].includes(step)"
+      <Collect v-else-if="['collect', 'collected', 'share'].includes(step.toString())"
                class="transform h-full w-full transition duration-400"
                :class="{ '-translate-x-1/5': step === 'share' }"
                :progress="holdProgress"
@@ -86,7 +86,7 @@ onBeforeUnmount(() => (
     </Transition>
 
     <Transition name="fade">
-      <div v-if="['customizeTomato', 'tomatoExplanation'].includes(step)"
+      <div v-if="['customizeTomato', 'tomatoExplanation'].includes(step.toString())"
            class="absolute w-full h-full inset-0 center-content bg-imperial/60">
         <div class="max-w-172 text-jade italic text-center">
           Ça se passe sur votre application ! <br>
@@ -94,14 +94,14 @@ onBeforeUnmount(() => (
 <!--          <button @click="sequenceManager.send('tomatoOk');">Heey</button>-->
         </div>
       </div>
-      <div v-else-if="['growReady', 'grow'].includes(step)"
+      <div v-else-if="['growReady', 'grow'].includes(step.toString())"
            class="absolute w-full h-full inset-0">
         <div class="p-12 text-jade font-bold text-5xl">
           <i class="uil uil-clock mr-1"></i>{{ timer }}
 <!--          <button @click="sequenceManager.send('startGrow')">go</button>-->
         </div>
       </div>
-      <div v-else-if="['collectReady', 'collect'].includes(step)"
+      <div v-else-if="['collectReady', 'collect'].includes(step.toString())"
            class="absolute w-full h-full inset-0 center-content transition duration-200"
            :class="{ 'bg-imperial/90': !holdProgress }"
       >
@@ -131,7 +131,7 @@ onBeforeUnmount(() => (
           </button>
         </div>
       </div>
-      <div v-else-if="['share'].includes(step)"
+      <div v-else-if="['share'].includes(step.toString())"
            class="absolute w-1/2 h-full top-0 right-0">
         <div class="p-16 text-jade flex flex-col h-full justify-center max-w-156 gap-6">
           <h1 class="font-title text-10xl font-bold">Bravo</h1>
