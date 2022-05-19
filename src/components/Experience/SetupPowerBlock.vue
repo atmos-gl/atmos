@@ -46,6 +46,11 @@ const step = computed(() => {
           <strong>dans le respect des traditions locales</strong>.
         </p>
       </StepTip>
+      <StepTip :tip="scene.trayUi" :icon="localIcon">
+        <p>
+          Le tiroir de fertilisant peut contenir jusqu'à 4 types de fertilisant différents. Cela permet à la serre de choisir le meilleur produit en fonction de ce que vous y cultivez.
+        </p>
+      </StepTip>
     </div>
   </main>
 </template>

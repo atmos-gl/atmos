@@ -1,8 +1,9 @@
-import {MathUtils, Mesh, Object3D, Vector3} from 'three';
+import {MathUtils, Mesh, Object3D, Vector2, Vector3} from 'three';
 import {BaseScene} from '../BaseScene';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import CustomDragControls from '../custom/CustomDragControls';
-import {animateAsync} from '../../utils';
+import {animateAsync, delay} from '../../utils';
+import useUiTip, {UiTip} from '../three-composables/useUiTip';
 
 export default class Tray {
     public object: Object3D;
@@ -15,6 +16,8 @@ export default class Tray {
 
     private openX = 303
 
+    public ui: UiTip
+
     constructor(object: Object3D, scene: BaseScene) {
         this.object = object
         this.scene = scene
@@ -26,6 +29,8 @@ export default class Tray {
 
     init() {
         this.initialPos = this.object.position.clone()
+        const handle = this.object.getObjectByName('Cylinder_4')
+        this.ui = useUiTip(handle, this.scene, new Vector2(0, 0))
     }
 
     setupControls() {
@@ -40,6 +45,11 @@ export default class Tray {
         )
         this.controls.transformGroup = true
         this.controls.deactivate()
+
+        this.controls.addEventListener('dragstart', async () => {
+            await delay(200)
+            this.ui.hide()
+        })
         this.controls.addEventListener('drag', (e) => {
             this.onDrag()
         })
@@ -50,6 +60,7 @@ export default class Tray {
 
     enable() {
         this.controls.activate()
+        this.ui.show()
     }
     disable() {
         this.controls.dispose()

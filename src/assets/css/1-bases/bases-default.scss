@@ -10,9 +10,9 @@ body {
   box-sizing: border-box;
 }
 
-section {
-  @apply py-52;
-}
+//section {
+//  @apply py-52;
+//}
 
 #app {
   @apply h-full;
@@ -50,6 +50,12 @@ section {
     px-6
     py-2
     text-center
+    transition
+    duration-200
+    hover:(
+    bg-jade
+    text-anthracite
+  )
   ;
 }
 
