@@ -5,3 +5,7 @@
 .absolute-y-center {
   @apply absolute top-1/2 transform -translate-y-1/2;
 }
+
+.center-content {
+  @apply flex items-center justify-center;
+}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import usePair from '../../composables/usePair'
-import { computed, ref } from 'vue'
-import { useQRCode } from '@vueuse/integrations/useQRCode'
+import {computed, ref} from 'vue'
+import {useQRCode} from '@vueuse/integrations/useQRCode'
 
 const emit = defineEmits(['pair'])
 
@@ -26,12 +26,17 @@ const hasPhone = ref(false)
 <template>
   <div class="text-white h-full flex flex-col items-center justify-center p-12">
     <Transition name="fade-quick" mode="out-in">
-      <div class="flex flex-col items-center justify-center" v-if="hasPhone">
-        {{pairUrl}}
-        <img :src="qrCode" alt="Pair with id">
-      </div>
+      <section class="flex flex-col items-center justify-center max-w-96 text-center" v-if="hasPhone">
+        <p class="text-lg">Pour connecter votre téléphone, scannez ce QRcode avec votre appareil photo.</p>
+        <div class="my-8 border-2 border-white rounded-lg">
+          <img :src="qrCode" alt="Pair with id">
+        </div>
+        <p class="italic">Alternativement, vous pouvez ouvrir <br>
+          <span class="underline">www.atmos-serre.com</span> <br>
+          sur votre téléphone.</p>
+      </section>
       <div class="flex flex-col items-center justify-center" v-else>
-        <h2 class="text-5xl font-title font-bold">Vous êtes en retard...</h2>
+        <h2 class="text-5xl font-title font-bold mb-6">Vous êtes en retard...</h2>
         <section class="max-w-172">
           <p class="text-center font-light leading-8">En retard pour le travail, vous quittez précipitemment votre
             domicile.

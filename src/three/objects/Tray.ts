@@ -22,7 +22,6 @@ export default class Tray {
         this.object = object
         this.scene = scene
 
-
         this.init()
         this.setupControls()
     }
