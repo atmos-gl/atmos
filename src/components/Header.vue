@@ -4,7 +4,7 @@ import HeaderScene from './Header/HeaderScene.vue';
 import ScrollingText from './Header/ScrollingText.vue';
 
 const {loading, percentageProgress} = headerLoader
-// headerLoader.load()
+headerLoader.load()
 
 const scrollingLines = 4
 </script>
@@ -22,20 +22,20 @@ const scrollingLines = 4
       </ul>
     </nav>
 
-  <div class="o-container flex text-jade flex-1 py-32">
-    <div class="absolute-y-center text-customBig font-title font-bold uppercase leading-none flex flex-col opacity-15">
+  <div class="o-container flex text-jade flex-1 pt-20 pb-32">
+    <div class="absolute-y-center text-customBig font-title font-bold uppercase leading-none flex flex-col opacity-15 -z-1">
       <ScrollingText v-for="line in scrollingLines"/>
     </div>
 
-    <div class="w-2/5">
+    <div class="w-2/5 pt-20">
       <h2 class="font-title font-bold text-8xl">Atmos</h2>
       <h3 class="my-6 text-4xl">La serre qui réduit l'effet de serre</h3>
       <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
     </div>
     <div class="w-3/5">
-<!--      <div v-if="loading">Loading: {{ percentageProgress }}</div>-->
+      <div v-if="loading">Loading: {{ percentageProgress }}</div>
 
-<!--      <HeaderScene v-else/>-->
+      <HeaderScene v-else/>
     </div>
   </div>
   </header>

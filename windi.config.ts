@@ -20,6 +20,12 @@ export default defineConfig({
                 customBig: '150px',
                 customWide: '257px'
             },
+            height: {
+                'introModels': '320px'
+            },
+            maxWidth: {
+                'introModels': '456px',
+            },
             opacity: {
                 '15': '0.15'
             }
