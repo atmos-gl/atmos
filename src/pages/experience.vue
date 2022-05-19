@@ -3,17 +3,24 @@ import SetupPowerBlock from '../components/Experience/SetupPowerBlock.vue';
 import {growLoader, powerBlockLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
-import {ref, watch} from 'vue';
+import {reactive, ref, watch} from 'vue';
 import PairPhone from '../components/Experience/PairPhone.vue';
 import Link from '@paapi/client/dist/Link';
 import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
 import Introduction from '../components/Experience/Introduction.vue';
+import {TomatoColor, TomatoParams} from '../three/objects/Tomato';
 
 const {loading, percentageProgress} = powerBlockLoader
 if (!powerBlockLoader.ready.value) {
   powerBlockLoader.load()
 }
 const {state, send} = useActor(sequenceManager)
+
+const tomatoParams: TomatoParams = reactive({
+  long: 1,
+  size: 1,
+  color: TomatoColor.red
+})
 
 const link = ref<Link>(null)
 const onPair = (l: Link) => {
@@ -29,6 +36,11 @@ const onPair = (l: Link) => {
   link.value.on('sequence:send', event => {
     sequenceManager.send(event)
   })
+  link.value.on('update:tomato', (newParams: TomatoParams) => {
+    tomatoParams.long = newParams.long
+    tomatoParams.size = newParams.size
+    tomatoParams.color = newParams.color
+  })
   updateStateToLink()
 }
 
@@ -43,10 +55,13 @@ watch(loading, newVal => {
   <div v-if="loading">Loading: {{ percentageProgress }}</div>
   <div v-else class="experience-wrapper theme-gradient h-full">
     <Transition name="fade" mode="out-in">
-      <Introduction v-if="state.value === 'introduction'" @next="send('next')" />
+      <Introduction v-if="state.value === 'introduction'" @next="send('next')"/>
       <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair"/>
-      <WhenOnMobile v-else-if=" ['tomatoExplanation', 'customizeTomato', 'growReady','grow', 'collect'].includes(state.value)"
-                    :step="state.value"/>
+      <WhenOnMobile
+          v-else-if=" ['tomatoExplanation', 'customizeTomato', 'growReady','grow', 'collect'].includes(state.value)"
+          :step="state.value"
+          :tomato-params="tomatoParams"
+      />
       <SetupPowerBlock v-else class="w-full h-full"/>
     </Transition>
   </div>

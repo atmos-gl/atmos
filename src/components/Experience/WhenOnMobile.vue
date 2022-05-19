@@ -5,9 +5,11 @@ import Grow from './Grow.vue'
 import {growLoader} from '../../composables/useLoader';
 import sequenceManager from '../../managers/sequenceManager';
 import Collect from './Collect.vue';
+import {TomatoParams} from '../../three/objects/Tomato';
 
 const props = defineProps<{
-  step: StateValue
+  step: StateValue,
+  tomatoParams: TomatoParams
 }>()
 const {step} = toRefs(props)
 const {loading, percentageProgress} = growLoader
@@ -19,7 +21,7 @@ const {loading, percentageProgress} = growLoader
     <div v-if="['grow', 'growReady', 'customizeTomato', 'collect'].includes(step)" class="">
       <Transition name="fade" mode="out-in">
         <div v-if="loading">Loading: {{ percentageProgress }}</div>
-        <Grow v-else-if="['customizeTomato', 'growReady', 'grow'].includes(step)"/>
+        <Grow v-else-if="['customizeTomato', 'growReady', 'grow'].includes(step)" :tomato-params="props.tomatoParams" />
         <Collect v-else-if="['collect'].includes(step)"/>
       </Transition>
     </div>
