@@ -5,13 +5,13 @@ import Card from './Card.vue';
 import data from "../../data/poiData";
 import {animate} from "popmotion";
 import {animateAsync} from "../../utils";
+import useScene from "../../composables/useScene";
 
 const isOpen = ref(false)
 const poiDesc = ref('Atmos')
 const showBgText = ref(true)
 
-const canvas = ref(null);
-const app = new ExplorePoi(poiDesc, showBgText)
+const { scene: app, canvas } = useScene<ExplorePoi>(new ExplorePoi(poiDesc, showBgText))
 
 const currentPoi = ref(null)
 app.onSelectPoi = index => {
@@ -42,11 +42,6 @@ const processExplore = async () => {
   // Disable scroll
   document.body.classList.add('overflow-hidden')
 }
-
-onMounted(() => {
-  app.init(canvas.value)
-  app.run()
-})
 </script>
 <template>
   <section ref="block" class="relative py-0 h-screen">
