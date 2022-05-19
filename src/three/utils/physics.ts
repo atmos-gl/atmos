@@ -9,6 +9,11 @@ export function createTrimesh(geometry: BufferGeometry) {
     const indices = Object.keys(vertices).map(Number)
     return new Trimesh(vertices as [], indices)
 }
+// export function createTrimesh(geometry: BufferGeometry) {
+//     const vertices = geometry.attributes.position.array
+//     const indices = Object.keys(vertices).map(Number)
+//     return new Trimesh(vertices as [], indices)
+// }
 
 
 // MIT License

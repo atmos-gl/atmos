@@ -5,13 +5,13 @@ import {
     MeshPhongMaterial,
     PlaneGeometry,
     PointLight,
-    PointLightHelper,
+    PointLightHelper, PolyhedronGeometry,
     Vector3
 } from 'three';
 import {BaseScene} from './BaseScene';
 import {Tomato, TomatoParams} from './objects/Tomato';
 import {growLoader} from '../composables/useLoader';
-import {World, Vec3, Body, Plane, Sphere} from 'cannon-es'
+import {World, Vec3, Body, Plane, Sphere, ConvexPolyhedron} from 'cannon-es'
 import CannonDebugRenderer, {createTrimesh} from './utils/physics';
 
 type PhysicalTomato = {
@@ -62,7 +62,10 @@ export class CollectScene extends BaseScene {
         })
 
         this.createTomato(new Vector3(
-            3, 0, 0
+            1, 0, 0
+        ))
+        this.createTomato(new Vector3(
+            -1, 4, 0
         ))
 
         const planeGeometry = new PlaneGeometry(25, 25)
@@ -89,6 +92,8 @@ export class CollectScene extends BaseScene {
         this.physicsDebug = new CannonDebugRenderer(this.scene, this.world)
         this.enableControls()
         this.setupPostProcessing()
+
+        window.heee = this.dropTomatoes.bind(this)
     }
 
     private onStep(state: any) {
@@ -102,7 +107,11 @@ export class CollectScene extends BaseScene {
         this.scene.add(tomato.mesh)
         const tomatoGeometry = tomato.bodyWorldGeometry
         tomatoGeometry.scale(scale, scale, scale)
+        tomatoGeometry.computeBoundingSphere()
         const tomatoShape = createTrimesh(tomatoGeometry)
+        const polyhedronGeometry = new PolyhedronGeometry(null, null, 3, 5)
+        // const tomatoShape = new ConvexPolyhedron()
+        // tomatoShape.sca
         const tomatoBody = new Body({mass: 1})
         tomatoBody.addShape(tomatoShape)
         // const tomatoPosition = tomato.body.localToWorld(tomato.body.position.clone())
