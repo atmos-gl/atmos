@@ -25,6 +25,11 @@ const onClosePoi = () => {
 
 const block = ref<HTMLElement>(null)
 
+const processDiscover = () => {
+  // Enabled scroll
+  document.body.classList.remove('overflow-hidden')
+}
+
 const processExplore = async () => {
   app.processExplore()
   isOpen.value = true
@@ -61,6 +66,7 @@ const processExplore = async () => {
         <RouterLink v-if="isOpen"
            to="/experience"
            class="absolute right-16 bottom-12 bg-bg border border-white text-lg py-4 px-14 rounded-full cursor-pointer"
+           @click="processDiscover"
         >Démarrer l'expérience</RouterLink>
       </transition>
     </div>
