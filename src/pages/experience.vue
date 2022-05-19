@@ -7,6 +7,7 @@ import {ref, watch} from 'vue';
 import PairPhone from '../components/Experience/PairPhone.vue';
 import Link from '@paapi/client/dist/Link';
 import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
+import Introduction from '../components/Experience/Introduction.vue';
 
 const {loading, percentageProgress} = powerBlockLoader
 if (!powerBlockLoader.ready.value) {
@@ -43,12 +44,7 @@ watch(loading, newVal => {
   <div v-if="loading">Loading: {{ percentageProgress }}</div>
   <div v-else class="experience-wrapper theme-gradient h-full">
     <Transition name="fade" mode="out-in">
-      <div v-if="state.value === 'introduction'" class="text-white">
-        <p>
-          Intro à mettre en forme ici
-        </p>
-        <button @click="send('next')">Next</button>
-      </div>
+      <Introduction v-if="state.value === 'introduction'" @next="send('next')" />
       <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair"/>
       <WhenOnMobile v-else-if=" ['tomatoExplanation', 'customizeTomato', 'growReady','grow', 'collect'].includes(state.value)"
                     :step="state.value"/>
