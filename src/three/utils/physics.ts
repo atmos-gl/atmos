@@ -1,19 +1,61 @@
-import {BufferGeometry} from 'three';
-import {Trimesh} from 'cannon-es';
+import {BufferGeometry, Vector3} from 'three';
+import {ConvexPolyhedron, Trimesh} from 'cannon-es';
 
 import * as THREE from 'three'
 import * as CANNON from 'cannon-es'
+import {mergeVertices} from 'three/examples/jsm/utils/BufferGeometryUtils';
 
 export function createTrimesh(geometry: BufferGeometry) {
     const vertices = geometry.attributes.position.array
     const indices = Object.keys(vertices).map(Number)
     return new Trimesh(vertices as [], indices)
 }
-// export function createTrimesh(geometry: BufferGeometry) {
-//     const vertices = geometry.attributes.position.array
-//     const indices = Object.keys(vertices).map(Number)
-//     return new Trimesh(vertices as [], indices)
+// export function createPolyHedron(geometry: BufferGeometry) {
+//
+//     const position = geometry.attributes.position.array
+//     const points: CANNON.Vec3[] = []
+//     for (let i = 0; i < position.length; i += 3) {
+//         points.push(
+//             new CANNON.Vec3(position[i], position[i + 1], position[i + 2])
+//         )
+//     }
+//     const faces: number[][] = []
+//     for (let i = 0; i < position.length / 3; i += 3) {
+//         faces.push([i, i + 1, i + 2])
+//     }
+//     const normals = []
+//     const normal = geometry.attributes.normal.array
+//     for (let i = 0; i < normal.length; i += 3) {
+//         normals.push(
+//             new CANNON.Vec3(normal[i], normal[i + 1], normal[i + 2])
+//         )
+//     }
+//     return new CANNON.ConvexPolyhedron({
+//         vertices: points,
+//         faces,
+//         normals
+//     })
 // }
+export function createPolyHedron(geometry: BufferGeometry){
+    geometry = geometry.clone()
+    geometry.deleteAttribute('normal');
+    //if not planning on putting textures on the mesh, you can delete the uv mapping for better vertice merging
+    geometry.deleteAttribute('uv');
+    geometry = mergeVertices(geometry);
+    //if using import statement
+    //geometry = BufferGeometryUtils.mergeVertices(geometry);
+    let position = geometry.attributes.position.array;
+    let geomFaces = geometry.index.array;
+    const points = [];
+    const faces = [];
+    for(let i = 0;i<position.length;i+=3){
+        points.push(new CANNON.Vec3(position[i],position[i+1],position[i+2]))
+    }
+    for(let i = 0;i<geomFaces.length;i+=3){
+        faces.push([geomFaces[i],geomFaces[i+1],geomFaces[i+2]])
+    }
+    return new CANNON.ConvexPolyhedron({vertices: points, faces});
+}
 
 
 // MIT License

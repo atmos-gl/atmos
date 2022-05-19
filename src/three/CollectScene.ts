@@ -5,14 +5,14 @@ import {
     MeshPhongMaterial,
     PlaneGeometry,
     PointLight,
-    PointLightHelper, PolyhedronGeometry,
+    PointLightHelper, PolyhedronGeometry, SphereGeometry,
     Vector3
 } from 'three';
 import {BaseScene} from './BaseScene';
 import {Tomato, TomatoParams} from './objects/Tomato';
 import {growLoader} from '../composables/useLoader';
 import {World, Vec3, Body, Plane, Sphere, ConvexPolyhedron} from 'cannon-es'
-import CannonDebugRenderer, {createTrimesh} from './utils/physics';
+import CannonDebugRenderer, {createPolyHedron, createTrimesh} from './utils/physics';
 
 type PhysicalTomato = {
     tomato: Tomato
@@ -62,7 +62,7 @@ export class CollectScene extends BaseScene {
         })
 
         this.createTomato(new Vector3(
-            1, 0, 0
+            2, 0, 0
         ))
         this.createTomato(new Vector3(
             -1, 4, 0
@@ -105,19 +105,27 @@ export class CollectScene extends BaseScene {
         tomato.mesh.scale.setScalar(scale)
         tomato.mesh.position.copy(position)
         this.scene.add(tomato.mesh)
-        const tomatoGeometry = tomato.bodyWorldGeometry
+        const geometry = tomato.bodyWorldGeometry
+        geometry.computeBoundingSphere()
+        const boundingsphere = geometry.boundingSphere
+        console.log(boundingsphere.center)
+        const tomatoGeometry = new SphereGeometry(boundingsphere.radius)
         tomatoGeometry.scale(scale, scale, scale)
-        tomatoGeometry.computeBoundingSphere()
-        const tomatoShape = createTrimesh(tomatoGeometry)
-        const polyhedronGeometry = new PolyhedronGeometry(null, null, 3, 5)
+        // const tomatoShape = createPolyHedron(tomatoGeometry)
+        let ratio = this.tomatoParams.long / this.tomatoParams.size
+        console.log(ratio)
+        const tomatoShape = new Sphere(boundingsphere.radius * scale)
+        console.log(boundingsphere.radius, this.tomatoParams.long / this.tomatoParams.size)
+        // const polyhedronGeometry = new PolyhedronGeometry(null, null, 3, 5)
         // const tomatoShape = new ConvexPolyhedron()
         // tomatoShape.sca
         const tomatoBody = new Body({mass: 1})
         tomatoBody.addShape(tomatoShape)
         // const tomatoPosition = tomato.body.localToWorld(tomato.body.position.clone())
-        tomatoBody.position.x = tomato.mesh.position.x
-        tomatoBody.position.y = tomato.mesh.position.y
-        tomatoBody.position.z = tomato.mesh.position.z
+        const spherePosition = boundingsphere.center.multiplyScalar(scale)
+        tomatoBody.position.x = tomato.mesh.position.x + spherePosition.x
+        tomatoBody.position.y = tomato.mesh.position.y + spherePosition.y
+        tomatoBody.position.z = tomato.mesh.position.z + spherePosition.z
         this.world.addBody(tomatoBody)
         this.tomatoes.push({
             tomato,
@@ -149,7 +157,11 @@ export class CollectScene extends BaseScene {
         // this.mixer.update(this.clock.getDelta())
         const deltaTime = this.clock.getDelta()
         if (this.dropped) {
-            this.world.step(deltaTime)
+            try {
+                this.world.step(deltaTime)
+            } catch (e) {
+                console.log(e)
+            }
             this.tomatoes.forEach(p => {
                 this.updateTomato(p)
             })

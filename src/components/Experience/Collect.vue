@@ -7,7 +7,7 @@ import {CollectScene} from '../../three/CollectScene';
 
 const tomato: TomatoParams = reactive({
   long: 0.8,
-  size: 1,
+  size: 1.4,
   color: TomatoColor.red
 })
 const { scene, canvas } = useScene(new CollectScene(tomato))
