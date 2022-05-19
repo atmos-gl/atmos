@@ -5,13 +5,13 @@ import Card from './Card.vue';
 import data from "../../data/poiData";
 import {animate} from "popmotion";
 import {animateAsync} from "../../utils";
+import useScene from "../../composables/useScene";
 
 const isOpen = ref(false)
 const poiDesc = ref('Atmos')
 const showBgText = ref(true)
 
-const canvas = ref(null);
-const app = new ExplorePoi(poiDesc, showBgText)
+const { scene: app, canvas } = useScene<ExplorePoi>(new ExplorePoi(poiDesc, showBgText))
 
 const currentPoi = ref(null)
 app.onSelectPoi = index => {
@@ -24,6 +24,11 @@ const onClosePoi = () => {
 }
 
 const block = ref<HTMLElement>(null)
+
+const processDiscover = () => {
+  // Enabled scroll
+  document.body.classList.remove('overflow-hidden')
+}
 
 const processExplore = async () => {
   app.processExplore()
@@ -42,11 +47,6 @@ const processExplore = async () => {
   // Disable scroll
   document.body.classList.add('overflow-hidden')
 }
-
-onMounted(() => {
-  app.init(canvas.value)
-  app.run()
-})
 </script>
 <template>
   <section ref="block" class="relative py-0 h-screen">
@@ -66,6 +66,7 @@ onMounted(() => {
         <RouterLink v-if="isOpen"
            to="/experience"
            class="absolute right-16 bottom-12 bg-bg border border-white text-lg py-4 px-14 rounded-full cursor-pointer"
+           @click="processDiscover"
         >Démarrer l'expérience</RouterLink>
       </transition>
     </div>

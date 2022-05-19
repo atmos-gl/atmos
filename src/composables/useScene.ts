@@ -1,7 +1,7 @@
 import {BaseScene} from '../three/BaseScene';
 import {onBeforeUnmount, onMounted, ref} from 'vue';
 
-export default function useScene(scene: BaseScene) {
+export default function useScene<T extends BaseScene>(scene: T) {
     const canvas = ref(null)
     const appReady = ref(false)
 

@@ -6,7 +6,6 @@ import {Ref} from "vue";
 import {createExpoIn, mirrorEasing, animate} from "popmotion";
 
 export class ExplorePoi extends BaseScene {
-
     private pointLight: PointLight;
     private explorePoiObject: ExploreGreenHouse;
     private labelRenderer: CSS2DRenderer;
@@ -33,6 +32,7 @@ export class ExplorePoi extends BaseScene {
     private secondGreenHouseInitialPos: Vector3;
     private secondPipe: Object3D;
     private secondPipeInitialPos: Vector3;
+    private ambientLight: AmbientLight;
 
     constructor(poiDesc: Ref<string>, showBgText: Ref<boolean>) {
         super();
@@ -44,8 +44,8 @@ export class ExplorePoi extends BaseScene {
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
 
-        // this.ambientLight = new AmbientLight('#ffffff', 0)
-        // this.scene.add(this.ambientLight)
+        this.ambientLight = new AmbientLight('#ffffff', 0.2)
+        this.scene.add(this.ambientLight)
 
         this.pointLight = new PointLight('#fff', 0.9)
         this.pointLight.position.x = 2
@@ -218,6 +218,7 @@ export class ExplorePoi extends BaseScene {
     }
 
     animate() {
+        if (this.disposed) return
         this.explorePoiObject.animate(this.clock.getDelta())
 
         this.labelRenderer.render( this.scene, this.camera );

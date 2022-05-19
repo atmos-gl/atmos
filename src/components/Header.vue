@@ -30,7 +30,7 @@ const scrollingLines = 4
     <div class="w-2/5 pt-20">
       <h2 class="font-title font-bold text-8xl">Atmos</h2>
       <h3 class="my-6 text-4xl">La serre qui réduit l'effet de serre</h3>
-      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
+      <p>Atmos, votre serre connecté vous faclite le quotidien en adoptant une démarche écologgique et durable. Manger sain et varié deviens, une priorité.</p>
     </div>
     <div class="w-3/5">
       <div v-if="loading">Loading: {{ percentageProgress }}</div>

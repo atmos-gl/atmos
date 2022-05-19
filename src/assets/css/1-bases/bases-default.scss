@@ -3,16 +3,12 @@ body, html {
 }
 
 body {
-  @apply bg-bg font-core text-pearl;
+  @apply bg-bg font-core text-pearl overflow-x-hidden;
 }
 
 * {
   box-sizing: border-box;
 }
-
-//section {
-//  @apply py-52;
-//}
 
 #app {
   @apply h-full;
