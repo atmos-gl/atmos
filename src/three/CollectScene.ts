@@ -1,5 +1,5 @@
 import {
-    AmbientLight,
+    AmbientLight, DoubleSide, Euler,
     Group,
     Mesh,
     MeshPhongMaterial,
@@ -50,11 +50,17 @@ export class CollectScene extends BaseScene {
         this.scene.add(this.pointLight)
         this.scene.add(new PointLightHelper(this.pointLight))
 
-        this.camera.position.set(-5, 4, 10)
-        this.camera.lookAt(0, 0, 0)
+        this.camera.position.set(30, 0, -30)
+        this.camera.lookAt(0, -20, 0)
         const {loader} = growLoader
 
-        this.tomatoModel = growLoader.loader.getFBX('tomato')
+        const cart = loader.getGLTF('cart').scene
+        console.log(cart)
+        cart.scale.setScalar(0.3)
+        cart.position.y = -20
+        this.scene.add(cart)
+
+        this.tomatoModel = loader.getFBX('tomato')
 
         // physics
         this.world = new World({
@@ -67,36 +73,67 @@ export class CollectScene extends BaseScene {
         this.createTomato(new Vector3(
             -1, 4, 0
         ))
-
-        const planeGeometry = new PlaneGeometry(25, 25)
-        const planeMesh = new Mesh(planeGeometry, new MeshPhongMaterial())
-        planeMesh.rotateX(-Math.PI / 2)
-        planeMesh.position.y = -8
-        this.scene.add(planeMesh)
-        const planeShape = new Plane()
-        const planeBody = new Body({mass: 0})
-        planeBody.addShape(planeShape)
-        planeBody.quaternion.set(
-            planeMesh.quaternion.x,
-            planeMesh.quaternion.y,
-            planeMesh.quaternion.z,
-            planeMesh.quaternion.w,
-        )
-        planeBody.position.set(
-            planeMesh.position.x,
-            planeMesh.position.y,
-            planeMesh.position.z,
-        )
-        this.world.addBody(planeBody)
+        this.createCartGround()
 
         this.physicsDebug = new CannonDebugRenderer(this.scene, this.world)
         this.enableControls()
+
+        this.controls.target.y = -10
         this.setupPostProcessing()
 
+        // @ts-ignore
         window.heee = this.dropTomatoes.bind(this)
     }
 
     private onStep(state: any) {
+    }
+
+    createCartGround() {
+        const createPlane = (
+            position = new Vector3(0, 0, 0),
+            rotation = new Euler(0, 0, 0)
+        ) => {
+            const planeGeometry = new PlaneGeometry(15, 15)
+            const planeMesh = new Mesh(planeGeometry, new MeshPhongMaterial({
+                side: DoubleSide,
+                transparent: true,
+                opacity: 0.3
+            }))
+            planeMesh.position.copy(position)
+            planeMesh.rotation.copy(rotation)
+            this.scene.add(planeMesh)
+            const planeShape = new Plane()
+            const planeBody = new Body({mass: 0})
+            planeBody.addShape(planeShape)
+            planeBody.quaternion.set(
+                planeMesh.quaternion.x,
+                planeMesh.quaternion.y,
+                planeMesh.quaternion.z,
+                planeMesh.quaternion.w,
+            )
+            planeBody.position.set(
+                planeMesh.position.x,
+                planeMesh.position.y,
+                planeMesh.position.z,
+            )
+            this.world.addBody(planeBody)
+        }
+        createPlane(
+            new Vector3(0, -22, 0),
+            new Euler(-Math.PI / 2, 0, 0),
+        )
+        createPlane(
+            new Vector3(-4.5, -18, 0),
+            new Euler(-0.3, Math.PI / 2, 0, 'YXZ'),
+        )
+        createPlane(
+            new Vector3(0, -18, 8),
+            new Euler(0.3, 0, 0),
+        )
+        // createPlane(
+        //     new Vector3(4.5, -18, 0),
+        //     new Euler(0.3, Math.PI / 2, 0, 'YXZ'),
+        // )
     }
 
     private createTomato(position: Vector3) {
@@ -108,14 +145,11 @@ export class CollectScene extends BaseScene {
         const geometry = tomato.bodyWorldGeometry
         geometry.computeBoundingSphere()
         const boundingsphere = geometry.boundingSphere
-        console.log(boundingsphere.center)
         const tomatoGeometry = new SphereGeometry(boundingsphere.radius)
         tomatoGeometry.scale(scale, scale, scale)
         // const tomatoShape = createPolyHedron(tomatoGeometry)
         let ratio = this.tomatoParams.long / this.tomatoParams.size
-        console.log(ratio)
         const tomatoShape = new Sphere(boundingsphere.radius * scale)
-        console.log(boundingsphere.radius, this.tomatoParams.long / this.tomatoParams.size)
         // const polyhedronGeometry = new PolyhedronGeometry(null, null, 3, 5)
         // const tomatoShape = new ConvexPolyhedron()
         // tomatoShape.sca
