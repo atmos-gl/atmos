@@ -62,12 +62,17 @@ onMounted(() => {
         <Card v-for="(card, i) in data" :data="card" :visible="i === currentPoi" @close="onClosePoi" />
       </div>
 
-
+      <transition name="fade">
+        <RouterLink v-if="isOpen"
+           to="/experience"
+           class="absolute right-16 bottom-12 bg-bg border border-white text-lg py-4 px-14 rounded-full cursor-pointer"
+        >Démarrer l'expérience</RouterLink>
+      </transition>
     </div>
     <transition name="fade">
       <p
           v-if="!isOpen"
-          class="absolute-center bg-bg border border-white text-2xl py-6 px-16 rounded-full cursor-pointer font-medium"
+          class="absolute-center bg-bg border border-white text-2xl py-6 px-16 rounded-full cursor-pointer"
          @click="processExplore"
          >Découvrir la serre</p>
     </transition>
