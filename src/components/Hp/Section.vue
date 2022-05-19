@@ -5,7 +5,7 @@ const props = defineProps(['data'])
 </script>
 
 <template>
-  <section class="o-container flex justify-between items-center flex-col" :class="data.isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'">
+  <section class="o-container flex justify-between items-center flex-col py-35" :class="data.isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'">
     <div class="w-full md:w-3/4 lg:w-1/2">
       <div class="relative max-w-introModels mx-auto snake" style="height: 550px">
         <img v-for="img in data.models" :src="img.src" :alt="img.alt" :class="img.classes">

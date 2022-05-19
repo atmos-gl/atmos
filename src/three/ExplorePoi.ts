@@ -6,7 +6,6 @@ import {Ref} from "vue";
 import {createExpoIn, mirrorEasing, animate} from "popmotion";
 
 export class ExplorePoi extends BaseScene {
-
     private pointLight: PointLight;
     private explorePoiObject: ExploreGreenHouse;
     private labelRenderer: CSS2DRenderer;
@@ -218,6 +217,7 @@ export class ExplorePoi extends BaseScene {
     }
 
     animate() {
+        if (this.disposed) return
         this.explorePoiObject.animate(this.clock.getDelta())
 
         this.labelRenderer.render( this.scene, this.camera );
