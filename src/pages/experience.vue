@@ -58,7 +58,7 @@ watch(loading, newVal => {
       <Introduction v-if="state.value === 'introduction'" @next="send('next')"/>
       <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair"/>
       <WhenOnMobile
-          v-else-if=" ['tomatoExplanation', 'customizeTomato', 'growReady','grow', 'collect'].includes(state.value)"
+          v-else-if=" ['tomatoExplanation', 'customizeTomato', 'growReady','grow', 'collectReady', 'collect', 'collected', 'share'].includes(state.value)"
           :step="state.value"
           :tomato-params="tomatoParams"
       />

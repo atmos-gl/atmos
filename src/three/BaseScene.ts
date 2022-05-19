@@ -25,6 +25,7 @@ export class BaseScene {
 
     public init(canvas: HTMLCanvasElement) {
         this.canvas = canvas
+        canvas.dataset.scene = this.constructor.name
         this.scene = new Scene()
         this.renderer = new WebGLRenderer({
             canvas: this.canvas,

@@ -45,12 +45,16 @@ body {
   px-6
   py-2
   text-center
-  transition
-  duration-200
-  hover:(
-  bg-jade
-  text-anthracite
-  )
   ;
+
+  &:not(.btn-static) {
+    @apply transition
+    duration-200
+    hover:(
+    bg-jade
+    text-anthracite
+    );
+
+  }
 }
 

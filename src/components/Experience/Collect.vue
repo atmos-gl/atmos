@@ -2,17 +2,25 @@
 import {GrowScene} from '../../three/GrowScene';
 import useScene from '../../composables/useScene';
 import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
-import {reactive} from 'vue';
+import {reactive, toRefs} from 'vue';
 import {CollectScene} from '../../three/CollectScene';
+import sequenceManager from '../../managers/sequenceManager';
 
-const tomato: TomatoParams = reactive({
-  long: 1,
-  size: 1,
-  color: TomatoColor.red
-})
-const { scene, canvas } = useScene(new CollectScene(tomato))
+const props = defineProps<{
+  tomatoParams: TomatoParams,
+  progress: number
+}>()
+
+const { progress } = toRefs(props)
+
+const { scene, canvas } = useScene<CollectScene>(new CollectScene(props.tomatoParams, progress))
 
 // sequenceManager.send('tomatoOk')
+sequenceManager.onTransition(state => {
+  if (state.value === 'collected') {
+    scene.dropTomatoes()
+  }
+})
 
 </script>
 <template>
