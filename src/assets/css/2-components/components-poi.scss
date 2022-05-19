@@ -1,8 +1,8 @@
 .poi {
-  @apply w-12 h-12 flex items-center justify-center rounded-full text-3xl text-jade cursor-pointer border border-jade border-2;
+  @apply w-12 h-12 flex items-center justify-center rounded-full text-3xl text-white cursor-pointer border-2 border-white;
 
   &:hover {
-    @apply bg-jade text-imperial;
+    @apply bg-jade text-imperial border-jade;
   }
 
   &.hidden {

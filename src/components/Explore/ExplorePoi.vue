@@ -35,7 +35,6 @@ const processExplore = async () => {
     from: document.body.scrollTop,
     to: target,
     onUpdate(v) {
-      console.log(v)
       document.body.scrollTop = v
     }
   })

@@ -10,6 +10,7 @@
 <template>
   <transition name="fade">
     <div v-show="visible" class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-3 h-full bg-bg flex items-center pl-64 gradient z-5">
+<!--    <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-3 h-full bg-bg flex items-center pl-64 gradient z-5">-->
       <div class="border border-px border-white bg-imperial text-jade px-16 py-12 w-md rounded-xl relative">
         <h2 class="font-title text-4xl mb-8 font-bold">{{ data.title }}</h2>
 

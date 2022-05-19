@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import {headerLoader} from "../composables/useLoader";
-import HeaderScene from '../components/HeaderScene.vue';
+import HeaderScene from './Header/HeaderScene.vue';
+import ScrollingText from './Header/ScrollingText.vue';
 
 const {loading, percentageProgress} = headerLoader
 // headerLoader.load()
+
+const scrollingLines = 4
 </script>
 
 <template>
@@ -20,6 +23,10 @@ const {loading, percentageProgress} = headerLoader
     </nav>
 
   <div class="o-container flex text-jade flex-1 py-32">
+    <div class="absolute-y-center text-customBig font-title font-bold uppercase leading-none flex flex-col opacity-15">
+      <ScrollingText v-for="line in scrollingLines"/>
+    </div>
+
     <div class="w-2/5">
       <h2 class="font-title font-bold text-8xl">Atmos</h2>
       <h3 class="my-6 text-4xl">La serre qui réduit l'effet de serre</h3>

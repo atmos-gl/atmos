@@ -5,6 +5,7 @@ export default defineConfig({
         extend: {
             colors: {
                 'imperial': '#074D2F',
+                'vervain': '#829f6eff',
                 'jade': '#CDE4D5',
                 'pearl': '#F5F7F6',
                 'bg': '#001606',
@@ -16,6 +17,7 @@ export default defineConfig({
                 'sans': ['cera-pro'],
             },
             fontSize: {
+                customBig: '150px',
                 customWide: '257px'
             },
             opacity: {
