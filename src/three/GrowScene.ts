@@ -3,7 +3,7 @@ import {BaseScene} from './BaseScene';
 import {Tomato, TomatoParams} from './objects/Tomato';
 import {growLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
-import {animateAsync} from '../utils';
+import {animateAsync, delay} from '../utils';
 import {createExpoIn, mirrorEasing} from 'popmotion';
 import {Greenhouse} from './objects/Greenhouse';
 
@@ -27,18 +27,18 @@ export class GrowScene extends BaseScene {
         this.scene.add(this.ambientLight)
 
         this.pointLight = new PointLight('#ffffff', 0.9)
-        this.pointLight.position.x = 3
-        this.pointLight.position.y = 2
-        this.pointLight.position.z = 2
+        this.pointLight.position.x = 6
+        this.pointLight.position.y = 4
+        this.pointLight.position.z = 4
         this.scene.add(this.pointLight)
-        this.scene.add(new PointLightHelper(this.pointLight))
+        // this.scene.add(new PointLightHelper(this.pointLight))
 
         this.camera.position.set(-5, 4, 10)
         this.camera.lookAt(0, 0, 0)
         this.camera.fov = 30
         const {loader} = growLoader
 
-        this.tomato = new Tomato(this.tomatoParams, growLoader.loader.getFBX('tomato'))
+        this.tomato = new Tomato(this.tomatoParams, growLoader.loader.getFBX('tomato').clone())
         this.tomato.mesh.scale.set(0.3, 0.3, 0.3)
         this.scene.add(this.tomato.mesh)
 
@@ -52,13 +52,13 @@ export class GrowScene extends BaseScene {
         this.setupPostProcessing()
     }
 
-    private onStep(state: any) {
-        console.log(state.value)
+    private async onStep(state: any) {
         if (state.value === 'growReady') {
             this.transitionToGrow()
         }
         if (state.value === 'grow') {
-            this.growTomatoes()
+            await this.growTomatoes()
+            sequenceManager.send('growOk')
         }
     }
 
@@ -106,7 +106,7 @@ export class GrowScene extends BaseScene {
     async growTomatoes() {
         await this.greenhouse.grow()
         this.greenhouse.openDoor()
-        this.camera.move({
+        await this.camera.move({
             x: 0,
             y: 1,
             z: 8,
@@ -114,6 +114,7 @@ export class GrowScene extends BaseScene {
             ty: 0.5,
             tz: 0,
         })
+        await delay(1000)
     }
 
     animate() {

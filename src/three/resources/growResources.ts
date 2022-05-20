@@ -3,11 +3,12 @@ import {ResourcesToLoad} from '../ResourcesLoader';
 const resources: ResourcesToLoad = {
     gltf: {
         plant: '/three-assets/gltf/plant.gltf',
-        cart: '/three-assets/gltf/cart.gltf',
+        // cart: '/three-assets/gltf/cart.gltf',
     },
     fbx: {
         tomato: '/three-assets/fbx/tomato.fbx',
         greenhouse: '/three-assets/fbx/greenhouse.fbx',
+        cart: '/three-assets/fbx/cart.fbx',
     },
     texture: {},
     cubeTexture: {

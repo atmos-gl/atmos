@@ -1,18 +1,14 @@
 <script setup lang="ts">
 import TomatoScene from './TomatoScene.vue';
-import {reactive} from 'vue';
 import {tomatoLoader} from '../../composables/useLoader';
 import ColorChooser from './ColorChooser.vue';
 import {animate} from 'popmotion';
 import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
 
+const props = defineProps<{ tomato: TomatoParams }>()
+const { tomato } = props
 const emit = defineEmits(['confirm-tomato'])
 
-const tomato: TomatoParams = reactive({
-  long: 1,
-  size: 1,
-  color: TomatoColor.red
-})
 const { loading } = tomatoLoader
 
 const resetTomato = () => {

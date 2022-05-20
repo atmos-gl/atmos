@@ -3,8 +3,11 @@ import GrowSteps from './GrowSteps.vue';
 import {ref} from 'vue';
 import {animate} from 'popmotion';
 
+const emit = defineEmits(['grow'])
+
 const ready = ref(false)
 const goButton = ref<HTMLElement>(null)
+const goPressed = ref(false)
 const isReady = async () => {
   ready.value = true
   animate({
@@ -14,6 +17,10 @@ const isReady = async () => {
       document.body.scrollTo({top: v})
     }
   })
+}
+const startGrow = () => {
+  goPressed.value = true
+  emit('grow')
 }
 </script>
 <template>
@@ -25,15 +32,20 @@ const isReady = async () => {
       <div class="rounded-full p-6 border border-jade">
         <button
             class="bg-imperial w-28 h-28  rounded-full flex items-center justify-center font-bold text-2xl"
-          @click="$emit('grow')"
+            @click="startGrow"
         >
           GO
         </button>
       </div>
     </div>
-<!--    <div class="fixed inset-0 w-full h-full bg-imperial/80 backdrop-filter">-->
-<!--      Hezy-->
-<!--    </div>-->
+    <Transition name="fade">
+      <div v-if="goPressed" class="fixed inset-0 w-full h-full bg-imperial/80 backdrop-filter backdrop-blur-sm p-12 center-content flex-col text-center">
+        <i class="uil uil-check text-4xl mb-2"></i>
+        <p>
+          Pousse démarrée ! Consultez votre ordinateur.
+        </p>
+      </div>
+    </Transition>
   </div>
 </template>
 <style scoped>

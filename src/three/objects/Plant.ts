@@ -49,6 +49,7 @@ export default class Plant {
         this.animationAction = this.mixer.clipAction(AnimationClip.findByName(this.model.animations, 'animation_0'))
         this.animationAction.setLoop(LoopOnce, 1)
         this.animationAction.clampWhenFinished = true
+        this.animationAction.timeScale = 0.5
         this.animationAction.play()
         this.animationAction.paused = true
     }

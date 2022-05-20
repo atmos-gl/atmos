@@ -30,7 +30,6 @@ body {
   opacity: 0;
 }
 
-
 .fade-quick-enter-active,
 .fade-quick-leave-active {
   transition: opacity 0.2s ease;
@@ -38,14 +37,24 @@ body {
 
 .btn {
   @apply
-    text-jade
-    border
-    border-jade
-    bg-black/10
-    rounded-full
-    px-6
-    py-2
-    text-center
+  text-jade
+  border
+  border-jade
+  bg-black/10
+  rounded-full
+  px-6
+  py-2
+  text-center
   ;
+
+  &:not(.btn-static) {
+    @apply transition
+    duration-200
+    hover:(
+    bg-jade
+    text-anthracite
+    );
+
+  }
 }
 
