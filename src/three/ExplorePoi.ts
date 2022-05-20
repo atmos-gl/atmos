@@ -172,6 +172,14 @@ export class ExplorePoi extends BaseScene {
         this.setupPostProcessing()
     }
 
+    protected resizeRendererToDisplaySize(): boolean {
+        const needResize = super.resizeRendererToDisplaySize()
+        if (needResize) {
+            this.labelRenderer?.setSize(window.innerWidth, window.innerHeight)
+        }
+        return needResize
+    }
+
     processExplore() {
         this.camera.move({
             x: this.defaultCamPos.x,

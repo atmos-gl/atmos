@@ -61,7 +61,6 @@ export class BaseScene {
     protected setupPostProcessing() {
         // Post processing
         this.composer = new EffectComposer(this.renderer, {
-
         })
         this.composer.addPass(new RenderPass(this.scene, this.camera))
         this.postProcessingPasses()
@@ -82,11 +81,13 @@ export class BaseScene {
     }
 
     protected resizeRendererToDisplaySize() {
-        const width = this.canvas!.clientWidth
-        const height = this.canvas!.clientHeight
-        const needResize = this.canvas!.width !== width || this.canvas!.height !== height
+        const width = this.canvas.parentElement.clientWidth
+        const height = this.canvas.parentElement.clientHeight
+        const needResize = this.canvas!.width / this.renderer.getPixelRatio() !== width
+            || this.canvas!.height / this.renderer.getPixelRatio() !== height
         if (needResize) {
-            this.renderer?.setSize(width, height, false)
+            this.renderer?.setSize(width, height, true)
+            this.composer?.setSize(width, height, true)
         }
         return needResize
     }
@@ -97,7 +98,6 @@ export class BaseScene {
     }
 
     protected fixResize() {
-
         const gl = this.renderer!.getContext()
         this.camera!.aspect = gl.drawingBufferWidth / gl.drawingBufferHeight
         this.camera!.updateProjectionMatrix()
