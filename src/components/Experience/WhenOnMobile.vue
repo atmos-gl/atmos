@@ -19,7 +19,7 @@ const hour = ref(10)
 const timer = computed(() => {
   const h = Math.round(hour.value)
   const m = ((hour.value % 1) * 60).toFixed(0).padStart(2, '0')
-  return `${h}:${m}`
+  return `${h}h${m}`
 })
 
 sequenceManager.onTransition(state => {

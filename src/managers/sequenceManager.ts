@@ -113,7 +113,7 @@ createMachine({
 }
   )
 
-// sequenceMachine.initial = 'customizeTomato'
+sequenceMachine.initial = 'grow'
 const sequenceManager = interpret(sequenceMachine)
 sequenceManager.start()
 export default sequenceManager
