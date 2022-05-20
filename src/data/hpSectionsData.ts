@@ -13,7 +13,7 @@ import pillule from '../assets/img/intro/pillule.png'
 const data = [
     {
         title: "Le monde entier dans votre assiette",
-        text: "Vous en avez marre de manger toujours les mêmes choses ? Vous rêvez d’essayer les fruits et légumes du monde entier mais vous ne les trouverez jamais en magasins ? Grâce à la serre Atome faites pousser chez vous les fruits et légumes d’ailleurs. Transformer l’exotique en local, en réduisant l’impact de l’importation des fruits et légumes.",
+        text: "Vous en avez marre de manger toujours les mêmes choses ? Vous rêvez d’essayer les fruits et légumes du monde entier mais vous ne les trouvez jamais en magasins ? Grâce à la serre Atmos faites pousser chez vous les fruits et légumes d’ailleurs. Transformer l’exotique en local, en réduisant l’impact de l’importation des fruits et légumes.",
         models: [
             {
                 src: assiette,
