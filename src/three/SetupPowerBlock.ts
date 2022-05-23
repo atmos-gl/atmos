@@ -1,4 +1,4 @@
-import {AmbientLight, Color, Object3D, PCFSoftShadowMap, PointLight} from 'three';
+import {AmbientLight, Color, DoubleSide, Object3D, PCFSoftShadowMap, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
@@ -7,6 +7,7 @@ import {createExpoIn, mirrorEasing} from 'popmotion';
 import {EffectPass, OutlineEffect} from 'postprocessing';
 import {animate} from 'popmotion';
 import {animateAsync} from '../utils';
+import {powerBlockLoader} from '../composables/useLoader';
 
 
 export class SetupPowerBlock extends BaseScene {
@@ -55,6 +56,16 @@ export class SetupPowerBlock extends BaseScene {
         //     new BoxGeometry(5, 5),
         //     new MeshPhongMaterial({color: '#f00'})
         // ))
+        // Temp
+        const fbx = powerBlockLoader.loader.getFBX('waterBottle')
+        console.log(fbx)
+        fbx.position.set(10, 0, 0)
+        fbx.scale.setScalar(0.03)
+        fbx.getObjectByName('etiquette_couleur').material.side = DoubleSide
+        fbx.getObjectByName('etiquette_transparente').material.transparent = true
+
+        this.scene.add(fbx)
+        this.enableControls()
 
         this.resizeRendererToDisplaySize()
         this.camera.updateMatrixWorld()
