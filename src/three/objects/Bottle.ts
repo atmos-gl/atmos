@@ -1,4 +1,4 @@
-import {Color, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3} from 'three';
+import {Color, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3, Vector4} from 'three';
 import {animate, createExpoIn, reverseEasing} from 'popmotion';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import {animateAsync, delay} from '../../utils';
@@ -32,11 +32,17 @@ export default class Bottle {
 
     public onFinished?: () => void;
     public ui: UiTip
+    private clamp: Vector4;
 
-    constructor(object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlock) {
+    constructor(object: Object3D,
+                targetObjectMesh: Mesh,
+                scene: SetupPowerBlock,
+                clamp: Vector4 = new Vector4(-220, 1000, -10, 120)
+    ) {
         this.object = object
         this.targetObject = targetObjectMesh
         this.scene = scene
+        this.clamp = clamp
 
         this.init()
         this.setupControls()
@@ -63,7 +69,7 @@ export default class Bottle {
         this.targetPosition = this.object.position.clone()
         this.targetPosition.y -= 20;
 
-        const initialPosition = new Vector2(450, -120)
+        const initialPosition = new Vector2(450, -50)
         this.initialX = initialPosition.x
 
         this.object.position.x = initialPosition.x + 200
@@ -124,14 +130,16 @@ export default class Bottle {
     }
 
     onDrag() {
-        this.object.position.y = MathUtils.clamp(this.object.position.y, -10, 120)
+        this.object.position.y = MathUtils.clamp(this.object.position.y, this.clamp.z, this.clamp.w)
         this.object.position.z = this.xToZ(this.object.position.x)
         this.object.rotation.x = this.xToRotate(this.object.position.x)
 
-        if (this.object.position.x < -220) {
-            this.object.position.x = -220
+        if (this.object.position.x < this.clamp.x) {
+            this.object.position.x = this.clamp.x
         }
-
+        if (this.object.position.y > this.clamp.y) {
+            this.object.position.y = this.clamp.y
+        }
         const distanceToTarget = this.object.position.distanceTo(this.targetPosition)
         if (distanceToTarget < 20) {
             this.snap()

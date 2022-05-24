@@ -1,4 +1,4 @@
-import {AnimationClip, AnimationMixer, Group, Mesh, Object3D, Vector3} from 'three';
+import {AnimationClip, AnimationMixer, Group, Mesh, Object3D, Vector3, Vector4} from 'three';
 import Door from './Door';
 import Bottle from './Bottle';
 import {BaseScene} from '../BaseScene';
@@ -41,6 +41,7 @@ export class Box {
         this.door = new Door(this.model.getObjectByName('porte'))
         this.door.handle.castShadow = true
         this.door.mesh.getObjectByName('Cube_1').receiveShadow = true
+        console.log( this.door.mesh.rotation.y)
 
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
@@ -49,8 +50,12 @@ export class Box {
         ;(co2Bottle.getObjectByName('parvis_c02') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
             co2Bottle,
-            this.model.getObjectByName('Tube_1') as Mesh,
-            this.scene
+            this.model.getObjectByName('Tube_1_2') as Mesh,
+            this.scene,
+            new Vector4(
+                -220, 1000,
+                30, 120
+            )
         )
 
         const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
@@ -62,8 +67,8 @@ export class Box {
             this.scene
         )
 
-        const pipe = this.model.getObjectByName('tuyeau').children[0] as Mesh
-        pipe.material = glassMaterial(loader)
+        // const pipe = this.model.getObjectByName('tuyeau').children[0] as Mesh
+        // pipe.material = glassMaterial(loader)
 
         this.tray = new Tray(this.model.getObjectByName('Tiroir'), this.scene)
 
@@ -72,11 +77,11 @@ export class Box {
         // console.log(fertilizerClip)
         this.fertilizer = new Fertilizer(fertilizer, this.scene, fertilizerClip)
 
-        const mixer = new AnimationMixer(fertilizer)
-        const action = mixer.clipAction(fertilizerClip)
-        // @ts-ignore
-        window.action = action
-        action.play()
+        // const mixer = new AnimationMixer(fertilizer)
+        // const action = mixer.clipAction(fertilizerClip)
+        // // @ts-ignore
+        // window.action = action
+        // action.play()
     }
 
     get mesh() {

@@ -57,9 +57,9 @@ export default class Fertilizer implements DragAnimatable {
         this.bottleMesh.material = getMetalMaterial(loader)
         //
         this.mixer = new AnimationMixer(this.object)
-        this.action = this.mixer.clipAction(this.animClip)
-        this.action.clampWhenFinished = true
-        this.action.play()
+        // this.action = this.mixer.clipAction(this.animClip)
+        // this.action.clampWhenFinished = true
+        // this.action.play()
 
         this.progress = this.animationBounds[0]
 
