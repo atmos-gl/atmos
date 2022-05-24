@@ -1,4 +1,4 @@
-import {AmbientLight, Color, DoubleSide, Object3D, PCFSoftShadowMap, PointLight} from 'three';
+import {AmbientLight, BackSide, Color, DoubleSide, Object3D, PCFSoftShadowMap, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
 import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
@@ -8,6 +8,7 @@ import {EffectPass, OutlineEffect} from 'postprocessing';
 import {animate} from 'popmotion';
 import {animateAsync} from '../utils';
 import {powerBlockLoader} from '../composables/useLoader';
+import getGlassMaterial from './materials/glassMaterial';
 
 
 export class SetupPowerBlock extends BaseScene {
@@ -61,8 +62,12 @@ export class SetupPowerBlock extends BaseScene {
         console.log(fbx)
         fbx.position.set(10, 0, 0)
         fbx.scale.setScalar(0.03)
-        fbx.getObjectByName('etiquette_couleur').material.side = DoubleSide
+        fbx.getObjectByName('etiquette_couleur').material[1].side = DoubleSide
         fbx.getObjectByName('etiquette_transparente').material.transparent = true
+        fbx.getObjectByName('bouteille').material = getGlassMaterial(powerBlockLoader.loader, {
+            color: '#000',
+            roughness: 0.2
+        })
 
         this.scene.add(fbx)
         this.enableControls()
