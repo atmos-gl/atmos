@@ -37,6 +37,7 @@ export default class Fertilizer implements DragAnimatable {
     private dragThreshold = 0.7
     private hasEnded = false
     private bottleMesh: Mesh;
+    private isVisible = false
 
     public ui: UiTip;
 
@@ -57,9 +58,9 @@ export default class Fertilizer implements DragAnimatable {
         this.bottleMesh.material = getMetalMaterial(loader)
         //
         this.mixer = new AnimationMixer(this.object)
-        // this.action = this.mixer.clipAction(this.animClip)
-        // this.action.clampWhenFinished = true
-        // this.action.play()
+        this.action = this.mixer.clipAction(this.animClip)
+        this.action.clampWhenFinished = true
+        this.action.play()
 
         this.progress = this.animationBounds[0]
 
@@ -142,11 +143,14 @@ export default class Fertilizer implements DragAnimatable {
                 object.visible = set
             }
         })
+        this.isVisible = set
     }
 
     animate(deltaTime: number) {
         // this.mixer.update(deltaTime)
-        this.mixer.setTime(this.progress)
+        if (this.isVisible) {
+            this.mixer.setTime(this.progress)
+        }
     }
 
 }

@@ -48,7 +48,7 @@ export class SetupPowerBlock extends BaseScene {
 
         this.camera.position.x = 4
         this.camera.position.y = 5
-        this.camera.position.z = 25
+        this.camera.position.z = 20
         this.camera.lookAt(2, 2, 0)
 
         // this.scene.add(new Mesh(
@@ -64,8 +64,6 @@ export class SetupPowerBlock extends BaseScene {
             this.openDoorInteraction.unbind()
             sequenceManager.send('doorOk')
         }
-
-
         sequenceManager.onTransition(state => this.onStep(state))
 
         setTimeout(() => {
@@ -189,8 +187,29 @@ export class SetupPowerBlock extends BaseScene {
                 this.box.fertilizer.show()
                 this.box.fertilizer.onFinished = () => {
                     sequenceManager.send('fertilizerOk')
-                    sequenceManager.send('uraniumOk')
                 }
+            }
+        }
+        if (state.value.setupPowerBlock === 'putUranium') {
+            await this.camera.move({
+                x: 2,
+                y: 4,
+                z: 7,
+                tx: 2,
+                ty: 3.5,
+                tz: 0,
+            })
+            this.box.uraniumFlask.show()
+            this.box.uraniumFlask.onConnected = async () => {
+                await this.camera.move({
+                    x: 2,
+                    y: 2,
+                    z: 12,
+                    tx: 2,
+                    ty: 0,
+                    tz: 0,
+                })
+                this.box.uraniumFlask.fallPill()
             }
         }
     }

@@ -1,4 +1,15 @@
-import {AnimationClip, AnimationMixer, Group, Mesh, Object3D, Vector3, Vector4} from 'three';
+import {
+    AnimationAction,
+    AnimationClip,
+    AnimationMixer,
+    Group,
+    Mesh,
+    MeshBasicMaterial, MeshLambertMaterial, MeshPhongMaterial, MeshPhysicalMaterial,
+    Object3D,
+    Vector2,
+    Vector3,
+    Vector4
+} from 'three';
 import Door from './Door';
 import Bottle from './Bottle';
 import {BaseScene} from '../BaseScene';
@@ -8,6 +19,7 @@ import Tray from './Tray';
 import Fertilizer from './Fertilizer';
 import {powerBlockLoader} from '../../composables/useLoader';
 import {SetupPowerBlock} from '../SetupPowerBlock';
+import UraniumFlask from './UraniumFlask';
 
 export class Box {
     public model: Object3D
@@ -17,6 +29,7 @@ export class Box {
     public waterBottle: Bottle;
     public tray: Tray;
     public fertilizer: Fertilizer;
+    public uraniumFlask: UraniumFlask;
 
 
     constructor(scene: SetupPowerBlock) {
@@ -38,10 +51,22 @@ export class Box {
     }
 
     setupChildren() {
+
+        const seeThroughGlass = glassMaterial(powerBlockLoader.loader, {
+            opacity: 0.15,
+            transparent: true,
+            transmission: 0,
+            color: '#000',
+            ior: 0
+        })
+        seeThroughGlass.thickness = 0
+        const tube = this.model.getObjectByName('centrale').getObjectByName('Tube_1') as Mesh
+        tube.material =seeThroughGlass.clone()
+
+
         this.door = new Door(this.model.getObjectByName('porte'))
         this.door.handle.castShadow = true
         this.door.mesh.getObjectByName('Cube_1').receiveShadow = true
-        console.log( this.door.mesh.rotation.y)
 
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
@@ -49,22 +74,32 @@ export class Box {
         ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial(loader)
         ;(co2Bottle.getObjectByName('parvis_c02') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
-            co2Bottle,
-            this.model.getObjectByName('Tube_1_2') as Mesh,
-            this.scene,
-            new Vector4(
-                -220, 1000,
-                30, 120
-            )
+            {
+                object: co2Bottle,
+                targetObjectMesh: this.model.getObjectByName('Tube_1_2') as Mesh,
+                scene: this.scene,
+                clamp: new Vector4(
+                    -220, 1000,
+                    30, 120
+                )
+            }
         )
 
         const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
         waterBottle.material = glassMaterial(loader, {
             color: 'rgba(112,170,220,0.57)'
         })
-        this.waterBottle = new Bottle(waterBottle,
-            this.model.getObjectByName('Tube_5') as Mesh,
-            this.scene
+        this.waterBottle = new Bottle({
+                object: waterBottle,
+                targetObjectMesh: this.model.getObjectByName('Tube_5') as Mesh,
+                scene: this.scene,
+                clamp: new Vector4(
+                    -220, 1000,
+                    -20, 90
+                ),
+                screwDirection: 1,
+            initialPosition: new Vector2(450, 100)
+            }
         )
 
         // const pipe = this.model.getObjectByName('tuyeau').children[0] as Mesh
@@ -74,14 +109,22 @@ export class Box {
 
         const fertilizer = this.model.getObjectByName('fertilisant')
         const fertilizerClip = AnimationClip.findByName(this.model.animations, 'fertilizer')
-        // console.log(fertilizerClip)
         this.fertilizer = new Fertilizer(fertilizer, this.scene, fertilizerClip)
 
-        // const mixer = new AnimationMixer(fertilizer)
-        // const action = mixer.clipAction(fertilizerClip)
-        // // @ts-ignore
-        // window.action = action
-        // action.play()
+        const uraniumFlask = this.model.getObjectByName('fiole')
+        const flaskBody = uraniumFlask.getObjectByName('Capsule') as Mesh
+        flaskBody.material = seeThroughGlass
+        const uraniumClip = AnimationClip.findByName(this.model.animations, 'pilule')
+        this.uraniumFlask = new  UraniumFlask({
+                object: uraniumFlask,
+                targetObjectMesh: this.model.getObjectByName('Tube_5') as Mesh,
+                scene: this.scene,
+            },
+            uraniumClip
+        )
+
+        ;(this.model.getObjectByName('Pillule').children[0] as Mesh).material = new MeshPhongMaterial({color: '#0f0', emissive: '#040', reflectivity: 0.5})
+
     }
 
     get mesh() {
@@ -94,6 +137,7 @@ export class Box {
 
     public animate(deltaTime: number) {
         this.fertilizer.animate(deltaTime)
+        this.uraniumFlask.animate(deltaTime)
     }
 
     destroy() {

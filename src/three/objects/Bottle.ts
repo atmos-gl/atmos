@@ -19,30 +19,38 @@ const createXtoZ = (start, end, amp, offset = 0) => {
 export default class Bottle {
     public object: Object3D;
 
-    private scene: SetupPowerBlock;
-    private controls: DragControls;
-    private targetPosition: Vector3;
-    private xToZ: (x) => number;
-    private finalPosition: Vector3;
-    private targetObject: Mesh;
-    private helperAnimation: { stop: () => void } = null;
-    private xToRotate: (x) => any;
-    private visibleOpacity: number;
-    private initialX: number;
+    protected scene: SetupPowerBlock;
+    protected controls: DragControls;
+    protected targetPosition: Vector3;
+    protected xToZ: (x) => number;
+    protected finalPosition: Vector3;
+    protected targetObject: Mesh;
+    protected helperAnimation: { stop: () => void } = null;
+    protected xToRotate: (x) => any;
+    protected visibleOpacity: number;
+    protected initialX: number;
 
     public onFinished?: () => void;
     public ui: UiTip
-    private clamp: Vector4;
+    protected clamp: Vector4;
+    protected screwDirection: number;
+    protected initialPosition: Vector2;
 
-    constructor(object: Object3D,
-                targetObjectMesh: Mesh,
-                scene: SetupPowerBlock,
-                clamp: Vector4 = new Vector4(-220, 1000, -10, 120)
+    constructor({
+                    object,
+                    targetObjectMesh,
+                    scene,
+                    clamp = new Vector4(-220, 1000, -10, 120),
+                    screwDirection = -1,
+                    initialPosition = new Vector2(450, -50)
+                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlock, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 },
     ) {
         this.object = object
         this.targetObject = targetObjectMesh
         this.scene = scene
         this.clamp = clamp
+        this.screwDirection = screwDirection
+        this.initialPosition = initialPosition
 
         this.init()
         this.setupControls()
@@ -67,13 +75,12 @@ export default class Bottle {
 
         this.finalPosition = this.object.position.clone()
         this.targetPosition = this.object.position.clone()
-        this.targetPosition.y -= 20;
+        this.targetPosition.y += this.screwDirection * 20;
 
-        const initialPosition = new Vector2(450, -50)
-        this.initialX = initialPosition.x
+        this.initialX = this.initialPosition.x
 
-        this.object.position.x = initialPosition.x + 200
-        this.object.position.y += initialPosition.y
+        this.object.position.x = this.initialPosition.x + 200
+        this.object.position.y += this.initialPosition.y
     }
 
     setupControls() {
@@ -137,8 +144,8 @@ export default class Bottle {
         if (this.object.position.x < this.clamp.x) {
             this.object.position.x = this.clamp.x
         }
-        if (this.object.position.y > this.clamp.y) {
-            this.object.position.y = this.clamp.y
+        if (this.object.position.x > this.clamp.y) {
+            this.object.position.x = this.clamp.y
         }
         const distanceToTarget = this.object.position.distanceTo(this.targetPosition)
         if (distanceToTarget < 20) {
@@ -171,7 +178,7 @@ export default class Bottle {
                 ...this.object.position
             },
             to: {
-                rotation: Math.PI * 4,
+                rotation: Math.PI * -4 * this.screwDirection,
                 ...this.finalPosition
             },
             onUpdate: v => {

@@ -7,8 +7,8 @@ export default class Door implements DragAnimatable{
     public handle: Object3D;
     private _open = 0
 
-    private minRotation = 0;
-    private maxRotation = 2;
+    private minRotation = 0.5;
+    private maxRotation = 2.5;
 
     public onOpen?: () => void
 
