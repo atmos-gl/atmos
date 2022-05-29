@@ -1,16 +1,29 @@
 <script setup lang="ts">
-import {headerLoader} from "../composables/useLoader";
 import HeaderScene from './Header/HeaderScene.vue';
 import ScrollingText from './Header/ScrollingText.vue';
-
-const {loading, percentageProgress} = headerLoader
-headerLoader.load()
+import {exploreLoader} from '../composables/useLoader';
+import {onBeforeUnmount, ref} from 'vue';
 
 const scrollingLines = 4
+
+// Preload further resources
+let alreadyLoaded = ref(exploreLoader.ready.value)
+const headerEl = ref(null)
+const onScroll = () => {
+  if (!alreadyLoaded.value) {
+    const rect = headerEl.value.getBoundingClientRect()
+    if (rect.top + rect.height < 0) {
+      exploreLoader.load()
+      alreadyLoaded.value = true
+    }
+  }
+}
+document.body.addEventListener('scroll', onScroll)
+onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <template>
-  <header class="h-screen text-white font-core snake mb-32 flex flex-col">
+  <header ref="headerEl" class="h-screen text-white font-core snake mb-32 flex flex-col">
     <nav class="o-container flex items-end w-full py-8">
       <h1>
         <img src="./../assets/img/logo.png" class="h-16">
@@ -33,9 +46,7 @@ const scrollingLines = 4
       <p>Atmos, votre serre connectée vous facilite le quotidien en adoptant une démarche écologgique et durable. Manger sain et varié devient une priorité.</p>
     </div>
     <div class="w-3/5">
-      <div v-if="loading">Loading: {{ percentageProgress }}</div>
-
-      <HeaderScene v-else/>
+      <HeaderScene/>
     </div>
   </div>
   </header>

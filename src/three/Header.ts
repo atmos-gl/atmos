@@ -46,7 +46,7 @@ export class Header extends BaseScene {
 
     animate() {
         // this.greenHouse.animate()
-
+        const deltaTime = this.clock.getDelta()
         super.animate()
     }
 

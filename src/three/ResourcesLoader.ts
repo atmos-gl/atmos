@@ -8,7 +8,7 @@ interface ResourceStore<T> {
 
 interface ResourceLoader<T> {
     load(
-        url: string|string[],
+        url: string | string[],
         onLoad: (r: T) => void,
         onProgress?: (event: ProgressEvent) => void,
         onError?: (event: ErrorEvent) => void,
@@ -28,12 +28,15 @@ export default class ResourcesLoader {
     private textureLoader: TextureLoader;
     private gltfLoader: GLTFLoader;
     private fbxLoader: FBXLoader;
+    private cubeTextureLoader: CubeTextureLoader;
 
     private textureResources: ResourceStore<Texture> = {}
     private cubeTextureResources: ResourceStore<CubeTexture> = {}
     private gltfResources: ResourceStore<GLTF> = {}
     private fbxResources: ResourceStore<Group> = {}
-    private cubeTextureLoader: CubeTextureLoader;
+
+    private itemsLoaded = 0
+    public onItemLoaded?: (key: string) => void;
 
     constructor() {
         this.manager = new LoadingManager()
@@ -60,14 +63,6 @@ export default class ResourcesLoader {
         this.manager.onLoad = cb
     }
 
-    get onProgress() {
-        return this.manager.onProgress
-    }
-
-    set onProgress(cb) {
-        this.manager.onProgress = cb
-    }
-
     get onError() {
         return this.manager.onError
     }
@@ -76,10 +71,12 @@ export default class ResourcesLoader {
         this.manager.onError = cb
     }
 
-    private loadResource<T>(key: string, url: string|string[], loader: ResourceLoader<T>, store: ResourceStore<T>) {
+    private loadResource<T>(key: string, url: string | string[], loader: ResourceLoader<T>, store: ResourceStore<T>) {
         if (store[key]) return
         loader.load(url, (resource: T) => {
             store[key] = resource
+            this.itemsLoaded++
+            this.onItemLoaded?.(key)
         })
     }
 
@@ -105,6 +102,7 @@ export default class ResourcesLoader {
     getGLTF(key): GLTF {
         return this.getResource<GLTF>(key, this.gltfResources)
     }
+
     loadFBX(key: string, url: string) {
         this.loadResource<Group>(key, url, this.fbxLoader, this.fbxResources)
     }
@@ -112,6 +110,7 @@ export default class ResourcesLoader {
     getFBX(key): Group {
         return this.getResource<Group>(key, this.fbxResources)
     }
+
     loadCubeTexture(key: string, url: string[]) {
         this.loadResource<CubeTexture>(key, url, this.cubeTextureLoader, this.cubeTextureResources)
     }
