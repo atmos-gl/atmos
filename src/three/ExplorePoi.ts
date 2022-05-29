@@ -4,6 +4,7 @@ import {ExploreGreenHouse} from './objects/ExploreGreenHouse';
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Ref} from "vue";
 import {createExpoIn, mirrorEasing, animate} from "popmotion";
+import {bindGrabCursor} from '../composables/useCursor';
 
 export class ExplorePoi extends BaseScene {
     private pointLight: PointLight;
@@ -126,6 +127,7 @@ export class ExplorePoi extends BaseScene {
             const poi = document.createElement('div')
             poi.innerHTML = '+'
             poi.classList.add('poi')
+            bindGrabCursor(poi)
             this.poiList.push(poi)
             const objectCSS = new CSS2DObject(poi)
             objectCSS.position.set(0, 0, 0)

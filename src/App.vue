@@ -17,7 +17,7 @@ const {lerpCursor, cursorProps} = useCursor()
     </transition>
   </RouterView>
   <div class="fixed inset-0 w-full h-full z-100 pointer-events-none">
-    <div class="w-12 h-12 absolute -top-6 -left-6"
+    <div class="w-16 h-16 absolute -top-8 -left-8"
          :style="{ transform: `translate3d(${lerpCursor.x}px, ${lerpCursor.y}px,0)` }"
     >
       <div class="cursor" :class="cursorProps.class"></div>
@@ -27,10 +27,14 @@ const {lerpCursor, cursorProps} = useCursor()
 </template>
 <style scoped lang="scss">
 .cursor {
-  @apply w-full h-full rounded-full border-2 border-white transition duration-200;
+  @apply w-full h-full rounded-full border-2 border-white transition-all duration-200;
+  transform: scale(0.6);
   &.click {
-    transform: scale(0.5);
+    transform: scale(0.3);
     background-color: #fff;
+  }
+  &.grab {
+    transform: scale(1);
   }
 }
 </style>
