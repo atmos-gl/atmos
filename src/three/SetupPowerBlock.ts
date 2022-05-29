@@ -100,6 +100,9 @@ export class SetupPowerBlock extends BaseScene {
     get trayUi() {
         return this.box.tray.ui.state
     }
+    get uraniumFlaskUi() {
+        return this.box.uraniumFlask.ui.state
+    }
 
     public showOutline() {
         return animateAsync({

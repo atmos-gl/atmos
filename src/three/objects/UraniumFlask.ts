@@ -1,6 +1,17 @@
 import Bottle from './Bottle';
-import {AnimationAction, AnimationClip, AnimationMixer, LoopOnce, Mesh, Object3D, Vector2, Vector4} from 'three';
+import {
+    AnimationAction,
+    AnimationClip,
+    AnimationMixer,
+    LoopOnce,
+    Mesh,
+    Object3D,
+    Vector2,
+    Vector3,
+    Vector4
+} from 'three';
 import {SetupPowerBlock} from '../SetupPowerBlock';
+import useUiTip from '../three-composables/useUiTip';
 
 export default class UraniumFlask extends Bottle {
     public onConnected?: () => void
@@ -26,6 +37,8 @@ export default class UraniumFlask extends Bottle {
         clip.tracks.pop()
         this.clip = clip
         this.setupAnimation()
+
+        this.ui = useUiTip(this.object, this.scene, new Vector3(-0.15, -0.3, 0))
     }
     setupPositions() {
         super.setupPositions()

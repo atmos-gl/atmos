@@ -29,7 +29,7 @@ export default class Tray {
     init() {
         this.initialPos = this.object.position.clone()
         const handle = this.object.getObjectByName('Cylinder_4')
-        this.ui = useUiTip(handle, this.scene, new Vector2(0, 0))
+        this.ui = useUiTip(handle, this.scene)
     }
 
     setupControls() {

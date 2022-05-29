@@ -51,6 +51,11 @@ const step = computed(() => {
           Le tiroir de fertilisant peut contenir jusqu'à 4 types de fertilisant différents. Cela permet à la serre de choisir le meilleur produit en fonction de ce que vous y cultivez.
         </p>
       </StepTip>
+      <StepTip :tip="scene.uraniumFlaskUi" :icon="localIcon">
+        <p>
+          ICI c'est l'uranium Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur cum dicta dignissimos ea eum fuga, fugit inventore labore, molestias mollitia nesciunt nisi possimus provident repellendus sapiente tempore temporibus totam!
+        </p>
+      </StepTip>
     </div>
   </main>
 </template>
