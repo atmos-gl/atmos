@@ -8,5 +8,10 @@ const currentPoc = ref(params.id ? 'mobile' : '')
 </script>
 
 <template>
-  <RouterView></RouterView>
+  <RouterView v-slot="{ Component }">
+    <transition mode="out-in" name="fade">
+      <component :is="Component"/>
+    </transition>
+  </RouterView>
+
 </template>
