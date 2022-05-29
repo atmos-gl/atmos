@@ -43,6 +43,7 @@ function loadResource(type, key, url) {
             gltf.animations?.forEach(animation => {
                 animations.push(animation.toJSON())
             })
+            console.log(gltf.scene)
             sendModelData(type, key, {
                 animations,
                 scene: gltf.scene.toJSON()

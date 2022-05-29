@@ -3,7 +3,7 @@ import {
     CubeTextureLoader,
     Group,
     Loader,
-    LoadingManager,
+    LoadingManager, Object3D,
     ObjectLoader,
     Texture,
     TextureLoader
@@ -78,7 +78,9 @@ export default class ResourcesLoader {
     }
     private gltfLoaded(key, data) {
         console.log(data)
-        console.log(this.objectLoader.parse(data.scene))
+        const scene = JSON.parse(data.scene)
+        Object.setPrototypeOf(scene, Group)
+        console.log(scene)
     }
 
     get onStart() {
