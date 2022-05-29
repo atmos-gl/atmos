@@ -23,7 +23,9 @@ watch(loading, async newVal => {
 
 <template>
   <Transition name="fade" mode="out-in">
-    <Loader v-if="displayLoading" :progress="progress" />
+    <div v-if="displayLoading" class="h-full w-full theme-gradient">
+      <Loader :progress="progress" />
+    </div>
     <main v-else>
       <Header ref="headerEl" />
       <Section v-for="(section) in data" :data="section" />
