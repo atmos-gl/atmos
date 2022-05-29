@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@iconscout/unicons": "^4.0.1",
+    "@its2easy/animate-sprite": "^2.2.1",
     "@paapi/client": "^1.0.2",
     "@types/three": "^0.139.0",
     "@vueuse/core": "^8.3.1",
