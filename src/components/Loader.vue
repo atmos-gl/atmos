@@ -12,13 +12,13 @@ const radius = (size / 2) - 5
 
 const c = Math.PI * (radius * 2)
 const pct = computed<number>(() => {
-  const p = clamp(progress.value, 0.001, 1)
+  const p = clamp(progress.value, 0, 1)
   return ((1 - p)) * c;
 })
 
 const animatedPct = ref(pct.value)
 const {pause} = useRafFn(() => {
-  animatedPct.value += (pct.value - animatedPct.value) * 0.03
+  animatedPct.value += (pct.value - animatedPct.value) * 0.05
 })
 onBeforeUnmount(() => pause)
 </script>
@@ -44,7 +44,7 @@ onBeforeUnmount(() => pause)
                   stroke-linecap="round"
           />
         </svg>
-        <div class="absolute inset-0 w-full h-full center-content font-title font-bold text-4xl">{{ displayProgress }}</div>
+        <div class="absolute inset-0 w-full h-full center-content font-title  text-xl">Chargement...</div>
       </div>
     </div>
   </div>
@@ -56,8 +56,9 @@ onBeforeUnmount(() => pause)
     fill: transparent;
   }
   .loadcircle {
-    animation: loader-spin 3s linear infinite;
+    //animation: loader-spin 3s linear infinite;
     transform-origin: center center;
+    transform: rotate(-90deg);
   }
 }
 @keyframes loader-spin {

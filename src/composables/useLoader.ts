@@ -25,12 +25,21 @@ function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
         return Math.round(progress.value * 100) + ' %'
     })
 
+    let itemsToLoad = 0
+    let itemsLoaded = 0
+
     const load = () => {
         if (toLoad) {
             if (loader.alreadyLoaded(toLoad)) {
                 progress.value = 1
                 loading.value = false
             } else {
+                itemsToLoad = (
+                    Object.keys(toLoad.texture).length +
+                    Object.keys(toLoad.cubeTexture).length +
+                    Object.keys(toLoad.gltf).length +
+                    Object.keys(toLoad.fbx).length
+                )
                 loader.bulkLoad(toLoad)
             }
         }
@@ -43,8 +52,9 @@ function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
     loader.onLoad = async function () {
         loading.value = false
     };
-    loader.onProgress = function (url, itemsLoaded, itemsTotal) {
-        progress.value = itemsLoaded / itemsTotal
+    loader.onItemLoaded = function () {
+        itemsLoaded++
+        progress.value = itemsLoaded / itemsToLoad
     };
     loader.onError = function (url) {
         console.log('There was an error loading ' + url);

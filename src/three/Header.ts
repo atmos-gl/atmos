@@ -46,6 +46,8 @@ export class Header extends BaseScene {
 
     animate() {
         // this.greenHouse.animate()
+        const deltaTime = this.clock.getDelta()
+        this.greenHouse.mesh.rotation.y += deltaTime
 
         super.animate()
     }
