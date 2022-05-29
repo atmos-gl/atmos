@@ -113,7 +113,7 @@ createMachine({
 }
   )
 
-// sequenceMachine.initial = 'grow'
+sequenceMachine.initial = 'collect'
 const sequenceManager = interpret(sequenceMachine)
 sequenceManager.start()
 export default sequenceManager

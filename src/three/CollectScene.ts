@@ -270,16 +270,22 @@ export class CollectScene extends BaseScene {
             }
         })
         await this.camera.move({
-            x: 0,
-            y: 20,
-            z: 0,
-            tx: 0,
-            ty: -10,
-            tz: 0,
-        },
+                x: 0,
+                y: 20,
+                z: 0,
+                tx: 0,
+                ty: -10,
+                tz: 0,
+            },
             null, duration, ease)
         await delay(300)
         sequenceManager.send('dropped')
+        await delay(3000)
+        this.dropped = false // Stop physics simulation
+    }
+
+    public getSceneJson() {
+        return JSON.stringify(this.scene.toJSON())
     }
 
     animate() {
