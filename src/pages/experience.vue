@@ -3,7 +3,7 @@ import SetupPowerBlock from '../components/Experience/SetupPowerBlock.vue';
 import {growLoader, powerBlockLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
-import {reactive, ref, watch} from 'vue';
+import {onBeforeUnmount, reactive, ref, watch} from 'vue';
 import PairPhone from '../components/Experience/PairPhone.vue';
 import Link from '@paapi/client/dist/Link';
 import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
@@ -49,6 +49,11 @@ watch(loading, newVal => {
   if (!newVal) {
     growLoader.load()
   }
+})
+
+onBeforeUnmount(() => {
+  sequenceManager.stop()
+  sequenceManager.start()
 })
 </script>
 <template>
