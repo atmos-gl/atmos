@@ -23,7 +23,7 @@ const {pause} = useRafFn(() => {
 onBeforeUnmount(() => pause)
 </script>
 <template>
-  <div class="h-full w-full bg-imperial flex flex-col items-center justify-center">
+  <div class="h-full w-full  flex flex-col items-center justify-center">
     <div>
       <div class="progress relative">
         <svg :height="size" :width="size">

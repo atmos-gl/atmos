@@ -1,15 +1,25 @@
 <script setup lang="ts">
-import {headerLoader} from "../composables/useLoader";
 import HeaderScene from './Header/HeaderScene.vue';
 import ScrollingText from './Header/ScrollingText.vue';
-import {ref} from 'vue';
-import {useElementVisibility} from '@vueuse/core';
+import {exploreLoader} from '../composables/useLoader';
+import {onBeforeUnmount, ref} from 'vue';
 
 const scrollingLines = 4
 
-// Loading flow
+// Preload further resources
+let alreadyLoaded = ref(exploreLoader.ready.value)
 const headerEl = ref(null)
-const headerIsVisible = useElementVisibility(headerEl)
+const onScroll = () => {
+  if (!alreadyLoaded.value) {
+    const rect = headerEl.value.getBoundingClientRect()
+    if (rect.top + rect.height < 0) {
+      exploreLoader.load()
+      alreadyLoaded.value = true
+    }
+  }
+}
+document.body.addEventListener('scroll', onScroll)
+onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <template>

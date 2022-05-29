@@ -2,11 +2,15 @@
 import ExplorePoi from './Explore/ExplorePoi.vue';
 import {exploreLoader} from '../composables/useLoader';
 import {delay} from '../utils';
+import Loader from './Loader.vue';
 
-const {loading, percentageProgress} = exploreLoader
-setTimeout(() => exploreLoader.load(), 3000)
+const {loading, progress} = exploreLoader
 </script>
 <template>
-  <div v-if="loading">Loading: {{ percentageProgress }}</div>
-  <ExplorePoi v-else/>
+  <Transition name="fade" mode="out-in">
+    <div v-if="loading" class="h-screen w-full">
+      <Loader :progress="progress"/>
+    </div>
+    <ExplorePoi v-else/>
+  </Transition>
 </template>

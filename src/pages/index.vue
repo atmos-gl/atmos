@@ -5,27 +5,27 @@ import Section from './../components/Hp/Section.vue';
 import Explore from './../components/Explore.vue';
 import data from "../data/hpSectionsData";
 import Loader from '../components/Loader.vue';
-import {ref, watch} from 'vue';
-import {headerLoader} from '../composables/useLoader';
+import {onBeforeUnmount, ref, watch} from 'vue';
+import {exploreLoader, headerLoader} from '../composables/useLoader';
 import {delay} from '../utils';
-import {useElementVisibility} from '@vueuse/core';
 
 const {loading, progress} = headerLoader
 headerLoader.load()
-const displayLoading = ref(true)
+const displayLoading = ref(loading.value)
 watch(loading, async newVal => {
   if(newVal === false) {
     await delay(800)
     displayLoading.value = false
   }
 })
+
 </script>
 
 <template>
   <Transition name="fade" mode="out-in">
     <Loader v-if="displayLoading" :progress="progress" />
     <main v-else>
-      <Header />
+      <Header ref="headerEl" />
       <Section v-for="(section) in data" :data="section" />
       <Explore />
       <Footer />

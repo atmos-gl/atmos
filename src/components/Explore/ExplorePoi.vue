@@ -6,6 +6,7 @@ import data from "../../data/poiData";
 import {animate} from "popmotion";
 import {animateAsync} from "../../utils";
 import useScene from "../../composables/useScene";
+import {powerBlockLoader} from '../../composables/useLoader';
 
 const isOpen = ref(false)
 const poiDesc = ref('Atmos')
@@ -46,6 +47,9 @@ const processExplore = async () => {
 
   // Disable scroll
   document.body.classList.add('overflow-hidden')
+
+  // Preload upcoming resources
+  powerBlockLoader.load()
 }
 </script>
 <template>
