@@ -6,7 +6,7 @@ import sequenceManager from '../managers/sequenceManager';
 import {createExpoIn, mirrorEasing} from 'popmotion';
 import {EffectPass, OutlineEffect} from 'postprocessing';
 import {animate} from 'popmotion';
-import {animateAsync} from '../utils';
+import {animateAsync, delay} from '../utils';
 
 
 export class SetupPowerBlock extends BaseScene {
@@ -187,6 +187,7 @@ export class SetupPowerBlock extends BaseScene {
             }
         }
         if (state.value.setupPowerBlock === 'putUranium') {
+            this.box.fertilizer.hide()
             await this.camera.move({
                 x: 2,
                 y: 4,
@@ -195,33 +196,36 @@ export class SetupPowerBlock extends BaseScene {
                 ty: 3.5,
                 tz: 0,
             })
-            this.box.fertilizer.hide()
-            this.box.tray.close()
+            await this.box.tray.close()
             this.box.uraniumFlask.show()
-            this.box.uraniumFlask.onConnected = async () => {
-                setTimeout(() => {
-                    this.box.uraniumFlask.fallPill()}, 200)
-                await this.camera.move({
-                    x: 2,
-                    y: 2,
-                    z: 10,
-                    tx: 2,
-                    ty: 0,
-                    tz: 0,
-                }, null, 2000)
-                this.box.turnLightOn()
-
-                setTimeout(() => this.box.door.closeDoor(), 500)
-                await this.camera.move({
-                    x: 0,
-                    y: 2,
-                    z: 18,
-                    tx: 0,
-                    ty: 0,
-                    tz: 0,
-                }, null, 2000)
+            this.box.uraniumFlask.onConnected = () => {
                 sequenceManager.send('uraniumOk')
             }
+        }
+        if (state.value.setupPowerBlock === 'start') {
+            setTimeout(() => {
+                this.box.uraniumFlask.fallPill()}, 200)
+            await this.camera.move({
+                x: 2,
+                y: 2,
+                z: 10,
+                tx: 2,
+                ty: 0,
+                tz: 0,
+            }, null, 2000)
+            this.box.turnLightOn()
+
+            setTimeout(() => this.box.door.closeDoor(), 500)
+            await this.camera.move({
+                x: 0,
+                y: 2,
+                z: 18,
+                tx: 0,
+                ty: 0,
+                tz: 0,
+            }, null, 2000)
+            await delay(500)
+            sequenceManager.send('started')
         }
     }
 

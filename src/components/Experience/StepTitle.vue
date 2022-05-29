@@ -18,6 +18,9 @@ const {step} = toRefs(props)
     <div v-else-if="step === 'pourFertilizer'">
       <h2 class="stepTitle">Étape 3:<br> Ajouter les granules de fertilisant</h2>
     </div>
+    <div v-else-if="step === 'putUranium'">
+      <h2 class="stepTitle">Démarrer la centrale avec la pilule énergétique !</h2>
+    </div>
   </Transition>
 </template>
 <style>
