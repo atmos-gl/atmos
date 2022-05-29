@@ -22,9 +22,6 @@ export class SetupPowerBlock extends BaseScene {
         super.init(canvas)
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = PCFSoftShadowMap
-        // this.renderer.setClearAlpha(1)
-        // this.renderer.setClearColor('#9f2828')
-        // this.enableControls()
         this.ambientLight = new AmbientLight('#b5c7ef', 0.15)
         this.scene.add(this.ambientLight)
 
@@ -47,9 +44,9 @@ export class SetupPowerBlock extends BaseScene {
         this.scene.add(this.box.mesh)
 
         this.camera.position.x = 4
-        this.camera.position.y = 5
-        this.camera.position.z = 20
-        this.camera.lookAt(2, 2, 0)
+        this.camera.position.y = 3
+        this.camera.position.z = 18
+        this.camera.lookAt(2, 1, 0)
 
         // this.scene.add(new Mesh(
         //     new BoxGeometry(5, 5),
@@ -140,15 +137,14 @@ export class SetupPowerBlock extends BaseScene {
 
     async onStep(state: any) {
         if (state.value.setupPowerBlock === 'plugCO2') {
-            const to = {
+            await this.camera.move({
                 x: 3,
                 y: 0,
                 z: 12,
                 tx: 3,
                 ty: 0,
                 tz: 0,
-            }
-            await this.camera.move(to)
+            })
             this.box.co2Bottle.onFinished = () => {
                 sequenceManager.send('co2Ok')
             }
@@ -199,17 +195,32 @@ export class SetupPowerBlock extends BaseScene {
                 ty: 3.5,
                 tz: 0,
             })
+            this.box.fertilizer.hide()
+            this.box.tray.close()
             this.box.uraniumFlask.show()
             this.box.uraniumFlask.onConnected = async () => {
+                setTimeout(() => {
+                    this.box.uraniumFlask.fallPill()}, 200)
                 await this.camera.move({
                     x: 2,
                     y: 2,
-                    z: 12,
+                    z: 10,
                     tx: 2,
                     ty: 0,
                     tz: 0,
-                })
-                this.box.uraniumFlask.fallPill()
+                }, null, 2000)
+                this.box.turnLightOn()
+
+                setTimeout(() => this.box.door.closeDoor(), 500)
+                await this.camera.move({
+                    x: 0,
+                    y: 2,
+                    z: 18,
+                    tx: 0,
+                    ty: 0,
+                    tz: 0,
+                }, null, 2000)
+                sequenceManager.send('uraniumOk')
             }
         }
     }

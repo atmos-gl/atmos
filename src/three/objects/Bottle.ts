@@ -28,7 +28,6 @@ export default class Bottle {
     protected helperAnimation: { stop: () => void } = null;
     protected xToRotate: (x) => any;
     protected visibleOpacity: number;
-    protected initialX: number;
 
     public onFinished?: () => void;
     public ui: UiTip
@@ -42,7 +41,7 @@ export default class Bottle {
                     scene,
                     clamp = new Vector4(-220, 1000, -10, 120),
                     screwDirection = -1,
-                    initialPosition = new Vector2(450, -50)
+                    initialPosition = new Vector2(450, 50)
                 }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlock, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 },
     ) {
         this.object = object
@@ -77,10 +76,8 @@ export default class Bottle {
         this.targetPosition = this.object.position.clone()
         this.targetPosition.y += this.screwDirection * 20;
 
-        this.initialX = this.initialPosition.x
-
-        this.object.position.x = this.initialPosition.x + 200
-        this.object.position.y += this.initialPosition.y
+        this.object.position.x = this.initialPosition.x + 800
+        this.object.position.y = this.initialPosition.y
     }
 
     setupControls() {
@@ -118,15 +115,18 @@ export default class Bottle {
         this.object.visible = true
         await animateAsync({
             from: {
-                translate: this.object.position.x,
+                x: this.object.position.x,
+                y: this.object.position.y,
                 opacity: 0
             },
             to: {
-                translate: this.initialX,
+                x: this.initialPosition.x,
+                y: this.initialPosition.y,
                 opacity: this.visibleOpacity
             },
             onUpdate: v => {
-                this.object.position.x = v.translate
+                this.object.position.x = v.x
+                this.object.position.y = v.y
                 this.setOpacity(v.opacity)
             },
             ease: reverseEasing(createExpoIn(4)),

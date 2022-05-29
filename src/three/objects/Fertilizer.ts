@@ -12,7 +12,7 @@ import {
 import {BaseScene} from '../BaseScene';
 import {getMetalMaterial} from '../materials/metalMaterials';
 import useDragAnimation, {DragAnimatable, DragAnimation} from '../three-composables/useDragAnimations';
-import {animate} from 'popmotion';
+import {animate, createExpoIn, reverseEasing} from 'popmotion';
 import {animateAsync, delay} from '../../utils';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
 import {powerBlockLoader} from '../../composables/useLoader';
@@ -40,6 +40,7 @@ export default class Fertilizer implements DragAnimatable {
     private isVisible = false
 
     public ui: UiTip;
+    private bottle: Object3D;
 
     constructor(object: Object3D, scene: BaseScene, animationClip: AnimationClip) {
         this.object = object
@@ -56,6 +57,7 @@ export default class Fertilizer implements DragAnimatable {
         const {loader} = powerBlockLoader
         this.bottleMesh = this.object.getObjectByName('Bouteille_ouverte') as Mesh
         this.bottleMesh.material = getMetalMaterial(loader)
+        this.bottle = this.object.getObjectByName('Bouteille_fertilisant')
         //
         this.mixer = new AnimationMixer(this.object)
         this.action = this.mixer.clipAction(this.animClip)
@@ -74,7 +76,9 @@ export default class Fertilizer implements DragAnimatable {
         })
         // this.object.visible = false
         this.setVisibility(false)
-        this.bottleMesh.material.opacity = 0
+
+        this.initialX = this.object.position.x
+        this.object.position.x += 500
     }
 
     get animationProgress() {
@@ -117,7 +121,7 @@ export default class Fertilizer implements DragAnimatable {
 
     async show() {
         this.fertilizerAnimation.bind()
-        this.bottleMesh.visible = true
+        this.setVisibility(true)
         await animateAsync({
             from: {
                 translate: this.object.position.x,
@@ -128,13 +132,25 @@ export default class Fertilizer implements DragAnimatable {
                 opacity: 1
             },
             onUpdate: v => {
-                // this.object.position.x = v.translate
-                ;(this.bottleMesh.material as MeshPhongMaterial).opacity = v.opacity
+                this.object.position.x = v.translate
             },
-            duration: 400
+            duration: 1000,
+            ease: reverseEasing(createExpoIn(4)),
         })
-        this.setVisibility(true)
         this.ui.show()
+    }
+    async hide() {
+        this.object.getObjectByName('granule_').visible = false
+        await animateAsync({
+            from: this.bottle.position.x,
+            to: this.bottle.position.x + 600,
+            onUpdate: v => {
+                this.bottle.position.x = v
+            },
+            duration: 1000,
+            ease: createExpoIn(4),
+        })
+        this.setVisibility(false)
     }
 
     setVisibility(set: boolean) {

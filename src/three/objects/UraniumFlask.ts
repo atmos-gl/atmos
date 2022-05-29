@@ -1,5 +1,5 @@
 import Bottle from './Bottle';
-import {AnimationAction, AnimationClip, AnimationMixer, Mesh, Object3D, Vector2, Vector4} from 'three';
+import {AnimationAction, AnimationClip, AnimationMixer, LoopOnce, Mesh, Object3D, Vector2, Vector4} from 'three';
 import {SetupPowerBlock} from '../SetupPowerBlock';
 
 export default class UraniumFlask extends Bottle {
@@ -21,7 +21,7 @@ export default class UraniumFlask extends Bottle {
                 365, 450
             ),
             screwDirection: 1,
-            initialPosition: new Vector2(200, 140)
+            initialPosition: new Vector2(200, 400)
         });
         clip.tracks.pop()
         this.clip = clip
@@ -32,7 +32,8 @@ export default class UraniumFlask extends Bottle {
         const pos = this.object.position.z
         this.xToZ = (x) => pos
         this.xToRotate = (x) => 0
-        this.object.position.x -= 200 // Cancel animation
+        this.object.position.x -= 500 // Cancel animation
+        this.object.position.y += 500 // Cancel animation
         this.targetPosition.y += 50
     }
 
@@ -45,6 +46,9 @@ export default class UraniumFlask extends Bottle {
     private setupAnimation() {
         this.animationMixer = new AnimationMixer(this.object)
         this.uraniumAction = this.animationMixer.clipAction(this.clip)
+        this.uraniumAction.loop = LoopOnce
+        this.uraniumAction.clampWhenFinished = true
+        this.uraniumAction.timeScale = 0.8
     }
 
     public fallPill() {

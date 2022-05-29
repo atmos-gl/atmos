@@ -94,4 +94,16 @@ export default class Tray {
         }
     }
 
+    public close() {
+        const position = this.object.position
+        return animateAsync({
+            from: position.x,
+            to: this.initialPos.x,
+            onUpdate: v => {
+                position.x = v
+            },
+            duration: 800,
+        })
+    }
+
 }

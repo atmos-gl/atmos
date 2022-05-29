@@ -1,18 +1,6 @@
-import {
-    AnimationAction,
-    AnimationClip,
-    AnimationMixer,
-    Group,
-    Mesh,
-    MeshBasicMaterial, MeshLambertMaterial, MeshPhongMaterial, MeshPhysicalMaterial,
-    Object3D,
-    Vector2,
-    Vector3,
-    Vector4
-} from 'three';
+import {AnimationClip, Group, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3, Vector4} from 'three';
 import Door from './Door';
 import Bottle from './Bottle';
-import {BaseScene} from '../BaseScene';
 import glassMaterial from '../materials/glassMaterial';
 import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
@@ -20,6 +8,7 @@ import Fertilizer from './Fertilizer';
 import {powerBlockLoader} from '../../composables/useLoader';
 import {SetupPowerBlock} from '../SetupPowerBlock';
 import UraniumFlask from './UraniumFlask';
+import {animate} from 'popmotion';
 
 export class Box {
     public model: Object3D
@@ -30,6 +19,7 @@ export class Box {
     public tray: Tray;
     public fertilizer: Fertilizer;
     public uraniumFlask: UraniumFlask;
+    private nuclearLight: Mesh;
 
 
     constructor(scene: SetupPowerBlock) {
@@ -98,7 +88,7 @@ export class Box {
                     -20, 90
                 ),
                 screwDirection: 1,
-            initialPosition: new Vector2(450, 100)
+            initialPosition: new Vector2(450, 50)
             }
         )
 
@@ -125,6 +115,23 @@ export class Box {
 
         ;(this.model.getObjectByName('Pillule').children[0] as Mesh).material = new MeshPhongMaterial({color: '#0f0', emissive: '#040', reflectivity: 0.5})
 
+        this.nuclearLight = this.model.getObjectByName('nuclear_light') as Mesh
+        this.nuclearLight.material = new MeshPhongMaterial({
+            color: '#1a1a1a'
+        })
+
+    }
+
+    public turnLightOn() {
+        const mat = this.nuclearLight.material as MeshPhongMaterial
+        animate({
+            from: {color: '#1a1a1a', emissive: '#000'},
+            to: {color: '#0d2d15', emissive: '#2a9a46'},
+            onUpdate(v) {
+                mat.color.set(v.color)
+                mat.emissive.set(v.emissive)
+            }
+        })
     }
 
     get mesh() {
