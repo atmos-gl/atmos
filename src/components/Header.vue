@@ -3,9 +3,6 @@ import {headerLoader} from "../composables/useLoader";
 import HeaderScene from './Header/HeaderScene.vue';
 import ScrollingText from './Header/ScrollingText.vue';
 
-const {loading, percentageProgress} = headerLoader
-headerLoader.load()
-
 const scrollingLines = 4
 </script>
 
@@ -33,9 +30,7 @@ const scrollingLines = 4
       <p>Atmos, votre serre connectée vous facilite le quotidien en adoptant une démarche écologgique et durable. Manger sain et varié devient une priorité.</p>
     </div>
     <div class="w-3/5">
-      <div v-if="loading">Loading: {{ percentageProgress }}</div>
-
-      <HeaderScene v-else/>
+      <HeaderScene/>
     </div>
   </div>
   </header>
