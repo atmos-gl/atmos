@@ -120,7 +120,6 @@ createMachine({
 }
   )
 
-sequenceMachine.initial = 'setupPowerBlock'
 const sequenceManager = interpret(sequenceMachine)
 sequenceManager.start()
 export default sequenceManager
