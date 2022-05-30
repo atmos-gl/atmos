@@ -99,6 +99,7 @@ export class Box {
 
         const fertilizer = this.model.getObjectByName('fertilisant')
         const fertilizerClip = AnimationClip.findByName(this.model.animations, 'fertilizer')
+        console.log(this.model)
         this.fertilizer = new Fertilizer(fertilizer, this.scene, fertilizerClip)
 
         const uraniumFlask = this.model.getObjectByName('fiole')

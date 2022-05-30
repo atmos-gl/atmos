@@ -21,9 +21,6 @@ export interface ResourcesToLoad {
     texture?: { [key: string]: string }
     cubeTexture?: { [key: string]: Array<string> }
 }
-interface Clonable {
-    clone: (recursive?: boolean) => any
-}
 
 export default class ResourcesLoader {
 
@@ -87,11 +84,16 @@ export default class ResourcesLoader {
         if (!store[key]) {
             throw new Error(`The resource ${key} has not been loaded.`)
         }
-        const resource = store[key] as unknown as Clonable
+        // return store[key]
+        const resource = store[key] as any
         if (resource.clone) {
-            return resource.clone(true)
+            const cloned = resource.clone(true)
+            if (resource.animations) {
+                cloned.animations = resource.animations
+            }
+            return cloned
         }
-        return resource as unknown as T
+        return resource
     }
 
     loadTexture(key: string, url: string) {
