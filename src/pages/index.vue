@@ -5,15 +5,33 @@ import Section from './../components/Hp/Section.vue';
 import Explore from './../components/Explore.vue';
 import data from "../data/hpSectionsData";
 import Loader from '../components/Loader.vue';
-import {onBeforeUnmount, ref, watch} from 'vue';
-import {exploreLoader, headerLoader} from '../composables/useLoader';
+import {computed, onBeforeUnmount, ref, watch} from 'vue';
+import {exploreLoader, growLoader, headerLoader, powerBlockLoader} from '../composables/useLoader';
 import {delay} from '../utils';
 
-const {loading, progress} = headerLoader
+const loading = computed(() => {
+  return (
+      headerLoader.loading.value
+      || exploreLoader.loading.value
+      || powerBlockLoader.loading.value
+      || growLoader.loading.value
+  )
+})
+const progress = computed(() => {
+  return (
+      headerLoader.progress.value
+      + exploreLoader.progress.value
+      + powerBlockLoader.progress.value
+      + growLoader.progress.value
+  ) / 4
+})
 headerLoader.load()
+exploreLoader.load()
+powerBlockLoader.load()
+growLoader.load()
 const displayLoading = ref(loading.value)
 watch(loading, async newVal => {
-  if(newVal === false) {
+  if (newVal === false) {
     await delay(800)
     displayLoading.value = false
   }
@@ -24,13 +42,13 @@ watch(loading, async newVal => {
 <template>
   <Transition name="fade" mode="out-in">
     <div v-if="displayLoading" class="h-full w-full theme-gradient">
-      <Loader :progress="progress" />
+      <Loader :progress="progress"/>
     </div>
     <main v-else>
-      <Header ref="headerEl" />
-      <Section v-for="(section) in data" :data="section" />
-      <Explore />
-      <Footer />
+      <Header ref="headerEl"/>
+      <Section v-for="(section) in data" :data="section"/>
+      <Explore/>
+      <Footer/>
     </main>
   </Transition>
 </template>
