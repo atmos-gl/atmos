@@ -78,3 +78,31 @@ export const growLoader = loaders.grow
 export default function useLoader(name): LoaderComposable {
     return loaders[name]
 }
+
+export function combineLoaders(...loaders: LoaderComposable[]) {
+    const loading = computed(() => {
+        for (const loader of loaders) {
+            if (loader.loading.value) return true
+        }
+        return false
+    })
+    const progress = computed(() => {
+        let sum = 0;
+        for (const loader of loaders) {
+            sum += loader.progress.value
+        }
+        return sum / loaders.length
+    })
+
+    const load = () => {
+        for (const loader of loaders) {
+            loader.load()
+        }
+    }
+
+    return {
+        loading,
+        progress,
+        load
+    }
+}
