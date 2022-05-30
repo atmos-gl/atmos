@@ -27,7 +27,7 @@ load()
       <Loader :progress="progress"/>
     </div>
     <main v-else>
-      <Header ref="headerEl"/>
+      <Header />
       <Section v-for="(section) in data" :data="section"/>
       <Explore/>
       <Footer/>
