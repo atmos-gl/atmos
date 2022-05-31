@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {Vector3} from 'three';
 import {SetupPowerBlock} from '../../three/SetupPowerBlock';
 import sequenceManager from '../../managers/sequenceManager';
@@ -11,6 +11,7 @@ import co2Icon from '../../assets/img/co2Icon.svg'
 import naturalIcon from '../../assets/img/naturalIcon.svg'
 import localIcon from '../../assets/img/localIcon.svg'
 import useScene from '../../composables/useScene';
+import Helper from './Helper.vue';
 
 const {scene, canvas, appReady} = useScene(new SetupPowerBlock())
 
@@ -19,6 +20,10 @@ const {state} = useActor(sequenceManager)
 const showUi = computed(() => !scene.isCameraMoving.value)
 const step = computed(() => {
   return (state.value.value as any).setupPowerBlock
+})
+const doorUi = ref(null)
+onMounted(() => {
+  doorUi.value = scene.doorUi
 })
 </script>
 <template>
@@ -30,6 +35,11 @@ const step = computed(() => {
       </Transition>
     </div>
     <div v-if="appReady">
+      <Transition name="fade">
+      <div v-if="doorUi.show" class="absolute top-0 left-0" :style="`transform: translate(${doorUi.position.x}px, ${doorUi.position.y}px)`">
+        <Helper class="absolute -left-10" :angle="160" />
+      </div>
+      </Transition>
       <StepTip :tip="scene.co2BottleUi"
                :icon="co2Icon"
               :helper-position="new Vector3(-35, 30, 190)"

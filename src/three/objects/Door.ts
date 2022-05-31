@@ -1,7 +1,10 @@
 import {MathUtils, Object3D} from 'three';
-import {DragAnimatable} from '../three-composables/useDragAnimations';
+import useDragAnimation, {DragAnimatable, DragAnimation} from '../three-composables/useDragAnimations';
 import {animate} from 'popmotion';
 import {animateAsync} from '../../utils';
+import useUiTip, {UiTip} from '../three-composables/useUiTip';
+import {BaseScene} from '../BaseScene';
+import sequenceManager from '../../managers/sequenceManager';
 
 export default class Door implements DragAnimatable{
     public mesh: Object3D;
@@ -12,12 +15,31 @@ export default class Door implements DragAnimatable{
     private maxRotation = 2.5;
 
     public onOpen?: () => void
+    private scene: BaseScene;
+    public ui: UiTip;
+    private dragAnimation: DragAnimation;
 
-    constructor(object: Object3D) {
+    constructor(object: Object3D, scene: BaseScene) {
         this.mesh = object
+        this.scene = scene
 
         this.handle = this.mesh.getObjectByName('poignee')
         this.mesh.rotation.y = this.minRotation
+
+        this.ui = useUiTip(this.handle, this.scene)
+
+        setTimeout(() => {
+            this.dragAnimation = useDragAnimation(this, this.scene.canvas, this.scene.camera, {
+                onDragStart: () => {
+                    this.ui.hide()
+                }
+            })
+            this.dragAnimation.bind()
+            this.onOpen = () => {
+                this.dragAnimation.unbind()
+                sequenceManager.send('doorOk')
+            }
+        }, 0)
     }
 
     set animationProgress(factor: number) {

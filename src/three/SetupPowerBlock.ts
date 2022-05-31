@@ -55,17 +55,8 @@ export class SetupPowerBlock extends BaseScene {
 
         this.resizeRendererToDisplaySize()
         this.camera.updateMatrixWorld()
-        this.openDoorInteraction = useDragAnimation(this.box.door, this.canvas, this.camera)
-        this.openDoorInteraction.bind()
-        this.box.door.onOpen = () => {
-            this.openDoorInteraction.unbind()
-            sequenceManager.send('doorOk')
-        }
-        sequenceManager.onTransition(state => this.onStep(state))
 
-        setTimeout(() => {
-            console.log(`Rendering ${this.renderer.info.render.triangles} triangles`)
-        }, 0)
+        sequenceManager.onTransition(state => this.onStep(state))
 
         this.setupPostProcessing()
     }
@@ -88,6 +79,9 @@ export class SetupPowerBlock extends BaseScene {
         super.postProcessingPasses();
     }
 
+    get doorUi() {
+        return this.box.door.ui.state
+    }
     get co2BottleUi() {
         return this.box.co2Bottle.ui.state
     }
@@ -139,6 +133,10 @@ export class SetupPowerBlock extends BaseScene {
     }
 
     async onStep(state: any) {
+        if (state.value.setupPowerBlock === 'openDoor') {
+            this.box.door.ui.show()
+            return
+        }
         if (state.value.setupPowerBlock === 'plugCO2') {
             await this.camera.move({
                 x: 3,

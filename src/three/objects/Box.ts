@@ -54,7 +54,7 @@ export class Box {
         tube.material =seeThroughGlass.clone()
 
 
-        this.door = new Door(this.model.getObjectByName('porte'))
+        this.door = new Door(this.model.getObjectByName('porte'), this.scene)
         this.door.handle.castShadow = true
         this.door.mesh.getObjectByName('Cube_1').receiveShadow = true
 
