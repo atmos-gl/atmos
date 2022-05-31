@@ -19,7 +19,7 @@ $amplitude: 100px;
   @apply h-12 w-12 rounded-full opacity-50;
   border: solid #fff 2px;
   opacity: 0.5;
-  animation: appear .5s both $initialDelay, indicator 1.5s infinite ($initialDelay + .6s);
+  animation: appear .5s both $initialDelay, indicator 2s infinite ($initialDelay + .6s);
 }
 @keyframes appear {
   from {
@@ -37,11 +37,11 @@ $amplitude: 100px;
     transform: translateX(0) scale($movingScale);
     opacity: 0.5
   }
-  70% {
+  50% {
     transform: translateX($amplitude) scale($movingScale);
     opacity: 0.5
   }
-  80% {
+  60% {
     transform: translateX($amplitude) scale($movingScale);
     opacity: 0
   }
