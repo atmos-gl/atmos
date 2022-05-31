@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {computed, onBeforeUnmount, onMounted, ref} from 'vue';
+import {computed} from 'vue';
+import {Vector3} from 'three';
 import {SetupPowerBlock} from '../../three/SetupPowerBlock';
 import sequenceManager from '../../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
@@ -29,31 +30,51 @@ const step = computed(() => {
       </Transition>
     </div>
     <div v-if="appReady">
-      <StepTip :tip="scene.co2BottleUi" :icon="co2Icon">
+      <StepTip :tip="scene.co2BottleUi"
+               :icon="co2Icon"
+              :helper-position="new Vector3(-35, 30, 190)"
+      >
         <p><strong>Le C02</strong> est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé
           notamment
           <strong>une gamme de CO2 recyclé</strong> que l'on récupère des centrales à gaz pour réduire leur impact. </p>
       </StepTip>
-      <StepTip :tip="scene.waterBottleUi" :icon="naturalIcon">
+      <StepTip :tip="scene.waterBottleUi"
+               :icon="naturalIcon"
+               :helper-position="new Vector3(-35, 20, 160)"
+      >
         <p>
-          Les fruits et légumes sont <strong>composés d'environ 90% d'eau</strong>. Il est donc important de nourrir votre plantation avec la meilleure eau possible. C'est un ingrédient
+          Les fruits et légumes sont <strong>composés d'environ 90% d'eau</strong>. Il est donc important de nourrir
+          votre plantation avec la meilleure eau possible. C'est un ingrédient
           <strong>100% naturel</strong> indispensable à votre santé.
         </p>
       </StepTip>
-      <StepTip :tip="scene.fertilizerUi" :icon="localIcon">
+      <StepTip :tip="scene.trayUi"
+               :icon="localIcon"
+               :helper-position="new Vector3(-60, 40, 10)"
+      >
         <p>
-          Nos granules de fertilisant contiennent des produits utilisés pour la pousse des végétaux du monde entier. Vos produits sont créés
+          Le tiroir de fertilisant peut contenir jusqu'à 4 types de fertilisant différents. Cela permet à la serre de
+          choisir le meilleur produit en fonction de ce que vous y cultivez.
+        </p>
+      </StepTip>
+      <StepTip :tip="scene.fertilizerUi"
+               :icon="localIcon"
+               :helper-position="new Vector3(-70, -60, 155)"
+      >
+        <p>
+          Nos granules de fertilisant contiennent des produits utilisés pour la pousse des végétaux du monde entier. Vos
+          produits sont créés
           <strong>dans le respect des traditions locales</strong>.
         </p>
       </StepTip>
-      <StepTip :tip="scene.trayUi" :icon="localIcon">
+      <StepTip :tip="scene.uraniumFlaskUi"
+               :icon="localIcon"
+               :helper-position="new Vector3(-30, -70, 130)"
+      >
         <p>
-          Le tiroir de fertilisant peut contenir jusqu'à 4 types de fertilisant différents. Cela permet à la serre de choisir le meilleur produit en fonction de ce que vous y cultivez.
-        </p>
-      </StepTip>
-      <StepTip :tip="scene.uraniumFlaskUi" :icon="localIcon">
-        <p>
-          ICI c'est l'uranium Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur cum dicta dignissimos ea eum fuga, fugit inventore labore, molestias mollitia nesciunt nisi possimus provident repellendus sapiente tempore temporibus totam!
+          ICI c'est l'uranium Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur cum dicta
+          dignissimos ea eum fuga, fugit inventore labore, molestias mollitia nesciunt nisi possimus provident
+          repellendus sapiente tempore temporibus totam!
         </p>
       </StepTip>
     </div>

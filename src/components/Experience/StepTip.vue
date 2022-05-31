@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import {computed, toRefs} from 'vue';
+import Helper from './Helper.vue';
+import {UiTip} from '../../three/three-composables/useUiTip';
+import {Vector3} from 'three';
 
-const props = defineProps(['tip', 'icon'])
-const {tip, icon} = toRefs(props)
+const props = defineProps(['tip', 'icon', 'helperPosition'])
+const {tip, icon, helperPosition} = toRefs(props)
 
 </script>
 
@@ -18,6 +21,12 @@ const {tip, icon} = toRefs(props)
         <img v-if="icon" :src="icon" alt="Icon" class="h-12 mb-2">
         <slot/>
       </div>
+      <Helper v-if="helperPosition" class="absolute"
+              :style="{
+        left: helperPosition.x + 'px',
+        top: helperPosition.y + 'px',
+              }"
+              :angle="helperPosition.z"/>
     </div>
   </Transition>
 </template>
@@ -25,12 +34,12 @@ const {tip, icon} = toRefs(props)
 .line::before, .line::after {
   content: '';
   @apply
-    absolute
-    -top-7
-    left-8
-    h-px
-    w-12
-    bg-white
+  absolute
+  -top-7
+  left-8
+  h-px
+  w-12
+  bg-white
   ;
   backdrop-filter: blur(10px);
   transform-origin: left;
