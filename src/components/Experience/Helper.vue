@@ -13,7 +13,7 @@ const props = defineProps({
 </template>
 <style scoped lang="scss">
 $movingScale : 0.5;
-$initialDelay: 1s;
+$initialDelay: 2s;
 $amplitude: 100px;
 .dot {
   @apply h-12 w-12 rounded-full opacity-50;
