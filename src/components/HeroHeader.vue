@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Header from './Header/Header.vue';
 import HeaderScene from './Header/HeaderScene.vue';
 import ScrollingText from './Header/ScrollingText.vue';
 import {exploreLoader} from '../composables/useLoader';
@@ -23,17 +24,8 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <template>
-  <header ref="headerEl" class="h-screen text-white font-core snake mb-32 flex flex-col">
-    <nav class="o-container flex items-end w-full py-8">
-      <h1>
-        <img src="./../assets/img/logo.png" class="h-16">
-      </h1>
-      <ul class="flex ml-auto">
-        <li class="mr-4"><a href="" v-cursor.click>Serre</a></li>
-        <li class="mr-4"><a href="">Valeurs</a></li>
-        <li><a href="">Panier</a></li>
-      </ul>
-    </nav>
+  <div ref="headerEl" class="h-screen text-white font-core snake mb-32 flex flex-col">
+    <Header/>
 
   <div class="o-container flex text-jade flex-1 pt-20 pb-32">
     <div class="absolute-y-center text-customBig font-title font-bold uppercase leading-none flex flex-col opacity-15 -z-1">
@@ -49,5 +41,5 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
       <HeaderScene/>
     </div>
   </div>
-  </header>
+  </div>
 </template>

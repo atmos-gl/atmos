@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Header from './../components/Header.vue';
+import HeroHeader from './../components/HeroHeader.vue';
 import Footer from './../components/Footer.vue';
 import Section from './../components/Hp/Section.vue';
 import Explore from './../components/Explore.vue';
@@ -27,7 +27,7 @@ load()
       <Loader :progress="progress"/>
     </div>
     <main v-else>
-      <Header />
+      <HeroHeader />
       <Section v-for="(section) in data" :data="section"/>
       <Explore/>
       <Footer/>
