@@ -14,7 +14,7 @@ const loaders = {
     grow: createLoader(growResources),
 }
 
-type LoaderComposable = { percentageProgress: ComputedRef<string>; load: () => void; loader: ResourcesLoader; ready: ComputedRef<boolean>; progress: Ref<UnwrapRef<number>>; loading: Ref<UnwrapRef<boolean>> };
+export type LoaderComposable = { percentageProgress: ComputedRef<string>; load: () => void; loader: ResourcesLoader; ready: ComputedRef<boolean>; progress: Ref<UnwrapRef<number>>; loading: Ref<UnwrapRef<boolean>> };
 
 function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
     const loader = new ResourcesLoader()

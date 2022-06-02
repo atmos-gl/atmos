@@ -9,3 +9,12 @@
 .center-content {
   @apply flex items-center justify-center;
 }
+
+.animate-breathe {
+  animation: breathe 1.5s alternate infinite;
+}
+@keyframes breathe {
+  to {
+    opacity: 0.3;
+  }
+}
