@@ -119,7 +119,7 @@ createMachine({
   },
 }
   )
-
+sequenceMachine.initial = 'leaveWork'
 const sequenceManager = interpret(sequenceMachine)
 sequenceManager.start()
 export default sequenceManager

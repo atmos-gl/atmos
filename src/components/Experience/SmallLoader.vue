@@ -11,7 +11,9 @@ const {loading} = props.loader
   <Transition name="fade" mode="out-in">
     <div v-if="loading"
          class="absolute bottom-0 right-0  px-12 py-8 pointer-events-none">
-      <span class="animate-breathe opacity-70">Chargement...</span>
+      <span class="animate-breathe opacity-70">
+        <slot />
+      </span>
     </div>
   </Transition>
 </template>

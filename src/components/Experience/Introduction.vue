@@ -33,6 +33,6 @@ const isFirstSlide = ref(true)
         <button @click="$emit('next')" class="mt-8 btn">C'est parti !</button>
       </div>
     </Transition>
-    <SmallLoader :loader="powerBlockLoader" />
+    <SmallLoader :loader="powerBlockLoader">Préparation de votre serre...</SmallLoader>
   </div>
 </template>
