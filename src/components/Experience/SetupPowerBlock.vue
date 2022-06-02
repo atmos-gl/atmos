@@ -25,6 +25,9 @@ const doorUi = ref(null)
 onMounted(() => {
   doorUi.value = scene.doorUi
 })
+
+// Fix vue compiler glitch
+const getVec3 = (x, y, z) => new Vector3(x, y, z)
 </script>
 <template>
   <main>
@@ -42,7 +45,7 @@ onMounted(() => {
       </Transition>
       <StepTip :tip="scene.co2BottleUi"
                :icon="co2Icon"
-              :helper-position="new Vector3(-35, 30, 190)"
+              :helper-position="getVec3(-35, 30, 190)"
       >
         <p><strong>Le C02</strong> est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé
           notamment
@@ -50,7 +53,7 @@ onMounted(() => {
       </StepTip>
       <StepTip :tip="scene.waterBottleUi"
                :icon="naturalIcon"
-               :helper-position="new Vector3(-35, 20, 160)"
+               :helper-position="getVec3(-35, 20, 160)"
       >
         <p>
           Les fruits et légumes sont <strong>composés d'environ 90% d'eau</strong>. Il est donc important de nourrir
@@ -60,7 +63,7 @@ onMounted(() => {
       </StepTip>
       <StepTip :tip="scene.trayUi"
                :icon="localIcon"
-               :helper-position="new Vector3(-60, 40, 10)"
+               :helper-position="getVec3(-60, 40, 10)"
       >
         <p>
           Le tiroir de fertilisant peut contenir jusqu'à 4 types de fertilisant différents. Cela permet à la serre de
@@ -69,7 +72,7 @@ onMounted(() => {
       </StepTip>
       <StepTip :tip="scene.fertilizerUi"
                :icon="localIcon"
-               :helper-position="new Vector3(-70, -60, 155)"
+               :helper-position="getVec3(-70, -60, 155)"
       >
         <p>
           Nos granules de fertilisant contiennent des produits utilisés pour la pousse des végétaux du monde entier. Vos
@@ -79,7 +82,7 @@ onMounted(() => {
       </StepTip>
       <StepTip :tip="scene.uraniumFlaskUi"
                :icon="localIcon"
-               :helper-position="new Vector3(-30, -70, 130)"
+               :helper-position="getVec3(-30, -70, 130)"
       >
         <p>
           ICI c'est l'uranium Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur cum dicta
