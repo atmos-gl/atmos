@@ -5,8 +5,8 @@ import Section from './../components/Hp/Section.vue';
 import Explore from './../components/Explore.vue';
 import data from "../data/hpSectionsData";
 import Loader from '../components/Loader.vue';
-import {computed, onBeforeUnmount, ref, watch} from 'vue';
-import {combineLoaders, exploreLoader, growLoader, headerLoader, powerBlockLoader} from '../composables/useLoader';
+import {ref, watch} from 'vue';
+import {combineLoaders, exploreLoader, headerLoader} from '../composables/useLoader';
 import {delay} from '../utils';
 
 const {loading, progress, load} = combineLoaders(headerLoader, exploreLoader)

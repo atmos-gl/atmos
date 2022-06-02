@@ -6,6 +6,8 @@ import {BaseScene} from '../BaseScene';
 import {TomatoColor, TomatoParams} from './Tomato';
 import {animateAsync} from '../../utils';
 
+type DoorToOpen = 'left' | 'right' | 'both';
+
 export class Greenhouse {
     public object: Object3D
     private scene: BaseScene;
@@ -78,35 +80,62 @@ export class Greenhouse {
         this.plant1.updateTomatoes()
         this.plant2.updateTomatoes()
     }
-     async grow() {
+
+    async grow() {
         this.plant1.grow()
         await this.plant2.grow()
-     }
+    }
 
-     async openDoor () {
+    private getDoorOpenFunction(door: DoorToOpen) {
+        if (door === 'left') {
+            return ({left}) => this.setLeftDoorAngle(left)
+        }
+        if (door === 'right') {
+            return ({right}) => this.setRightDoorAngle(right)
+        }
+        return this.setDoorsAngle.bind(this)
+    }
+
+    async openDoor(door: DoorToOpen = 'both') {
         await animateAsync({
-            from: 0,
-            to: Math.PI * 3 / 4,
+            from: {
+                left: this.leftDoor.rotation.y,
+                right: this.rightDoor.rotation.y,
+            },
+            to: {
+                left: -Math.PI * 3 / 4,
+                right: Math.PI * 3 / 4,
+            },
             duration: 500,
-            onUpdate: v => {
-                this.setDoorsAngle(v)
-            }
+            onUpdate: this.getDoorOpenFunction(door)
         })
-     }
+    }
 
-     async closeDoor () {
+    async closeDoor(door: DoorToOpen = 'both') {
         await animateAsync({
-            from: Math.PI * 3 / 4,
-            to: 0,
+            from: {
+                left: this.leftDoor.rotation.y,
+                right: this.rightDoor.rotation.y,
+            },
+            to: {
+                left: 0,
+                right: 0,
+            },
             duration: 500,
-            onUpdate: v => {
-                this.setDoorsAngle(v)
-            }
+            onUpdate: this.getDoorOpenFunction(door)
         })
-     }
+    }
 
-    setDoorsAngle(angle: number) {
-        this.leftDoor.rotation.y = -angle
+    setDoorsAngle(angle: number|any) {
+        this.setLeftDoorAngle(angle.left ?? angle)
+        this.setRightDoorAngle(angle.right ?? angle)
+    }
+
+    setLeftDoorAngle(angle: number) {
+        this.leftDoor.rotation.y = angle
+    }
+
+    setRightDoorAngle(angle: number) {
         this.rightDoor.rotation.y = angle
     }
 
