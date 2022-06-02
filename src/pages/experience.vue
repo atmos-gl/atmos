@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SetupPowerBlock from '../components/Experience/SetupPowerBlock.vue';
-import {growLoader, powerBlockLoader} from '../composables/useLoader';
+import {combineLoaders, commonLoader, growLoader, powerBlockLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
 import {onBeforeUnmount, onMounted, reactive, ref, watch} from 'vue';
@@ -15,7 +15,7 @@ const {
   loading: powerBlockLoading,
   progress: powerBlockProgress,
   load: loadPowerBlock
-} = powerBlockLoader
+} = commonLoader.ready.value ? powerBlockLoader : combineLoaders(commonLoader, powerBlockLoader)
 const {
   loading: growLoading,
   progress: growProgress
