@@ -9,17 +9,6 @@ const scrollingLines = 4
 // Preload further resources
 let alreadyLoaded = ref(exploreLoader.ready.value)
 const headerEl = ref(null)
-const onScroll = () => {
-  if (!alreadyLoaded.value) {
-    const rect = headerEl.value.getBoundingClientRect()
-    if (rect.top + rect.height < 0) {
-      exploreLoader.load()
-      alreadyLoaded.value = true
-    }
-  }
-}
-document.body.addEventListener('scroll', onScroll)
-onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <template>

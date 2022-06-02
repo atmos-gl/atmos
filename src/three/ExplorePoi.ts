@@ -50,7 +50,7 @@ export class ExplorePoi extends BaseScene {
 
         this.pointLight = new PointLight('#fff', 0.9)
         this.pointLight.position.x = 5
-        this.pointLight.position.y = 5
+        this.pointLight.position.y = 3
         this.pointLight.position.z = 8
         // const helper = new PointLightHelper(this.pointLight)
         this.scene.add(this.pointLight)
@@ -128,7 +128,7 @@ export class ExplorePoi extends BaseScene {
         this.poiObjects.forEach((object, i) => {
             const poi = document.createElement('div')
             poi.innerHTML = '+'
-            poi.classList.add('poi')
+            poi.classList.add('poi', 'transition-opacity', 'duration-200')
             this.poiList.push(poi)
             const objectCSS = new CSS2DObject(poi)
             objectCSS.position.set(0, 0, 0)
@@ -206,7 +206,7 @@ export class ExplorePoi extends BaseScene {
 
     async openPoi(object, poi, i) {
         const objPos = object.objInstance.getWorldPosition(new Vector3())
-        poi.classList.toggle('hidden')
+        poi.classList.add('opacity-0')
         await this.camera.move({
             x: object.camPos.x,
             y: object.camPos.y,
@@ -228,7 +228,7 @@ export class ExplorePoi extends BaseScene {
             ty: this.defaultCamLookAt.y,
             tz: this.defaultCamLookAt.z,
         })
-        this.poiList[i].classList.toggle('hidden')
+        this.poiList[i].classList.remove('opacity-0')
         this.currentPoiIndex = null
         this.setObjectsClickable(true)
         this.showBgText.value = true
