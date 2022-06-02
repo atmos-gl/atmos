@@ -5,6 +5,7 @@ import Plant from './Plant';
 import {BaseScene} from '../BaseScene';
 import {TomatoColor, TomatoParams} from './Tomato';
 import {animateAsync} from '../../utils';
+import {commonLoader} from '../../composables/useLoader';
 
 type DoorToOpen = 'left' | 'right' | 'both';
 
@@ -17,20 +18,18 @@ export class Greenhouse {
     private plant1: Plant;
     private plant2: Plant;
     private tomatoParams: TomatoParams;
-    private loader: ResourcesLoader;
 
-    constructor(loader: ResourcesLoader, tomatoParams: TomatoParams = {
+    constructor(tomatoParams: TomatoParams = {
         long: 1,
         size: 1,
         color: TomatoColor.red
     }) {
         this.tomatoParams = tomatoParams
-        this.loader = loader
-        this.init(loader)
+        this.init()
     }
 
-    public init(loader: ResourcesLoader) {
-        const model = loader.getFBX('greenhouse')
+    public init() {
+        const model = commonLoader.loader.getFBX('greenhouse')
         this.importModel(model)
     }
 
@@ -40,7 +39,7 @@ export class Greenhouse {
         this.object = fbx
 
         // Vitres
-        const glassMat = getGlassMaterial(this.loader, {
+        const glassMat = getGlassMaterial( {
             side: DoubleSide,
             roughness: 0.01,
             transmission: 0.99,
@@ -60,8 +59,9 @@ export class Greenhouse {
         // this.setDoorsAngle(Math.PI * 3 / 4)
 
         // Add plant
-        const plantModel = this.loader.getGLTF('plant')
-        const tomatoModel = this.loader.getFBX('tomato')
+        const {loader} = commonLoader
+        const plantModel = loader.getGLTF('plant')
+        const tomatoModel = loader.getFBX('tomato')
         this.plant1 = new Plant(plantModel, tomatoModel, this.tomatoParams)
         this.plant1.object.position.set(90, 70, 0)
         this.plant1.object.rotation.y = -4

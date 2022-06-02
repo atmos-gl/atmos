@@ -1,7 +1,7 @@
 import {AmbientLight, PointLight, Vector3} from 'three';
 import {BaseScene} from './BaseScene';
 import {Greenhouse} from "./objects/Greenhouse";
-import {headerLoader} from "../composables/useLoader";
+import {commonLoader} from "../composables/useLoader";
 
 export class Header extends BaseScene {
 
@@ -24,8 +24,7 @@ export class Header extends BaseScene {
         this.pointLight.position.z = 10
         this.scene.add(this.pointLight)
 
-        this.greenHouse = new Greenhouse(headerLoader.loader, this)
-        // this.greenHouse.mesh.rotateY(Math.PI)
+        this.greenHouse = new Greenhouse()
         this.scene.add(this.greenHouse.mesh)
 
         this.camera.position.set(this.defaultCamPos.x, this.defaultCamPos.y, this.defaultCamPos.z)

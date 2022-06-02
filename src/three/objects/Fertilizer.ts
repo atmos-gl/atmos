@@ -56,7 +56,7 @@ export default class Fertilizer implements DragAnimatable {
 
         const {loader} = powerBlockLoader
         this.bottleMesh = this.object.getObjectByName('Bouteille_ouverte') as Mesh
-        this.bottleMesh.material = getMetalMaterial(loader)
+        this.bottleMesh.material = getMetalMaterial()
         this.bottle = this.object.getObjectByName('Bouteille_fertilisant')
         //
         this.mixer = new AnimationMixer(this.object)

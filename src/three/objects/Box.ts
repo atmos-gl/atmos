@@ -42,7 +42,7 @@ export class Box {
 
     setupChildren() {
 
-        const seeThroughGlass = glassMaterial(powerBlockLoader.loader, {
+        const seeThroughGlass = glassMaterial({
             opacity: 0.15,
             transparent: true,
             transmission: 0,
@@ -61,7 +61,7 @@ export class Box {
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
         const {loader} = powerBlockLoader
-        ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial(loader)
+        ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial()
         ;(co2Bottle.getObjectByName('parvis_c02') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
             {
@@ -76,7 +76,7 @@ export class Box {
         )
 
         const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
-        waterBottle.material = glassMaterial(loader, {
+        waterBottle.material = glassMaterial({
             color: 'rgba(112,170,220,0.57)'
         })
         this.waterBottle = new Bottle({

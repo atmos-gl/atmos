@@ -30,6 +30,6 @@
 
 <style scoped>
 .gradient {
-  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, theme('colors.bg') 50%);
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, theme('colors.bg') 80%);
 }
 </style>
