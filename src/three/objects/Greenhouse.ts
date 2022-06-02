@@ -17,12 +17,11 @@ export class Greenhouse {
     private tomatoParams: TomatoParams;
     private loader: ResourcesLoader;
 
-    constructor(loader: ResourcesLoader, scene: BaseScene, tomatoParams: TomatoParams = {
+    constructor(loader: ResourcesLoader, tomatoParams: TomatoParams = {
         long: 1,
         size: 1,
         color: TomatoColor.red
     }) {
-        this.scene = scene
         this.tomatoParams = tomatoParams
         this.loader = loader
         this.init(loader)
@@ -51,7 +50,6 @@ export class Greenhouse {
 
         ;(fbx.getObjectByName('Vitre_droite').children[0] as Mesh).material = glassMat
         ;(fbx.getObjectByName('Vitre_gauche').children[0] as Mesh).material = glassMat
-        console.log(fbx)
         this.leftDoor = fbx.getObjectByName('Porte_gauche')
         this.rightDoor = fbx.getObjectByName('Porte_droite')
 
@@ -62,11 +60,11 @@ export class Greenhouse {
         // Add plant
         const plantModel = this.loader.getGLTF('plant')
         const tomatoModel = this.loader.getFBX('tomato')
-        this.plant1 = new Plant(plantModel, tomatoModel, this.scene, this.tomatoParams)
+        this.plant1 = new Plant(plantModel, tomatoModel, this.tomatoParams)
         this.plant1.object.position.set(90, 70, 0)
         this.plant1.object.rotation.y = -4
         this.object.add(this.plant1.object)
-        this.plant2 = new Plant(plantModel, tomatoModel, this.scene, this.tomatoParams)
+        this.plant2 = new Plant(plantModel, tomatoModel, this.tomatoParams)
         this.plant2.object.position.set(-90, 70, 0)
         this.plant2.object.rotation.y = 4
         this.object.add(this.plant2.object)

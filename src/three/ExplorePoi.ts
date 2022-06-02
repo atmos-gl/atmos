@@ -48,8 +48,8 @@ export class ExplorePoi extends BaseScene {
         this.scene.add(this.ambientLight)
 
         this.pointLight = new PointLight('#fff', 0.9)
-        this.pointLight.position.x = 2
-        this.pointLight.position.y = 3
+        this.pointLight.position.x = 5
+        this.pointLight.position.y = 5
         this.pointLight.position.z = 8
         // const helper = new PointLightHelper(this.pointLight)
         this.scene.add(this.pointLight)
@@ -69,7 +69,7 @@ export class ExplorePoi extends BaseScene {
         // Watering
         this.poiObjects.push({
             camPos: new Vector3(1.457519042153834, 1.1014487223805816, 1.4552405242302724),
-            objInstance: this.explorePoiObject.mesh.getObjectByName('Serre_2').getObjectByName('spray_2_2'),
+            objInstance: this.explorePoiObject.mainGreenhouse.mesh.getObjectByName('spray_2'),
             textContainer: "js-watering",
             isClickable: true,
             poiDesc: 'Arrosage'
@@ -78,7 +78,7 @@ export class ExplorePoi extends BaseScene {
         // Speakers
         this.poiObjects.push({
             camPos: new Vector3(-0.30193644740226677, 1.447445584071967, 1.6421059736908377),
-            objInstance: this.explorePoiObject.mesh.getObjectByName('Serre_2').getObjectByName('enceinte_1_2'),
+            objInstance: this.explorePoiObject.mainGreenhouse.mesh.getObjectByName('enceinte_1'),
             textContainer: "js-speaker",
             isClickable: true,
             poiDesc: 'Enceinte'
@@ -103,7 +103,7 @@ export class ExplorePoi extends BaseScene {
         })
 
         // Second GreenHouse
-        this.secondGreenHouse = this.explorePoiObject.mesh.getObjectByName('Serre')
+        this.secondGreenHouse = this.explorePoiObject.secondGreenhouse.mesh
         this.secondPipe = this.explorePoiObject.mesh.getObjectByName('cable_2')
         this.secondGreenHouseInitialPos = this.secondGreenHouse.position.clone()
         this.secondPipeInitialPos = this.secondPipe.position.clone()
