@@ -47,9 +47,6 @@ const processExplore = async () => {
 
   // Disable scroll
   document.body.classList.add('overflow-hidden')
-
-  // Preload upcoming resources
-  powerBlockLoader.load()
 }
 </script>
 <template>
