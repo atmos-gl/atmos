@@ -29,6 +29,9 @@ function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
     let itemsLoaded = 0
 
     const load = () => {
+        if (ready.value === true) {
+            return
+        }
         if (toLoad) {
             if (loader.alreadyLoaded(toLoad)) {
                 progress.value = 1
