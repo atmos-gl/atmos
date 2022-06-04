@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineProps, ref, toRefs} from 'vue';
+import {computed, defineProps, ref, toRefs} from 'vue';
 import {shareUrl} from '../../config'
 import {CollectScene} from '../../three/CollectScene';
 
@@ -12,12 +12,12 @@ const shareId = ref(null)
 const username = ref('')
 const submitted = ref(false)
 
-const newShareUrl = shareUrl + 'new'
+const createShareUrl = shareUrl + 'new'
 
 const confirmName = async () => {
   submitted.value = true
   const sceneData = scene.value.getSceneData()
-  const result = await fetch(newShareUrl, {
+  const result = await fetch(createShareUrl, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -25,8 +25,20 @@ const confirmName = async () => {
     },
     body: JSON.stringify({username: username.value, sceneData})
   }).then(r => r.text())
-  console.log(result)
+  shareId.value = result
 }
+
+const shareUrlBase = computed(() => `${shareUrl}${shareId.value}`)
+
+const shareMessage = computed(() => `Quelle belle récolte de tomates !
+
+${shareUrlBase.value}`)
+
+const shareOnFacebookUrl = computed(() => `https://www.facebook.com/sharer/sharer.php?u=${shareUrlBase.value}`)
+const shareOnTwitterUrl = computed(() => `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage.value)}`)
+const imageDownloadUrl = computed(() => {
+  return shareUrlBase.value + '/download'
+})
 </script>
 <template>
   <div
@@ -35,12 +47,19 @@ const confirmName = async () => {
       <h1 class="font-title text-10xl font-bold">Bravo</h1>
       <p>Votre panier de tomates est prêt ! Vous pourrez recevoir vos invités avec des produits de qualité et on ne peut
         plus fais !</p>
-      <Transition name="fade-quick">
+      <Transition name="fade-quick" mode="out-in">
         <div v-if="shareId" class="flex text-lg items-center gap-2">
           <span class="font-bold">Partager sur :</span>
-          <i class="uil uil-facebook-f text-2xl"></i>
-          <i class="uil uil-instagram text-2xl"></i>
-          <i class="uil uil-twitter text-2xl"></i>
+          <a :href="shareOnTwitterUrl"
+             target="_blank"
+             title="Tweeter"><i class="uil uil-twitter text-2xl"></i></a>
+          <a :href="shareOnFacebookUrl"
+             target="_blank"
+             title="Partager sur Facebook"
+          ><i class="uil uil-facebook-f text-2xl"></i></a>
+          <a :href="imageDownloadUrl"
+             target="_blank"
+             title="Télécharger l'image"><i class="uil uil-image-download text-2xl"></i></a>
         </div>
         <form @submit.prevent="confirmName" v-else class="text-lg flex flex-col gap-3">
           <span class="font-semibold">Partager votre panier</span>
@@ -57,7 +76,7 @@ const confirmName = async () => {
                     class="btn btn-square focus:(outline-none ring ring-jade/70 ring-offset-transparent)"
                     :disabled="submitted || username === ''"
             >
-              Envoyer
+              Partager
             </button>
           </div>
         </form>
