@@ -121,8 +121,8 @@ createMachine({
 }
   )
 // temp
-sequenceMachine.initial = 'collect'
-growLoader.load()
+// sequenceMachine.initial = 'collect'
+// growLoader.load()
 //
 const sequenceManager = interpret(sequenceMachine)
 sequenceManager.start()
