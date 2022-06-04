@@ -128,6 +128,27 @@ export class CollectScene extends BaseScene {
         this.createTomato(new Vector3(
             -4, 8, -7
         ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            4, -2, -3
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            3, -4, 4
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            0, 8, -2
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            4, 4, -2
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            2, 9, 5
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            2, 9, 5
+        ), new Vec3(0, 15, 0))
+        this.createTomato(new Vector3(
+            4, 12, -3
+        ), new Vec3(0, 8, 0))
     }
 
     private createCartGround() {
@@ -192,6 +213,9 @@ export class CollectScene extends BaseScene {
         const scale = this.tomatoScale
         tomato.mesh.scale.setScalar(scale)
         tomato.mesh.position.copy(position)
+        tomato.mesh.rotation.x = Math.random() * Math.PI * 2
+        tomato.mesh.rotation.y = Math.random() * Math.PI * 2
+        tomato.mesh.rotation.z = Math.random() * Math.PI * 2
         this.scene.add(tomato.mesh)
         const geometry = tomato.bodyWorldGeometry
         geometry.computeBoundingSphere()
@@ -220,6 +244,12 @@ export class CollectScene extends BaseScene {
         tomatoBody.position.x = tomato.mesh.position.x + spherePosition.x
         tomatoBody.position.y = tomato.mesh.position.y + spherePosition.y
         tomatoBody.position.z = tomato.mesh.position.z + spherePosition.z
+        tomatoBody.quaternion.set(
+            tomato.mesh.quaternion.x,
+            tomato.mesh.quaternion.y,
+            tomato.mesh.quaternion.z,
+            tomato.mesh.quaternion.w,
+        )
         this.world.addBody(tomatoBody)
         tomato.mesh.scale.setScalar(0)
         this.tomatoes.push({
