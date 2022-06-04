@@ -128,7 +128,7 @@ export class BaseScene {
 
     // Run app, load things, add listeners, ...
     run() {
-        console.log("App run")
+        console.log(`Scene ${this.constructor.name} run`)
 
         this.render()
         this.animate()

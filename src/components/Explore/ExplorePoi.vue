@@ -47,9 +47,6 @@ const processExplore = async () => {
 
   // Disable scroll
   document.body.classList.add('overflow-hidden')
-
-  // Preload upcoming resources
-  powerBlockLoader.load()
 }
 </script>
 <template>
@@ -81,7 +78,6 @@ const processExplore = async () => {
       <button
           v-if="!isOpen"
           class="absolute-center bg-bg border border-white text-2xl py-6 px-16 rounded-full cursor-pointer"
-          v-cursor.button
           @click="processExplore"
       >Découvrir la serre
       </button>

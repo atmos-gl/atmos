@@ -10,7 +10,7 @@ import {
 } from 'three';
 import {BaseScene} from './BaseScene';
 import {Tomato, TomatoParams} from './objects/Tomato';
-import {growLoader} from '../composables/useLoader';
+import {commonLoader, growLoader} from '../composables/useLoader';
 import {World, Vec3, Body, Plane, Box, Sphere, ConvexPolyhedron, Material, ContactMaterial} from 'cannon-es'
 import CannonDebugRenderer, {createPolyHedron, createTrimesh} from './utils/physics';
 import {delay} from '../utils';
@@ -65,12 +65,11 @@ export class CollectScene extends BaseScene {
 
         // const cart = loader.getGLTF('cart').scene
         const cart = loader.getFBX('cart')
-        console.log(cart)
         cart.scale.setScalar(0.06)
         cart.position.y = -15
         this.scene.add(cart)
 
-        this.tomatoModel = loader.getFBX('tomato')
+        this.tomatoModel = commonLoader.loader.getFBX('tomato')
 
         // physics
         this.world = new World({

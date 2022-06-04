@@ -25,13 +25,11 @@ export default class Plant {
     private tomatoes: Tomato[] = []
     private tomatoModel: Group;
 
-    constructor(model: GLTF, tomatoModel: Group, scene: BaseScene, tomatoParams: TomatoParams) {
+    constructor(model: GLTF, tomatoModel: Group, tomatoParams: TomatoParams) {
         this.model = model
         this.tomatoModel = tomatoModel
-        this.scene = scene
 
         this.object = model.scene.clone()
-        console.log(this.model)
 
         this.tomatoParams = tomatoParams
 

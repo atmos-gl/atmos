@@ -22,7 +22,7 @@
           <p v-for="content in data.features" class="mr-6 text-lg font-bold">{{ content.text }}</p>
         </div>
 
-        <div class="poi--close" v-cursor.grab @click="emit('close')"><i class="uil uil-times"></i></div>
+        <div class="poi--close" @click="emit('close')"><i class="uil uil-times"></i></div>
       </div>
     </div>
   </transition>
@@ -30,6 +30,6 @@
 
 <style scoped>
 .gradient {
-  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, theme('colors.bg') 50%);
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, theme('colors.bg') 80%);
 }
 </style>

@@ -1,11 +1,9 @@
 import {AmbientLight, Color, Object3D, PCFSoftShadowMap, PointLight} from 'three';
 import {BaseScene} from './BaseScene';
 import {Box} from './objects/Box';
-import useDragAnimation, {DragAnimation} from './three-composables/useDragAnimations';
 import sequenceManager from '../managers/sequenceManager';
 import {createExpoIn, mirrorEasing} from 'popmotion';
 import {EffectPass, OutlineEffect} from 'postprocessing';
-import {animate} from 'popmotion';
 import {animateAsync, delay} from '../utils';
 
 
@@ -14,8 +12,6 @@ export class SetupPowerBlock extends BaseScene {
     private ambientLight: AmbientLight
     private pointLight: PointLight;
     private box: Box;
-    private xOffset: number;
-    private openDoorInteraction: DragAnimation;
     private outlineEffect: OutlineEffect
 
     public init(canvas: HTMLCanvasElement) {

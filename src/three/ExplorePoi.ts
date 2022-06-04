@@ -4,7 +4,6 @@ import {ExploreGreenHouse} from './objects/ExploreGreenHouse';
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Ref} from "vue";
 import {createExpoIn, mirrorEasing, animate} from "popmotion";
-import {bindGrabCursor} from '../composables/useCursor';
 
 export class ExplorePoi extends BaseScene {
     private pointLight: PointLight;
@@ -15,7 +14,8 @@ export class ExplorePoi extends BaseScene {
         objInstance: Object3D
         textContainer: string
         isClickable: Boolean
-        poiDesc: string
+        poiDesc: string,
+        name?: string
     }> = []
 
     private defaultCamPos: Vector3 = new Vector3(4, 5, 15)
@@ -49,7 +49,7 @@ export class ExplorePoi extends BaseScene {
         this.scene.add(this.ambientLight)
 
         this.pointLight = new PointLight('#fff', 0.9)
-        this.pointLight.position.x = 2
+        this.pointLight.position.x = 5
         this.pointLight.position.y = 3
         this.pointLight.position.z = 8
         // const helper = new PointLightHelper(this.pointLight)
@@ -70,19 +70,21 @@ export class ExplorePoi extends BaseScene {
         // Watering
         this.poiObjects.push({
             camPos: new Vector3(1.457519042153834, 1.1014487223805816, 1.4552405242302724),
-            objInstance: this.explorePoiObject.mesh.getObjectByName('Serre_2').getObjectByName('spray_2_2'),
+            objInstance: this.explorePoiObject.mainGreenhouse.mesh.getObjectByName('spray_2'),
             textContainer: "js-watering",
             isClickable: true,
-            poiDesc: 'Arrosage'
+            poiDesc: 'Arrosage',
+            name: 'watering'
         })
 
         // Speakers
         this.poiObjects.push({
             camPos: new Vector3(-0.30193644740226677, 1.447445584071967, 1.6421059736908377),
-            objInstance: this.explorePoiObject.mesh.getObjectByName('Serre_2').getObjectByName('enceinte_1_2'),
+            objInstance: this.explorePoiObject.mainGreenhouse.mesh.getObjectByName('enceinte_1'),
             textContainer: "js-speaker",
             isClickable: true,
-            poiDesc: 'Enceinte'
+            poiDesc: 'Enceinte',
+            name: 'speakers'
         })
 
         // Pipe
@@ -104,12 +106,11 @@ export class ExplorePoi extends BaseScene {
         })
 
         // Second GreenHouse
-        this.secondGreenHouse = this.explorePoiObject.mesh.getObjectByName('Serre')
+        this.secondGreenHouse = this.explorePoiObject.secondGreenhouse.mesh
         this.secondPipe = this.explorePoiObject.mesh.getObjectByName('cable_2')
         this.secondGreenHouseInitialPos = this.secondGreenHouse.position.clone()
         this.secondPipeInitialPos = this.secondPipe.position.clone()
         const anchor = new Object3D()
-        anchor.name = 'secondGreenHouse'
         anchor.position.set(-5, -1, 0)
         this.scene.add(anchor)
         this.poiObjects.push({
@@ -117,7 +118,8 @@ export class ExplorePoi extends BaseScene {
             objInstance: anchor,
             textContainer: "js-powerPlant",
             isClickable: true,
-            poiDesc: 'Serre'
+            poiDesc: 'Serre',
+            name: 'secondGreenHouse'
         })
 
         this.secondGreenHouse.position.setY(2000)
@@ -126,13 +128,12 @@ export class ExplorePoi extends BaseScene {
         this.poiObjects.forEach((object, i) => {
             const poi = document.createElement('div')
             poi.innerHTML = '+'
-            poi.classList.add('poi')
-            bindGrabCursor(poi)
+            poi.classList.add('poi', 'transition-opacity', 'duration-200')
             this.poiList.push(poi)
             const objectCSS = new CSS2DObject(poi)
             objectCSS.position.set(0, 0, 0)
             poi.addEventListener("click", async () => {
-                if (object.objInstance.name === "secondGreenHouse") {
+                if (object.name === "secondGreenHouse") {
                     animate({
                         from: this.secondGreenHouse.position,
                         to: this.secondGreenHouseInitialPos,
@@ -149,6 +150,12 @@ export class ExplorePoi extends BaseScene {
                             this.secondPipe.position.copy(v)
                         }
                     })
+                }
+                if (object.name === 'watering') {
+                    this.explorePoiObject.mainGreenhouse.openDoor('right')
+                }
+                if (object.name === 'speakers') {
+                    this.explorePoiObject.mainGreenhouse.openDoor('left')
                 }
                 if (object.isClickable) {
                     this.showBgText.value = false
@@ -199,7 +206,7 @@ export class ExplorePoi extends BaseScene {
 
     async openPoi(object, poi, i) {
         const objPos = object.objInstance.getWorldPosition(new Vector3())
-        poi.classList.toggle('hidden')
+        poi.classList.add('opacity-0')
         await this.camera.move({
             x: object.camPos.x,
             y: object.camPos.y,
@@ -221,10 +228,12 @@ export class ExplorePoi extends BaseScene {
             ty: this.defaultCamLookAt.y,
             tz: this.defaultCamLookAt.z,
         })
-        this.poiList[i].classList.toggle('hidden')
+        this.poiList[i].classList.remove('opacity-0')
         this.currentPoiIndex = null
         this.setObjectsClickable(true)
         this.showBgText.value = true
+
+        this.explorePoiObject.mainGreenhouse.closeDoor()
     }
 
     animate() {

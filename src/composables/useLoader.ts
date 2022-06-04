@@ -3,18 +3,18 @@ import {computed, ComputedRef, Ref, ref, UnwrapRef} from 'vue';
 import exploreResources from '../three/resources/exploreResources';
 import powerBlockResources from '../three/resources/powerBlockResources';
 import tomatoResources from '../three/resources/tomatoResources';
-import headerResources from '../three/resources/headerResources';
 import growResources from '../three/resources/growResources';
+import commonResources from '../three/resources/commonResources';
 
 const loaders = {
-    header: createLoader(headerResources),
+    common: createLoader(commonResources),
     explore: createLoader(exploreResources),
     powerBlock: createLoader(powerBlockResources),
     tomato: createLoader(tomatoResources),
     grow: createLoader(growResources),
 }
 
-type LoaderComposable = { percentageProgress: ComputedRef<string>; load: () => void; loader: ResourcesLoader; ready: ComputedRef<boolean>; progress: Ref<UnwrapRef<number>>; loading: Ref<UnwrapRef<boolean>> };
+export type LoaderComposable = { percentageProgress: ComputedRef<string>; load: () => void; loader: ResourcesLoader; ready: ComputedRef<boolean>; progress: Ref<UnwrapRef<number>>; loading: Ref<UnwrapRef<boolean>> };
 
 function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
     const loader = new ResourcesLoader()
@@ -29,6 +29,9 @@ function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
     let itemsLoaded = 0
 
     const load = () => {
+        if (ready.value === true) {
+            return
+        }
         if (toLoad) {
             if (loader.alreadyLoaded(toLoad)) {
                 progress.value = 1
@@ -72,7 +75,7 @@ function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
 export const exploreLoader = loaders.explore
 export const powerBlockLoader = loaders.powerBlock
 export const tomatoLoader = loaders.tomato
-export const headerLoader = loaders.header
+export const commonLoader = loaders.common
 export const growLoader = loaders.grow
 
 export default function useLoader(name): LoaderComposable {

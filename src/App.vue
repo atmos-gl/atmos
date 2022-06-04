@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import {ref} from 'vue';
 import {useUrlSearchParams} from '@vueuse/core';
-import useCursor from './composables/useCursor';
 
 const params = useUrlSearchParams()
-
-const currentPoc = ref(params.id ? 'mobile' : '')
-
-const {lerpCursor, cursorProps} = useCursor()
 </script>
 
 <template>
@@ -16,13 +10,6 @@ const {lerpCursor, cursorProps} = useCursor()
       <component :is="Component"/>
     </transition>
   </RouterView>
-  <div class="fixed inset-0 w-full h-full z-100 pointer-events-none">
-    <div class="w-16 h-16 absolute -top-8 -left-8"
-         :style="{ transform: `translate3d(${lerpCursor.x}px, ${lerpCursor.y}px,0)` }"
-    >
-      <div class="cursor" :class="cursorProps.class"></div>
-    </div>
-  </div>
 
 </template>
 <style scoped lang="scss">

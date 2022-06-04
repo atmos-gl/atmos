@@ -6,6 +6,7 @@ const resources: ResourcesToLoad = {
     fbx: {
         tomato: '/three-assets/fbx/tomato.fbx',
     },
-    texture: {}
+    texture: {},
+    cubeTexture: {}
 }
 export default resources

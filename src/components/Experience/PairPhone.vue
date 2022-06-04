@@ -2,6 +2,8 @@
 import usePair from '../../composables/usePair'
 import {computed, ref} from 'vue'
 import {useQRCode} from '@vueuse/integrations/useQRCode'
+import SmallLoader from './SmallLoader.vue';
+import {growLoader} from '../../composables/useLoader';
 
 const emit = defineEmits(['pair'])
 
@@ -22,9 +24,13 @@ const qrCode = useQRCode(pairUrl, {
 })
 
 const hasPhone = ref(false)
+
+
+const {load} = growLoader
+load()
 </script>
 <template>
-  <div class="text-white h-full flex flex-col items-center justify-center p-12">
+  <div class="text-white h-full flex flex-col items-center justify-center p-12 relative">
     <Transition name="fade-quick" mode="out-in">
       <section class="flex flex-col items-center justify-center max-w-96 text-center" v-if="hasPhone">
         <p class="text-lg">Pour connecter votre téléphone, scannez ce QRcode avec votre appareil photo.</p>
@@ -32,7 +38,7 @@ const hasPhone = ref(false)
           <img :src="qrCode" alt="Pair with id">
         </div>
         <p class="italic">Alternativement, vous pouvez ouvrir <br>
-          <span class="underline">www.atmos-serre.com</span> <br>
+          <a :href="pairUrl" class="underline" target="_blank">www.atmos-serre.com</a> <br>
           sur votre téléphone.</p>
       </section>
       <div class="flex flex-col items-center justify-center" v-else>

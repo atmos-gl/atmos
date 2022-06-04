@@ -5,6 +5,9 @@ import Plant from './Plant';
 import {BaseScene} from '../BaseScene';
 import {TomatoColor, TomatoParams} from './Tomato';
 import {animateAsync} from '../../utils';
+import {commonLoader} from '../../composables/useLoader';
+
+type DoorToOpen = 'left' | 'right' | 'both';
 
 export class Greenhouse {
     public object: Object3D
@@ -15,21 +18,18 @@ export class Greenhouse {
     private plant1: Plant;
     private plant2: Plant;
     private tomatoParams: TomatoParams;
-    private loader: ResourcesLoader;
 
-    constructor(loader: ResourcesLoader, scene: BaseScene, tomatoParams: TomatoParams = {
+    constructor(tomatoParams: TomatoParams = {
         long: 1,
         size: 1,
         color: TomatoColor.red
     }) {
-        this.scene = scene
         this.tomatoParams = tomatoParams
-        this.loader = loader
-        this.init(loader)
+        this.init()
     }
 
-    public init(loader: ResourcesLoader) {
-        const model = loader.getFBX('greenhouse')
+    public init() {
+        const model = commonLoader.loader.getFBX('greenhouse')
         this.importModel(model)
     }
 
@@ -39,7 +39,7 @@ export class Greenhouse {
         this.object = fbx
 
         // Vitres
-        const glassMat = getGlassMaterial(this.loader, {
+        const glassMat = getGlassMaterial( {
             side: DoubleSide,
             roughness: 0.01,
             transmission: 0.99,
@@ -51,7 +51,6 @@ export class Greenhouse {
 
         ;(fbx.getObjectByName('Vitre_droite').children[0] as Mesh).material = glassMat
         ;(fbx.getObjectByName('Vitre_gauche').children[0] as Mesh).material = glassMat
-        console.log(fbx)
         this.leftDoor = fbx.getObjectByName('Porte_gauche')
         this.rightDoor = fbx.getObjectByName('Porte_droite')
 
@@ -60,13 +59,14 @@ export class Greenhouse {
         // this.setDoorsAngle(Math.PI * 3 / 4)
 
         // Add plant
-        const plantModel = this.loader.getGLTF('plant')
-        const tomatoModel = this.loader.getFBX('tomato')
-        this.plant1 = new Plant(plantModel, tomatoModel, this.scene, this.tomatoParams)
+        const {loader} = commonLoader
+        const plantModel = loader.getGLTF('plant')
+        const tomatoModel = loader.getFBX('tomato')
+        this.plant1 = new Plant(plantModel, tomatoModel, this.tomatoParams)
         this.plant1.object.position.set(90, 70, 0)
         this.plant1.object.rotation.y = -4
         this.object.add(this.plant1.object)
-        this.plant2 = new Plant(plantModel, tomatoModel, this.scene, this.tomatoParams)
+        this.plant2 = new Plant(plantModel, tomatoModel, this.tomatoParams)
         this.plant2.object.position.set(-90, 70, 0)
         this.plant2.object.rotation.y = 4
         this.object.add(this.plant2.object)
@@ -80,35 +80,62 @@ export class Greenhouse {
         this.plant1.updateTomatoes()
         this.plant2.updateTomatoes()
     }
-     async grow() {
+
+    async grow() {
         this.plant1.grow()
         await this.plant2.grow()
-     }
+    }
 
-     async openDoor () {
+    private getDoorOpenFunction(door: DoorToOpen) {
+        if (door === 'left') {
+            return ({left}) => this.setLeftDoorAngle(left)
+        }
+        if (door === 'right') {
+            return ({right}) => this.setRightDoorAngle(right)
+        }
+        return this.setDoorsAngle.bind(this)
+    }
+
+    async openDoor(door: DoorToOpen = 'both') {
         await animateAsync({
-            from: 0,
-            to: Math.PI * 3 / 4,
+            from: {
+                left: this.leftDoor.rotation.y,
+                right: this.rightDoor.rotation.y,
+            },
+            to: {
+                left: -Math.PI * 3 / 4,
+                right: Math.PI * 3 / 4,
+            },
             duration: 500,
-            onUpdate: v => {
-                this.setDoorsAngle(v)
-            }
+            onUpdate: this.getDoorOpenFunction(door)
         })
-     }
+    }
 
-     async closeDoor () {
+    async closeDoor(door: DoorToOpen = 'both') {
         await animateAsync({
-            from: Math.PI * 3 / 4,
-            to: 0,
+            from: {
+                left: this.leftDoor.rotation.y,
+                right: this.rightDoor.rotation.y,
+            },
+            to: {
+                left: 0,
+                right: 0,
+            },
             duration: 500,
-            onUpdate: v => {
-                this.setDoorsAngle(v)
-            }
+            onUpdate: this.getDoorOpenFunction(door)
         })
-     }
+    }
 
-    setDoorsAngle(angle: number) {
-        this.leftDoor.rotation.y = -angle
+    setDoorsAngle(angle: number|any) {
+        this.setLeftDoorAngle(angle.left ?? angle)
+        this.setRightDoorAngle(angle.right ?? angle)
+    }
+
+    setLeftDoorAngle(angle: number) {
+        this.leftDoor.rotation.y = angle
+    }
+
+    setRightDoorAngle(angle: number) {
         this.rightDoor.rotation.y = angle
     }
 
