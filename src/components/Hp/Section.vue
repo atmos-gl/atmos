@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import testvideo from '../../assets/video/testscene.webm'
 const props = defineProps(['data'])
+
+const videoUrl = {
+  safari: `/assets/video/${props.data.video}-hevc-safari.mp4`,
+  chrome: `/assets/video/${props.data.video}-vp9-chrome.webm`,
+}
 
 </script>
 
@@ -9,15 +13,13 @@ const props = defineProps(['data'])
     <div class="h-full flex-grow snake">
       <video width="600" height="100%" autoplay loop muted playsinline disablePictureInPicture>
         <source
-            :src="testvideo"
+            :src="videoUrl.safari"
+            type='video/mp4; codecs="hvc1"'>
+        <source
+            :src="videoUrl.chrome"
             type="video/webm">
       </video>
     </div>
-<!--    <div class="flex-grow relative h-full md:w-3/4 lg:w-1/2">-->
-<!--&lt;!&ndash;      <div class="relative max-w-introModels mx-auto snake" style="height: 550px">&ndash;&gt;-->
-<!--&lt;!&ndash;        <img v-for="img in data.models" :src="img.src" :alt="img.alt" :class="img.classes">&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--    </div>-->
 
     <div class="w-full md:w-3/4 lg:w-1/2 my-35" :class="data.isReversed ? 'lg:text-left' : 'lg:text-right'">
       <h2 class="font-title text-5xl mb-12 font-bold text-jade"
