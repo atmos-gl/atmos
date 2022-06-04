@@ -279,6 +279,9 @@ export class CollectScene extends BaseScene {
             null, duration, ease)
         await delay(300)
         sequenceManager.send('dropped')
+        // Stop physics to avoid background bug
+        await delay(2000)
+        this.dropped = false
     }
 
     animate() {
@@ -297,6 +300,18 @@ export class CollectScene extends BaseScene {
         this.physicsDebug?.update()
 
         super.animate()
+    }
+
+    public getSceneData() {
+        return {
+            tomatoParams: this.tomatoParams,
+            tomatoes: this.tomatoes.map(t => {
+                return {
+                    position: t.tomato.mesh.position,
+                    quaternion: t.tomato.mesh.quaternion,
+                }
+            })
+        }
     }
 
     // Memory management

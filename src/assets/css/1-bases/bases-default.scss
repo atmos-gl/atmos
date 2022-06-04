@@ -45,9 +45,14 @@ body {
   px-6
   py-2
   text-center
+    disabled:text-jade/40
   ;
 
-  &:not(.btn-static) {
+  &.btn-square {
+    @apply py-0 px-5 h-full rounded-l-none rounded-r-lg;
+  }
+
+  &:not(.btn-static):not(:disabled) {
     @apply transition
     duration-200
     hover:(

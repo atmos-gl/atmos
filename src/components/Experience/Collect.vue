@@ -2,7 +2,7 @@
 import {GrowScene} from '../../three/GrowScene';
 import useScene from '../../composables/useScene';
 import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
-import {reactive, toRefs} from 'vue';
+import {defineEmits, onMounted, reactive, toRefs} from 'vue';
 import {CollectScene} from '../../three/CollectScene';
 import sequenceManager from '../../managers/sequenceManager';
 
@@ -10,11 +10,14 @@ const props = defineProps<{
   tomatoParams: TomatoParams,
   progress: number
 }>()
+const emit = defineEmits(['load-scene'])
 
 const { progress } = toRefs(props)
 
 const { scene, canvas } = useScene<CollectScene>(new CollectScene(props.tomatoParams, progress))
-
+onMounted(() => {
+  emit('load-scene', scene)
+})
 // sequenceManager.send('tomatoOk')
 sequenceManager.onTransition(state => {
   if (state.value === 'collected') {

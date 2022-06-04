@@ -7,6 +7,7 @@ import sequenceManager from '../../managers/sequenceManager';
 import Collect from './Collect.vue';
 import {TomatoParams} from '../../three/objects/Tomato';
 import {animate, linear} from 'popmotion';
+import Share from './Share.vue';
 
 const props = defineProps<{
   step: StateValue,
@@ -69,6 +70,11 @@ window.addEventListener('mouseup', mouseUp)
 onBeforeUnmount(() => (
     window.removeEventListener('mouseup', mouseUp)
 ))
+const collectScene = ref(null)
+const setCollectScene = scene => {
+  collectScene.value = scene
+}
+
 </script>
 <template>
   <div class="flex-col flex h-full w-full relative">
@@ -82,6 +88,7 @@ onBeforeUnmount(() => (
                :class="{ '-translate-x-1/5': step === 'share' }"
                :progress="holdProgress"
                :tomato-params="tomatoParams"
+               @load-scene="setCollectScene"
       />
     </Transition>
 
@@ -131,19 +138,7 @@ onBeforeUnmount(() => (
           </button>
         </div>
       </div>
-      <div v-else-if="['share'].includes(step.toString())"
-           class="absolute w-1/2 h-full top-0 right-0">
-        <div class="p-16 text-jade flex flex-col h-full justify-center max-w-156 gap-6">
-          <h1 class="font-title text-10xl font-bold">Bravo</h1>
-          <p>Votre panier de tomates est prêt ! Vous pourrez recevoir vos invités avec des produits de qualité et on ne peut plus fais !</p>
-          <div class="flex text-lg items-center gap-2">
-            <span class="font-bold mr-6">Partagez</span>
-            <i class="uil uil-facebook-f text-2xl"></i>
-            <i class="uil uil-instagram text-2xl"></i>
-            <i class="uil uil-twitter text-2xl"></i>
-          </div>
-        </div>
-      </div>
+      <Share v-else-if="['share'].includes(step.toString())" :scene="collectScene" />
     </Transition>
   </div>
 </template>
