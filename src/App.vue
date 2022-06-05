@@ -8,17 +8,12 @@ import sequenceManager from './managers/sequenceManager';
 //     () => {
 //       console.log('konami')
 //     })
-const {setBypass} = useBypassMode()
+const {toggleBypass} = useBypassMode()
 useKeySequence(['Shift', 'Shift', 'm', 'Shift', 'Shift'],
     300,
     () => {
-  setBypass(true)
+      toggleBypass()
     })
-
-//tmp
-window.tmp = () => {
-  sequenceManager.send('skip-powerblock')
-}
 </script>
 
 <template>
@@ -33,10 +28,12 @@ window.tmp = () => {
 .cursor {
   @apply w-full h-full rounded-full border-2 border-white transition-all duration-200;
   transform: scale(0.6);
+
   &.click {
     transform: scale(0.3);
     background-color: #fff;
   }
+
   &.grab {
     transform: scale(1);
   }

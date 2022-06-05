@@ -39,13 +39,14 @@ const getVec3 = (x, y, z) => new Vector3(x, y, z)
     </div>
     <div v-if="appReady">
       <Transition name="fade">
-      <div v-if="doorUi.show" class="absolute top-0 left-0" :style="`transform: translate(${doorUi.position.x}px, ${doorUi.position.y}px)`">
-        <Helper class="absolute -left-10" :angle="160" />
-      </div>
+        <div v-if="doorUi.show" class="absolute top-0 left-0"
+             :style="`transform: translate(${doorUi.position.x}px, ${doorUi.position.y}px)`">
+          <Helper class="absolute -left-10" :angle="160"/>
+        </div>
       </Transition>
       <StepTip :tip="scene.co2BottleUi"
                :icon="co2Icon"
-              :helper-position="getVec3(-35, 30, 190)"
+               :helper-position="getVec3(-35, 30, 190)"
       >
         <p><strong>Le C02</strong> est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé
           notamment

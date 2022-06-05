@@ -2,8 +2,9 @@
 import usePair from '../../composables/usePair'
 import {computed, ref} from 'vue'
 import {useQRCode} from '@vueuse/integrations/useQRCode'
-import SmallLoader from './SmallLoader.vue';
+import sequenceManager from '../../managers/sequenceManager';
 import {growLoader} from '../../composables/useLoader';
+import useBypassMode from '../../composables/useBypassMode';
 
 const emit = defineEmits(['pair'])
 
@@ -28,6 +29,8 @@ const hasPhone = ref(false)
 
 const {load} = growLoader
 load()
+
+const {isBypass} = useBypassMode()
 </script>
 <template>
   <div class="text-white h-full flex flex-col items-center justify-center p-12 relative">

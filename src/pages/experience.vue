@@ -10,6 +10,7 @@ import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
 import Introduction from '../components/Experience/Introduction.vue';
 import {TomatoColor, TomatoParams} from '../three/objects/Tomato';
 import Loader from '../components/Loader.vue';
+import SkipButton from '../components/SkipButton.vue';
 
 const {
   loading: powerBlockLoading,
@@ -79,6 +80,7 @@ onBeforeUnmount(() => {
         <SetupPowerBlock v-else class="w-full h-full"/>
       </Transition>
     </Transition>
+    <SkipButton />
   </div>
 </template>
 <style scoped>
