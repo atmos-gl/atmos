@@ -1,3 +1,5 @@
+import {onBeforeUnmount} from 'vue';
+
 export default function useKeySequence(sequence: Array<string>, expireDelay = 1000, callback: () => void) {
     let enteredSequence = []
     let lastKeyTime = Date.now()
@@ -7,7 +9,7 @@ export default function useKeySequence(sequence: Array<string>, expireDelay = 10
             enteredSequence.every((val, index) => val == sequence[index])
     }
 
-    document.addEventListener('keyup', e => {
+    const onKeyUp = e => e => {
         const {key} = e
 
         const currentTime = Date.now()
@@ -20,5 +22,10 @@ export default function useKeySequence(sequence: Array<string>, expireDelay = 10
         if (isSequence()) {
             callback()
         }
+    }
+
+    document.addEventListener('keyup', onKeyUp)
+    onBeforeUnmount(() => {
+        document.removeEventListener('keyup', onKeyUp)
     })
 }
