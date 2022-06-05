@@ -9,7 +9,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "deploy:staging": "git checkout staging && git merge develop && git push && git checkout develop"
+    "deploy:staging": "git checkout staging && git merge develop && git push && git checkout develop",
+    "deploy:prod": "git checkout production && git merge develop && git push && git checkout develop"
   },
   "dependencies": {
     "@iconscout/unicons": "^4.0.1",
