@@ -144,7 +144,7 @@ export class CollectScene extends BaseScene {
             2, 9, 5
         ), new Vec3(0, 8, 0))
         this.createTomato(new Vector3(
-            2, 9, 5
+            2, 9, -5
         ), new Vec3(0, 15, 0))
         this.createTomato(new Vector3(
             4, 12, -3

@@ -115,7 +115,7 @@ const setCollectScene = scene => {
         <div class="max-w-172 text-jade italic text-center">
           <div class="transition duration-200" :class="{ 'opacity-0': !!holdProgress }">
             <h2 class="text-4xl font-title">Et voilà !</h2>
-            <p class="my-4">Lors de votre retours chez vous, il ne vous reste plus qu'à récolter.</p>
+            <p class="my-4">Lors de votre retour chez vous, il ne vous reste plus qu'à récolter.</p>
           </div>
           <button class="btn btn-static relative w-72 relative overflow-hidden"
                   @mouseenter="onHoverCollectButton"

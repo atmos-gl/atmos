@@ -29,8 +29,6 @@ const hasPhone = ref(false)
 
 const {load} = growLoader
 load()
-
-const {isBypass} = useBypassMode()
 </script>
 <template>
   <div class="text-white h-full flex flex-col items-center justify-center p-12 relative">
