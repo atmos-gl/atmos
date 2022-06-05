@@ -1,16 +1,24 @@
 <script setup lang="ts">
 import useKeySequence from './composables/useKeySequence';
+import useBypassMode from './composables/useBypassMode';
+import sequenceManager from './managers/sequenceManager';
 
 // useKeySequence(['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'],
 //     1000,
 //     () => {
 //       console.log('konami')
 //     })
+const {setBypass} = useBypassMode()
 useKeySequence(['Shift', 'Shift', 'm', 'Shift', 'Shift'],
     300,
     () => {
-      console.log('bypass')
+  setBypass(true)
     })
+
+//tmp
+window.tmp = () => {
+  sequenceManager.send('skip-powerblock')
+}
 </script>
 
 <template>

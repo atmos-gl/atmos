@@ -3,16 +3,13 @@ import HeaderScene from './Header/HeaderScene.vue';
 import ScrollingText from './Header/ScrollingText.vue';
 import {exploreLoader} from '../composables/useLoader';
 import {onBeforeUnmount, ref} from 'vue';
+import useBypassMode from '../composables/useBypassMode';
 
 const scrollingLines = 4
-
-// Preload further resources
-let alreadyLoaded = ref(exploreLoader.ready.value)
-const headerEl = ref(null)
 </script>
 
 <template>
-  <header ref="headerEl" class="h-screen text-white font-core snake mb-32 flex flex-col">
+  <header class="h-screen text-white font-core snake mb-32 flex flex-col">
     <nav class="o-container flex items-end w-full py-8">
       <h1>
         <img src="./../assets/img/logo.png" class="h-16">
