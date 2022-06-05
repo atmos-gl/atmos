@@ -9,7 +9,7 @@ export default function useKeySequence(sequence: Array<string>, expireDelay = 10
             enteredSequence.every((val, index) => val == sequence[index])
     }
 
-    const onKeyUp = e => e => {
+    const onKeyUp = e => {
         const {key} = e
 
         const currentTime = Date.now()
