@@ -3,7 +3,7 @@ import {BaseScene} from './BaseScene';
 import {Greenhouse} from "./objects/Greenhouse";
 import {commonLoader} from "../composables/useLoader";
 
-export class Header extends BaseScene {
+export class HeaderScene extends BaseScene {
 
     private ambientLight: AmbientLight
     private pointLight: PointLight;

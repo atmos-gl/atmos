@@ -10,7 +10,7 @@ import {
     Vector3,
     Vector4
 } from 'three';
-import {SetupPowerBlock} from '../SetupPowerBlock';
+import {SetupPowerBlockScene} from '../SetupPowerBlock';
 import useUiTip from '../three-composables/useUiTip';
 
 export default class UraniumFlask extends Bottle {
@@ -22,7 +22,7 @@ export default class UraniumFlask extends Bottle {
                     object,
                     targetObjectMesh,
                     scene,
-                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlock, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 }, clip: AnimationClip) {
+                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlockScene, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 }, clip: AnimationClip) {
         super({
             object,
             targetObjectMesh,

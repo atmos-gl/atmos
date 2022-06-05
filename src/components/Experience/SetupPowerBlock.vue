@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
 import {Vector3} from 'three';
-import {SetupPowerBlock} from '../../three/SetupPowerBlock';
+import {SetupPowerBlockScene} from '../../three/SetupPowerBlockScene';
 import sequenceManager from '../../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
 import StepTitle from './StepTitle.vue';
@@ -13,7 +13,7 @@ import localIcon from '../../assets/img/localIcon.svg'
 import useScene from '../../composables/useScene';
 import Helper from './Helper.vue';
 
-const {scene, canvas, appReady} = useScene(new SetupPowerBlock())
+const {scene, canvas, appReady} = useScene(new SetupPowerBlockScene())
 
 const {state} = useActor(sequenceManager)
 

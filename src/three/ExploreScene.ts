@@ -5,7 +5,7 @@ import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRend
 import {Ref} from "vue";
 import {createExpoIn, mirrorEasing, animate} from "popmotion";
 
-export class ExplorePoi extends BaseScene {
+export class ExploreScene extends BaseScene {
     private pointLight: PointLight;
     private explorePoiObject: ExploreGreenHouse;
     private labelRenderer: CSS2DRenderer;

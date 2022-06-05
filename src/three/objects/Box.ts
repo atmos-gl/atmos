@@ -6,7 +6,7 @@ import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
 import Fertilizer from './Fertilizer';
 import {powerBlockLoader} from '../../composables/useLoader';
-import {SetupPowerBlock} from '../SetupPowerBlock';
+import {SetupPowerBlockScene} from '../SetupPowerBlock';
 import UraniumFlask from './UraniumFlask';
 import {animate} from 'popmotion';
 
@@ -14,7 +14,7 @@ export class Box {
     public model: Object3D
     public door: Door;
     public co2Bottle: Bottle;
-    private scene: SetupPowerBlock;
+    private scene: SetupPowerBlockScene;
     public waterBottle: Bottle;
     public tray: Tray;
     public fertilizer: Fertilizer;
@@ -22,7 +22,7 @@ export class Box {
     private nuclearLight: Mesh;
 
 
-    constructor(scene: SetupPowerBlock) {
+    constructor(scene: SetupPowerBlockScene) {
         this.scene = scene
         this.init()
     }

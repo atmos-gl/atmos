@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import {onMounted, reactive, ref} from 'vue';
-import {ExplorePoi} from '../../three/ExplorePoi';
+import {ref} from 'vue';
+import {ExploreScene} from '../../three/ExploreScene';
 import Card from './Card.vue';
 import data from "../../data/poiData";
-import {animate} from "popmotion";
 import {animateAsync} from "../../utils";
 import useScene from "../../composables/useScene";
-import {powerBlockLoader} from '../../composables/useLoader';
 
 const isOpen = ref(false)
 const poiDesc = ref('Atmos')
 const showBgText = ref(true)
 
-const {scene: app, canvas} = useScene<ExplorePoi>(new ExplorePoi(poiDesc, showBgText))
+const {scene: app, canvas} = useScene<ExploreScene>(new ExploreScene(poiDesc, showBgText))
 
 const currentPoi = ref(null)
 app.onSelectPoi = index => {

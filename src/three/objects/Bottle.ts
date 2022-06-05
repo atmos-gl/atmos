@@ -4,7 +4,7 @@ import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import {animateAsync, delay} from '../../utils';
 import CustomDragControls from '../custom/CustomDragControls';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
-import {SetupPowerBlock} from '../SetupPowerBlock';
+import {SetupPowerBlockScene} from '../SetupPowerBlock';
 
 
 const createXtoZ = (start, end, amp, offset = 0) => {
@@ -19,7 +19,7 @@ const createXtoZ = (start, end, amp, offset = 0) => {
 export default class Bottle {
     public object: Object3D;
 
-    protected scene: SetupPowerBlock;
+    protected scene: SetupPowerBlockScene;
     protected controls: DragControls;
     protected targetPosition: Vector3;
     protected xToZ: (x) => number;
@@ -42,7 +42,7 @@ export default class Bottle {
                     clamp = new Vector4(-220, 1000, -10, 120),
                     screwDirection = -1,
                     initialPosition = new Vector2(450, 50)
-                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlock, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 },
+                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlockScene, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 },
     ) {
         this.object = object
         this.targetObject = targetObjectMesh

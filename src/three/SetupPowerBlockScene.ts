@@ -7,7 +7,7 @@ import {EffectPass, OutlineEffect} from 'postprocessing';
 import {animateAsync, delay} from '../utils';
 
 
-export class SetupPowerBlock extends BaseScene {
+export class SetupPowerBlockScene extends BaseScene {
 
     private ambientLight: AmbientLight
     private pointLight: PointLight;
