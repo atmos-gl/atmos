@@ -53,7 +53,6 @@ export class TomatoScene extends BaseScene {
     }
 
     animate() {
-        // hey
         const deltaTime = this.clock.getDelta()
 
         this.tomato.animate(deltaTime)
