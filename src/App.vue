@@ -1,7 +1,16 @@
 <script setup lang="ts">
-import {useUrlSearchParams} from '@vueuse/core';
+import useKeySequence from './composables/useKeySequence';
 
-const params = useUrlSearchParams()
+// useKeySequence(['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'],
+//     1000,
+//     () => {
+//       console.log('konami')
+//     })
+useKeySequence(['Shift', 'Shift', 'm', 'Shift', 'Shift'],
+    300,
+    () => {
+      console.log('bypass')
+    })
 </script>
 
 <template>
