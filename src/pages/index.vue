@@ -6,10 +6,10 @@ import Explore from './../components/Explore.vue';
 import data from "../data/hpSectionsData";
 import Loader from '../components/Loader.vue';
 import {ref, watch} from 'vue';
-import {combineLoaders, exploreLoader, commonLoader} from '../composables/useLoader';
+import {combineLoaders, exploreLoader, commonLoader, powerBlockLoader, growLoader} from '../composables/useLoader';
 import {delay} from '../utils';
 
-const {loading, progress, load} = combineLoaders(commonLoader, exploreLoader)
+const {loading, progress, load} = combineLoaders(commonLoader, exploreLoader, powerBlockLoader, growLoader)
 const displayLoading = ref(loading.value)
 watch(loading, async newVal => {
   if (newVal === false) {
@@ -17,7 +17,7 @@ watch(loading, async newVal => {
     displayLoading.value = false
   }
 })
-load()
+// setTimeout(load, 4000)
 
 </script>
 
