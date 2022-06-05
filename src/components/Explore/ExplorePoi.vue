@@ -75,7 +75,7 @@ const {isBypass} = useBypassMode()
 
       <transition name="fade">
         <div v-show="showOverlay" class="absolute top-0 left-0 w-full px-10 py-8 flex justify-between items-start">
-          <button class="hover:underline flex items-center" @click="leave">
+          <button class="hover:underline flex items-center" @click="leave()">
             <i class="uil uil-angle-left text-xl mt-1"></i> Retour
           </button>
           <transition name="fade">

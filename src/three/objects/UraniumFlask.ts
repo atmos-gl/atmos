@@ -10,7 +10,7 @@ import {
     Vector3,
     Vector4
 } from 'three';
-import {SetupPowerBlockScene} from '../SetupPowerBlock';
+import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 import useUiTip from '../three-composables/useUiTip';
 
 export default class UraniumFlask extends Bottle {

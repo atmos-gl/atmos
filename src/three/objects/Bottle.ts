@@ -4,7 +4,7 @@ import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import {animateAsync, delay} from '../../utils';
 import CustomDragControls from '../custom/CustomDragControls';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
-import {SetupPowerBlockScene} from '../SetupPowerBlock';
+import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 
 
 const createXtoZ = (start, end, amp, offset = 0) => {

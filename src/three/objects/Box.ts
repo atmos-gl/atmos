@@ -6,7 +6,7 @@ import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
 import Fertilizer from './Fertilizer';
 import {powerBlockLoader} from '../../composables/useLoader';
-import {SetupPowerBlockScene} from '../SetupPowerBlock';
+import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 import UraniumFlask from './UraniumFlask';
 import {animate} from 'popmotion';
 
