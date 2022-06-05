@@ -18,8 +18,8 @@ export class ExploreScene extends BaseScene {
         name?: string
     }> = []
 
-    private defaultCamPos: Vector3 = new Vector3(4, 5, 15)
-    private defaultCamLookAt: Vector3 = new Vector3()
+    private defaultCamPos: Vector3 = new Vector3(4, 3, 15)
+    private defaultCamLookAt: Vector3 = new Vector3(0, -1, 0)
 
     private poiList: Array<HTMLElement> = []
 

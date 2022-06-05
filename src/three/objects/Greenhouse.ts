@@ -1,11 +1,10 @@
 import {DoubleSide, Group, Mesh, Object3D} from 'three';
-import ResourcesLoader from "../ResourcesLoader";
 import getGlassMaterial from '../materials/glassMaterial';
 import Plant from './Plant';
 import {BaseScene} from '../BaseScene';
 import {TomatoColor, TomatoParams} from './Tomato';
-import {animateAsync} from '../../utils';
 import {commonLoader} from '../../composables/useLoader';
+import {animate} from 'popmotion';
 
 type DoorToOpen = 'left' | 'right' | 'both';
 
@@ -18,6 +17,8 @@ export class Greenhouse {
     private plant1: Plant;
     private plant2: Plant;
     private tomatoParams: TomatoParams;
+
+    private currentAnimation
 
     constructor(tomatoParams: TomatoParams = {
         long: 1,
@@ -96,8 +97,9 @@ export class Greenhouse {
         return this.setDoorsAngle.bind(this)
     }
 
-    async openDoor(door: DoorToOpen = 'both') {
-        await animateAsync({
+    async openDoor(door: DoorToOpen = 'both', duration = 500) {
+        this.currentAnimation?.stop()
+        this.currentAnimation = animate({
             from: {
                 left: this.leftDoor.rotation.y,
                 right: this.rightDoor.rotation.y,
@@ -106,13 +108,14 @@ export class Greenhouse {
                 left: -Math.PI * 3 / 4,
                 right: Math.PI * 3 / 4,
             },
-            duration: 500,
+            duration,
             onUpdate: this.getDoorOpenFunction(door)
         })
     }
 
-    async closeDoor(door: DoorToOpen = 'both') {
-        await animateAsync({
+    async closeDoor(door: DoorToOpen = 'both', duration = 500) {
+        this.currentAnimation?.stop()
+        this.currentAnimation = animate({
             from: {
                 left: this.leftDoor.rotation.y,
                 right: this.rightDoor.rotation.y,
@@ -121,7 +124,7 @@ export class Greenhouse {
                 left: 0,
                 right: 0,
             },
-            duration: 500,
+            duration,
             onUpdate: this.getDoorOpenFunction(door)
         })
     }
