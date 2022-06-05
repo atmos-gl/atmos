@@ -4,7 +4,7 @@ import {tomatoLoader} from '../../composables/useLoader';
 import ColorChooser from './ColorChooser.vue';
 import {animate} from 'popmotion';
 import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
-import {ref, Ref} from 'vue';
+import {computed, ref, Ref} from 'vue';
 //Images
 import standardTomato from '../../assets/img/tomatoPresets/standard.png'
 import cherryTomato from '../../assets/img/tomatoPresets/cherry.png'
@@ -54,6 +54,7 @@ const tomatoPresets = [
   },
 ]
 const selectedPresetIndex = ref(0)
+const selectedPreset = computed(() => tomatoPresets[selectedPresetIndex.value])
 const selectPreset = index => {
   selectedPresetIndex.value = index
   tomato.color = tomatoPresets[index].color
@@ -96,7 +97,16 @@ const selectPreset = index => {
           <button class="btn" @click="step = 'customize'">Continuer</button>
         </div>
         <div v-else class="flex flex-col gap-3">
-          <div class="text-jade w-full font-semibold text-lg">Personnaliser la tomate</div>
+          <div class="text-jade w-full font-semibold text-lg">Personnaliser la base</div>
+
+          <div
+              class="flex items-center font-light text-sm text-jade/80 border border-jade/80 bg-black/10 rounded-lg disabled:(opacity-50)
+          h-12 pl-2 pr-4 gap-3">
+            <img :src="selectedPreset.image"
+                 class="h-9/10">
+            <span class="">Tomate {{ selectedPreset.name.toLowerCase() }} </span>
+            <button class="ml-auto text-xl text-jade" @click="step = 'preset'"><i class="uil uil-pen"></i></button>
+          </div>
           <div class="title">Forme</div>
           <input type="range"
                  class="input-range w-full  my-1"

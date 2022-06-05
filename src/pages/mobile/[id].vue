@@ -10,7 +10,7 @@ import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
 const props = defineProps(['id'])
 
 const step = ref('tomatoExplanation')
-step.value = 'customizeTomato'
+// step.value = 'customizeTomato'
 
 const {link} = usePair()
 
