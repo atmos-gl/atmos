@@ -90,13 +90,13 @@ const {isBypass} = useBypassMode()
       </transition>
       <transition name="fade">
         <div v-show="showOverlay"
-             class="absolute text-jade/70 text-sm left-1/2 transform -translate-x-1/2 max-w-120 text-center bottom-0 w-full py-6">
+             class="absolute text-jade/70 text-sm left-1/2 transform -translate-x-1/2 max-w-156 text-center bottom-0 w-full py-6 px-12">
           <div
-              v-if="!exploreNumber" class="flex items-center justify-start">Cliquez sur les <i
+              v-if="!exploreNumber" class="flex items-center justify-center">Cliquez sur les <i
               class="uil uil-plus text-white text-lg mx-1 mt-0.5"></i> pour décourir les secrets de la Serre !
           </div>
-          <div v-else-if="exploreNumber >= 5">Quand vous avez terminé, continuez en cliquant sur "Commencer
-            l'expérience".
+          <div v-else-if="exploreNumber >= 4">Quand vous avez terminé, continuez en cliquant sur "Démarrer
+            l'expérience"
           </div>
         </div>
       </transition>
