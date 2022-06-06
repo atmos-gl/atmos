@@ -5,7 +5,7 @@ import {animateAsync, delay} from '../../utils';
 import CustomDragControls from '../custom/CustomDragControls';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
 import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
-
+import useSoundEffect from '../../composables/useSoundEffect';
 
 const createXtoZ = (start, end, amp, offset = 0) => {
     const l = end - start
@@ -34,6 +34,7 @@ export default class Bottle {
     protected clamp: Vector4;
     protected screwDirection: number;
     protected initialPosition: Vector2;
+    private soundEffect: { play: () => void };
 
     constructor({
                     object,
@@ -41,8 +42,9 @@ export default class Bottle {
                     scene,
                     clamp = new Vector4(-220, 1000, -10, 120),
                     screwDirection = -1,
-                    initialPosition = new Vector2(450, 50)
-                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlockScene, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 },
+                    initialPosition = new Vector2(450, 50),
+        soundEffect = 'screw1'
+                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlockScene, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2, soundEffect?: string },
     ) {
         this.object = object
         this.targetObject = targetObjectMesh
@@ -50,6 +52,8 @@ export default class Bottle {
         this.clamp = clamp
         this.screwDirection = screwDirection
         this.initialPosition = initialPosition
+
+        this.soundEffect = useSoundEffect(soundEffect)
 
         this.init()
         this.setupControls()
@@ -172,6 +176,7 @@ export default class Bottle {
                 this.object.position.set(x, y, z)
             },
         })
+        this.soundEffect.play()
         await animateAsync({
             from: {
                 rotation: 0,

@@ -32,7 +32,8 @@ export default class UraniumFlask extends Bottle {
                 365, 450
             ),
             screwDirection: 1,
-            initialPosition: new Vector2(200, 400)
+            initialPosition: new Vector2(200, 400),
+            soundEffect: 'click'
         });
         clip.tracks.pop()
         this.clip = clip

@@ -51,7 +51,7 @@ export class Box {
         })
         seeThroughGlass.thickness = 0
         const tube = this.model.getObjectByName('centrale').getObjectByName('Tube_1') as Mesh
-        tube.material =seeThroughGlass.clone()
+        tube.material = seeThroughGlass.clone()
 
 
         this.door = new Door(this.model.getObjectByName('porte'), this.scene)
@@ -88,7 +88,8 @@ export class Box {
                     -20, 90
                 ),
                 screwDirection: 1,
-            initialPosition: new Vector2(450, 50)
+                initialPosition: new Vector2(450, 50),
+                soundEffect: 'screw2'
             }
         )
 
@@ -106,7 +107,7 @@ export class Box {
         const flaskBody = uraniumFlask.getObjectByName('Capsule') as Mesh
         flaskBody.material = seeThroughGlass
         const uraniumClip = AnimationClip.findByName(this.model.animations, 'pilule')
-        this.uraniumFlask = new  UraniumFlask({
+        this.uraniumFlask = new UraniumFlask({
                 object: uraniumFlask,
                 targetObjectMesh: this.model.getObjectByName('Tube_5') as Mesh,
                 scene: this.scene,
@@ -114,7 +115,11 @@ export class Box {
             uraniumClip
         )
 
-        ;(this.model.getObjectByName('Pillule').children[0] as Mesh).material = new MeshPhongMaterial({color: '#0f0', emissive: '#040', reflectivity: 0.5})
+        ;(this.model.getObjectByName('Pillule').children[0] as Mesh).material = new MeshPhongMaterial({
+            color: '#0f0',
+            emissive: '#040',
+            reflectivity: 0.5
+        })
 
         this.nuclearLight = this.model.getObjectByName('nuclear_light') as Mesh
         this.nuclearLight.material = new MeshPhongMaterial({
