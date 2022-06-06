@@ -23,6 +23,14 @@ export class BaseScene {
     public gui: GUI;
     protected composer: EffectComposer
 
+    public name = 'base'
+
+    constructor(name?: string) {
+        if (name) {
+            this.name = name
+        }
+    }
+
     public init(canvas: HTMLCanvasElement) {
         this.canvas = canvas
         canvas.dataset.scene = this.constructor.name
@@ -128,7 +136,7 @@ export class BaseScene {
 
     // Run app, load things, add listeners, ...
     run() {
-        console.log(`Scene ${this.constructor.name} run`)
+        console.log(`Scene ${this.name} run`)
 
         this.render()
         this.animate()

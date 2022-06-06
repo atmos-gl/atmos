@@ -14,6 +14,10 @@ export class HeaderScene extends BaseScene {
 
     private isHover = false
 
+    constructor() {
+        super('header');
+    }
+
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
         // this.enableControls()

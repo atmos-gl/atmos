@@ -16,7 +16,7 @@ export class GrowScene extends BaseScene {
     private greenhouse: Greenhouse;
 
     constructor(tomatoParams: TomatoParams) {
-        super();
+        super('grow');
         this.tomatoParams = tomatoParams
     }
 

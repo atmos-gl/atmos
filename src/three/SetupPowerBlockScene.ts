@@ -14,6 +14,10 @@ export class SetupPowerBlockScene extends BaseScene {
     private box: Box;
     private outlineEffect: OutlineEffect
 
+    constructor() {
+        super('power-block');
+    }
+
     public init(canvas: HTMLCanvasElement) {
         super.init(canvas)
         this.renderer.shadowMap.enabled = true

@@ -36,7 +36,7 @@ export class ExploreScene extends BaseScene {
     private ambientLight: AmbientLight;
 
     constructor(poiDesc: Ref<string>, showBgText: Ref<boolean>) {
-        super();
+        super('explore');
         this.poiDesc = poiDesc
         this.poiDescDefault = poiDesc.value
         this.showBgText = showBgText

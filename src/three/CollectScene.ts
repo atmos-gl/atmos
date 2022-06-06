@@ -40,7 +40,7 @@ export class CollectScene extends BaseScene {
     private lastShownTomato = 0
 
     constructor(tomatoParams: TomatoParams, progress: Ref<number>) {
-        super();
+        super('collect');
         this.tomatoParams = tomatoParams
 
         watch(progress, p => this.updateProgress(p))
