@@ -3,7 +3,7 @@ import SetupPowerBlock from '../components/Experience/SetupPowerBlock.vue';
 import {combineLoaders, commonLoader, growLoader, powerBlockLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
-import {onBeforeUnmount, onMounted, reactive, ref, watch} from 'vue';
+import {onBeforeUnmount, reactive, ref, watch} from 'vue';
 import PairPhone from '../components/Experience/PairPhone.vue';
 import Link from '@paapi/client/dist/Link';
 import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
@@ -12,6 +12,7 @@ import {TomatoColor, TomatoParams} from '../three/objects/Tomato';
 import Loader from '../components/Loader.vue';
 import SkipButton from '../components/SkipButton.vue';
 import {useEventBus} from '@vueuse/core';
+import useShareResult from '../composables/useShareResult';
 
 const {
   loading: powerBlockLoading,
@@ -50,7 +51,7 @@ const onPair = (l: Link) => {
   const updateStateToLink = () => {
     link.value.emit('update:state', sequenceManager.state.value)
   }
-  sequenceManager.onTransition(() => {
+  sequenceManager.onTransition((state) => {
     updateStateToLink()
   })
   link.value.on('sequence:send', event => {
@@ -64,7 +65,12 @@ const onPair = (l: Link) => {
   updateStateToLink()
 }
 
-onMounted(loadPowerBlock)
+const {shareId} = useShareResult()
+watch(shareId, newVal => {
+  link.value.emit('update:shareId', newVal)
+})
+
+loadPowerBlock()
 
 onBeforeUnmount(() => {
   sequenceManager.stop()

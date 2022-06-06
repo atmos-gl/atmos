@@ -70,11 +70,6 @@ window.addEventListener('mouseup', mouseUp)
 onBeforeUnmount(() => (
     window.removeEventListener('mouseup', mouseUp)
 ))
-const collectScene = ref(null)
-const setCollectScene = scene => {
-  collectScene.value = scene
-}
-
 </script>
 <template>
   <div class="flex-col flex h-full w-full relative">
@@ -88,7 +83,6 @@ const setCollectScene = scene => {
                :class="{ '-translate-x-1/5': step === 'share' }"
                :progress="holdProgress"
                :tomato-params="tomatoParams"
-               @load-scene="setCollectScene"
       />
     </Transition>
 

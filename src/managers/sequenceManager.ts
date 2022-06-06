@@ -147,7 +147,7 @@ createMachine({
 }
   )
 // temp
-// sequenceMachine.initial = 'leaveWork'
+sequenceMachine.initial = 'leaveWork'
 //
 const sequenceManager = interpret(sequenceMachine)
 sequenceManager.start()
