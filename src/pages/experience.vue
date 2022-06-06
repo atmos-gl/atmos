@@ -11,6 +11,7 @@ import Introduction from '../components/Experience/Introduction.vue';
 import {TomatoColor, TomatoParams} from '../three/objects/Tomato';
 import Loader from '../components/Loader.vue';
 import SkipButton from '../components/SkipButton.vue';
+import {useEventBus} from '@vueuse/core';
 
 const {
   loading: powerBlockLoading,
@@ -21,6 +22,17 @@ const {
   loading: growLoading,
   progress: growProgress
 } = growLoader
+
+const displayPowerBlockLoading = ref(powerBlockLoading.value)
+const bus = useEventBus('init-scene')
+watch(powerBlockLoading, isLoading => {
+  displayPowerBlockLoading.value = isLoading
+})
+bus.on(scene => {
+  if (scene === 'power-block') {
+    displayPowerBlockLoading.value = false
+  }
+})
 
 const {state, send} = useActor(sequenceManager)
 
@@ -75,12 +87,16 @@ onBeforeUnmount(() => {
             :tomato-params="tomatoParams"
         />
       </Transition>
-      <Transition v-else name="fade-quick" mode="out-in">
-        <Loader v-if="powerBlockLoading" :progress="powerBlockProgress"/>
-        <SetupPowerBlock v-else class="w-full h-full"/>
-      </Transition>
+      <div class="w-full h-full" v-else>
+        <SetupPowerBlock v-if="!powerBlockLoading" class="w-full h-full z-10"/>
+        <Transition name="fade-quick">
+          <div v-show="displayPowerBlockLoading" class="absolute w-full h-full inset-0 bg-imperial">
+            <Loader :progress="powerBlockProgress"/>
+          </div>
+        </Transition>
+      </div>
     </Transition>
-    <SkipButton />
+    <SkipButton/>
   </div>
 </template>
 <style scoped>
