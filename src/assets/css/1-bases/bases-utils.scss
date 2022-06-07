@@ -6,6 +6,10 @@
   @apply absolute top-1/2 transform -translate-y-1/2;
 }
 
+.absolute-x-center {
+  @apply absolute left-1/2 transform -translate-x-1/2;
+}
+
 .center-content {
   @apply flex items-center justify-center;
 }

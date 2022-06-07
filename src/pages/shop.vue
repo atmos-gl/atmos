@@ -1,21 +1,40 @@
 <script setup>
 import Header from '../components/Header/Header.vue';
 import sliderData from '../data/sliderData'
-import Glide from '@glidejs/glide'
-import '@glidejs/glide/dist/css/glide.core.min.css';
 import {onMounted, ref} from "vue";
 
 const activeRangeIndex = ref(0)
-// const activeCardIndex = ref(0)
+const activeCardIndex = ref(0)
 // const customData = ref(sliderData[0])
 
-onMounted(() => {
-  new Glide('.glide', {
-    type: 'carousel',
-    startAt: 0,
-    perView: 3,
-  }).mount()
-})
+const prev = () => {
+  if (activeCardIndex.value > 0) activeCardIndex.value--
+}
+
+const next = () => {
+  if (activeCardIndex.value < sliderData[activeRangeIndex.value].products.length - 1) activeCardIndex.value++
+}
+
+const getCustomClass = (index) => {
+  let classes = ''
+
+  switch (index) {
+    case activeCardIndex.value:
+      classes = 'right-1/4 opacity-100'
+      break
+    case activeCardIndex.value - 1:
+      classes = 'right-1/2 opacity-50'
+      break
+    case activeCardIndex.value - 2:
+      classes = 'right-3/4 opacity-25'
+      break
+    case activeCardIndex.value - 3:
+      classes = 'right-full opacity-0'
+      break
+  }
+
+  return classes
+}
 
 </script>
 <template>
@@ -29,49 +48,27 @@ onMounted(() => {
     </ul>
 
     <div class="flex-1 flex">
-      <section class="flex w-full h-full">
-        <div class="w-3/5 h-full">
-          <div class="glide h-full">
-            <div class="glide__track h-3/4" data-glide-el="track">
-              <ul class="glide__slides h-full">
-                <li class="glide__slide w-full" v-for="product in sliderData[activeRangeIndex].products">
-                  <img class="h-full w-full" :src="product.src" :alt="product.alt">
-                </li>
-              </ul>
-            </div>
-
-            <!--          <div class="glide__bullets flex" data-glide-el="controls[nav]">-->
-            <!--            <button class="glide__bullet" data-glide-dir="=0" v-for="(product, index) in sliderData[activeRangeIndex].products"></button>-->
-            <!--          </div>-->
-            <div class="glide__bullets" data-glide-el="controls[nav]">
-              <button class="glide__bullet" data-glide-dir="=0"></button>
-              <button class="glide__bullet" data-glide-dir="=1"></button>
-              <button class="glide__bullet" data-glide-dir="=2"></button>
-            </div>
+      <section class="flex items-center w-full h-full">
+        <div class="w-3/5 h-3/5 flex relative overflow-hidden">
+          <div v-for="(slide, index) in sliderData[activeRangeIndex].products" class="absolute top-0 h-full transition-all -right-full -z-1 opacity-0" :class="getCustomClass(index)">
+            <img :src="slide.src" :alt="slide.alt" class="h-full">
           </div>
+          <div class="absolute-x-center -bottom-0 flex">
+            <p @click="prev">Prev</p>
+            <span v-for="dot in sliderData[activeRangeIndex].products" class="h-5 w-5 bg-white"></span>
+            <p @click="next">Next</p>
+          </div>
+
         </div>
-
-
-<!--        <div class="w-2/5">-->
-<!--          <div v-for="(product, index) in sliderData[activeRangeIndex].products">-->
-<!--            <div class="border border-white rounded-lg py-4 px-6" v-if="index === activeCardIndex">-->
-<!--              <h2>{{ product.card.title }}</h2>-->
-<!--              <p>{{ product.card.subtitle }}</p>-->
-<!--              <img :src="product.card.localisation" alt="Localisation">-->
-<!--              <p v-for="text in product.card.content">{{ text.text }}</p>-->
-<!--              <img v-for="label in product.card.labels" :src="label.src" alt="Label">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
 
         <div class="w-2/5">
           <div class="border border-white rounded-3xl py-12 px-14 relative">
-            <h2 class="font-title text-4xl font-bold mb-3">{{ sliderData[0].products[0].card.title }}</h2>
-            <p class="font-bold mb-8">{{ sliderData[0].products[0].card.subtitle }}</p>
-            <img class="absolute top-20 right-16" :src="sliderData[0].products[0].card.localisation" alt="Localisation">
-            <p class="mb-8" v-for="text in sliderData[0].products[0].card.content">{{ text.text }}</p>
+            <h2 class="font-title text-4xl font-bold mb-3">{{ sliderData[activeRangeIndex].products[activeCardIndex].card.title }}</h2>
+            <p class="font-bold mb-8">{{ sliderData[activeRangeIndex].products[activeCardIndex].card.subtitle }}</p>
+            <img class="absolute top-20 right-16" :src="sliderData[activeRangeIndex].products[activeCardIndex].card.localisation" alt="Localisation">
+            <p class="mb-8" v-for="text in sliderData[activeRangeIndex].products[activeCardIndex].card.content">{{ text.text }}</p>
             <ul class="flex justify-between mx-auto w-3/4">
-              <img v-for="label in sliderData[0].products[0].card.labels" :src="label.src" alt="Label">
+              <img v-for="label in sliderData[activeRangeIndex].products[activeCardIndex].card.labels" :src="label.src" alt="Label">
             </ul>
           </div>
         </div>
@@ -79,7 +76,3 @@ onMounted(() => {
     </div>
   </main>
 </template>
-
-<style scoped lang="scss">
-
-</style>
