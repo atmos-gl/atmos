@@ -1,11 +1,11 @@
-import {Color, MathUtils, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3, Vector4} from 'three';
-import {animate, createExpoIn, reverseEasing} from 'popmotion';
+import {MathUtils, Mesh, Object3D, Vector2, Vector3, Vector4} from 'three';
+import {createExpoIn, reverseEasing} from 'popmotion';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import {animateAsync, delay} from '../../utils';
 import CustomDragControls from '../custom/CustomDragControls';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
-import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 import useSoundEffect from '../../composables/useSoundEffect';
+import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 
 const createXtoZ = (start, end, amp, offset = 0) => {
     const l = end - start
@@ -179,11 +179,11 @@ export default class Bottle {
         this.soundEffect.play()
         await animateAsync({
             from: {
-                rotation: 0,
+                rotation: this.object.rotation.y,
                 ...this.object.position
             },
             to: {
-                rotation: Math.PI * -4 * this.screwDirection,
+                rotation: this.object.rotation.y + (Math.PI * -4 * this.screwDirection),
                 ...this.finalPosition
             },
             onUpdate: v => {

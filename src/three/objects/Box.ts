@@ -1,4 +1,4 @@
-import {AnimationClip, Group, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3, Vector4} from 'three';
+import {AnimationClip, DoubleSide, Group, Mesh, MeshPhongMaterial, Object3D, Vector2, Vector3, Vector4} from 'three';
 import Door from './Door';
 import Bottle from './Bottle';
 import glassMaterial from '../materials/glassMaterial';
@@ -9,6 +9,7 @@ import {powerBlockLoader} from '../../composables/useLoader';
 import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 import UraniumFlask from './UraniumFlask';
 import {animate} from 'popmotion';
+import getGlassMaterial from '../materials/glassMaterial';
 
 export class Box {
     public model: Object3D
@@ -60,7 +61,6 @@ export class Box {
 
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
-        const {loader} = powerBlockLoader
         ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial()
         ;(co2Bottle.getObjectByName('parvis_c02') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
@@ -76,9 +76,13 @@ export class Box {
         )
 
         const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
+
+        ;(waterBottle.getObjectByName('etiquette_couleur') as Mesh).material[1].side = DoubleSide
         waterBottle.material = glassMaterial({
-            color: 'rgba(112,170,220,0.57)'
+            roughness: 0.1,
+            transmission: 1
         })
+
         this.waterBottle = new Bottle({
                 object: waterBottle,
                 targetObjectMesh: this.model.getObjectByName('Tube_5') as Mesh,
