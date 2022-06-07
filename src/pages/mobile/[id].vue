@@ -12,7 +12,7 @@ import useShareResult from '../../composables/useShareResult';
 const props = defineProps(['id'])
 
 const step = ref('tomatoExplanation')
-step.value = 'share'
+// step.value = 'share'
 
 const {shareId, setShareID} = useShareResult()
 setShareID('6e7b42ec-1779-4f14-b475-a957dbe857bc')
