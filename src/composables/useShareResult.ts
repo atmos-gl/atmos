@@ -15,6 +15,8 @@ export default function useShareResult() {
         shareId.value = result
     }
 
+    const setShareID = id => shareId.value = id
+
     const shareUrlBase = computed(() => `${shareUrl}${shareId.value}`)
     const shareMessage = computed(() => `Quelle belle récolte de tomates !
 
@@ -28,6 +30,7 @@ ${shareUrlBase.value}`)
 
     return {
         shareId,
+        setShareID,
         uploadSceneData,
         shareOnFacebookUrl,
         shareOnTwitterUrl,
