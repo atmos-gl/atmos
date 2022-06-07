@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@glidejs/glide": "^3.5.2",
     "@iconscout/unicons": "^4.0.1",
     "@paapi/client": "^1.0.2",
     "@types/three": "^0.139.0",
@@ -19,7 +20,6 @@
     "popmotion": "^11.0.3",
     "postprocessing": "^6.26.4",
     "qrcode": "^1.5.0",
-    "swiper": "^8.2.1",
     "three": "^0.139.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14",
