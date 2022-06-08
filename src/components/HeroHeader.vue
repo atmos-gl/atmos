@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HeaderScene from './Header/HeaderScene.vue';
 import ScrollingText from './Header/ScrollingText.vue';
-import MainNav from "./MainNav.vue";
+import Header from "./Header/Header.vue";
 
 const scrollingLines = 4
 </script>
@@ -24,6 +24,6 @@ const scrollingLines = 4
         <HeaderScene/>
       </div>
     </div>
-    <MainNav class="absolute top-0 left-0 w-full"/>
+    <Header class="absolute top-0 left-0 w-full"/>
   </header>
 </template>
