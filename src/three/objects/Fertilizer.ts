@@ -1,7 +1,7 @@
 import {
     AnimationAction,
     AnimationClip,
-    AnimationMixer,
+    AnimationMixer, Color,
     LoopOnce,
     MathUtils,
     Mesh,
@@ -17,6 +17,7 @@ import {animateAsync, delay} from '../../utils';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
 import {powerBlockLoader} from '../../composables/useLoader';
 import useSoundEffect from '../../composables/useSoundEffect';
+import getGlassMaterial from '../materials/glassMaterial';
 
 const dropSound = useSoundEffect('drop')
 
@@ -55,12 +56,24 @@ export default class Fertilizer implements DragAnimatable {
     }
 
     init() {
-        this.object.getObjectByName('reservoir_pillule').visible = false
+        ;(this.object.getObjectByName('reservoir_pillule') as Mesh).material = new MeshPhongMaterial({
+            color: '#142a14'
+        })
 
-        const {loader} = powerBlockLoader
+        const glassmat =  getGlassMaterial({
+            color: '#214121',
+            roughness: 0.3,
+            ior: 8,
+            metalness: 0.9,
+            specularColor: new Color('#214121'),
+            transmission: 0.5,
+        })
+        glassmat.thickness = 6
+
         this.bottleMesh = this.object.getObjectByName('Bouteille_ouverte') as Mesh
-        this.bottleMesh.material = getMetalMaterial()
+        this.bottleMesh.material = glassmat
         this.bottle = this.object.getObjectByName('Bouteille_fertilisant')
+
         //
         this.mixer = new AnimationMixer(this.object)
         this.action = this.mixer.clipAction(this.animClip)

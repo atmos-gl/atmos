@@ -35,7 +35,6 @@ export class Box {
     }
 
     private importFBX(model: Group) {
-        console.log(model)
 
         model.scale.set(0.01, 0.01, 0.01)
         this.model = model
@@ -61,7 +60,7 @@ export class Box {
 
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
-        ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial()
+        // ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial()
         ;(co2Bottle.getObjectByName('parvis_c02') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
             {
@@ -104,12 +103,12 @@ export class Box {
 
         const fertilizer = this.model.getObjectByName('fertilisant')
         const fertilizerClip = AnimationClip.findByName(this.model.animations, 'fertilizer')
-        console.log(this.model)
         this.fertilizer = new Fertilizer(fertilizer, this.scene, fertilizerClip)
 
         const uraniumFlask = this.model.getObjectByName('fiole')
         const flaskBody = uraniumFlask.getObjectByName('Capsule') as Mesh
         flaskBody.material = seeThroughGlass
+        console.log(seeThroughGlass)
         const uraniumClip = AnimationClip.findByName(this.model.animations, 'pilule')
         this.uraniumFlask = new UraniumFlask({
                 object: uraniumFlask,
