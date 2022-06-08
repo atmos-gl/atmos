@@ -13,6 +13,7 @@ import Loader from '../components/Loader.vue';
 import SkipButton from '../components/SkipButton.vue';
 import {useEventBus} from '@vueuse/core';
 import useShareResult from '../composables/useShareResult';
+import Header from '../components/Header/Header.vue';
 
 const {
   loading: powerBlockLoading,
@@ -97,11 +98,14 @@ onBeforeUnmount(() => {
         <SetupPowerBlock v-if="!powerBlockLoading" class="w-full h-full z-10"/>
       </div>
     </Transition>
-      <Transition name="fade-quick">
-        <div v-show="displayPowerBlockLoading" class="absolute w-full h-full inset-0 bg-imperial z-10">
-          <Loader :progress="powerBlockProgress"/>
-        </div>
-      </Transition>
+    <Transition name="fade-quick">
+      <div v-show="displayPowerBlockLoading" class="absolute w-full h-full inset-0 bg-imperial z-10">
+        <Loader :progress="powerBlockProgress"/>
+      </div>
+    </Transition>
+    <Transition name="fade">
+      <Header v-if="['share'].includes(state.value)" class="absolute top-0 left-0 w-full"/>
+    </Transition>
     <SkipButton/>
   </div>
 </template>

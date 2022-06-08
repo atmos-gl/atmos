@@ -22,3 +22,41 @@
     opacity: 0.3;
   }
 }
+
+.underline-hover {
+  display: block;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: currentColor;
+  }
+
+  &:hover::before {
+    animation: underline-hover .6s;
+  }
+
+  &.underline-reversed {
+    &::before {
+      transform: scale(0, 1);
+      transform-origin: right;
+      transition: transform .3s;
+    }
+
+    &:hover::before {
+      animation: none;
+      transform-origin: left;
+      transform: scale(1, 1);
+    }
+  }
+
+  &.underline-bold::before {
+    height: 3px;
+    bottom: -2px;
+  }
+}
