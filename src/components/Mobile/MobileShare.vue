@@ -7,13 +7,13 @@ const {shareId, shareOnTwitterUrl, shareOnFacebookUrl, imageDownloadUrl} = useSh
 const imageSrc = shareUrl + shareId.value + '/top-shot.webp'
 const { share, isSupported } = useShare()
 const image = ref(null)
-onMounted(async () => {
-  if (!isSupported) return
-  image.value = await fetch(shareUrl + shareId.value + '/mobile-image.webp').then(r => r.blob())
-})
 
+const loadShareContent = async () => {
+  if (!isSupported) return
+  image.value = await fetch(shareUrl + shareId.value + '/mobile-image.png').then(r => r.blob())
+}
 const shareResult = () => {
-  const filesArray: File[] = [new File([image.value], 'tomates.webp', { type: image.value.type, lastModified: new Date().getTime() })];
+  const filesArray: File[] = [new File([image.value], 'tomates.png', { type: image.value.type, lastModified: new Date().getTime() })];
   if (isSupported) {
     share({
       files: filesArray
@@ -24,7 +24,7 @@ const shareResult = () => {
 <template>
   <div class="flex flex-col h-full p-10 items-center gap-3 text-jade">
     <h1 class="text-6xl font-title font-bold">Bravo !</h1>
-    <img :src="imageSrc" class="w-full my-4">
+    <img :src="imageSrc" class="w-full my-4" @load="loadShareContent">
     <span class="font-bold">Partager sur :</span>
     <section class="flex text-lg items-center gap-3">
       <a :href="shareOnTwitterUrl"
