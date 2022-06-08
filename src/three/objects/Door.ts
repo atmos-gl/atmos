@@ -5,6 +5,7 @@ import {animateAsync} from '../../utils';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
 import {BaseScene} from '../BaseScene';
 import sequenceManager from '../../managers/sequenceManager';
+import {playSoundEffect, useDoorSoundEffect} from '../../composables/useSoundEffect';
 
 export default class Door implements DragAnimatable{
     public mesh: Object3D;
@@ -71,8 +72,11 @@ export default class Door implements DragAnimatable{
         return this.animateTo(0, 800)
     }
 
-    private animateTo(to, duration = 500) {
-        return animateAsync({
+    private async animateTo(to, duration = 500) {
+        if (to === 0) {
+            setTimeout(() => playSoundEffect('clacDoor'), duration - 100)
+        }
+        await animateAsync({
             from: this.animationProgress,
             to,
             onUpdate: val => {
