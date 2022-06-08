@@ -60,3 +60,9 @@
     bottom: -2px;
   }
 }
+.hover\:glow:hover {
+  box-shadow: 0 0 15px theme('colors.jade');
+}
+.hover\:glow-xl:hover {
+  box-shadow: 0 0 25px theme('colors.jade');
+}

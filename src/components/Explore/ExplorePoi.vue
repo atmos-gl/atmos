@@ -81,7 +81,7 @@ const {isBypass} = useBypassMode()
           <transition name="fade">
             <RouterLink v-show="isBypass || exploreNumber"
                         to="/experience"
-                        class="btn"
+                        class="btn hover:glow"
                         @click="leave(false)"
             >Démarrer l'expérience
             </RouterLink>
@@ -104,7 +104,8 @@ const {isBypass} = useBypassMode()
     <transition name="fade">
       <button
           v-if="!isOpen"
-          class="absolute-center bg-bg border border-white text-2xl py-6 px-16 rounded-full cursor-pointer"
+          class="absolute-center bg-bg border border-jade text-2xl py-6 px-16 rounded-full cursor-pointer transition
+           duration-200 hover:(bg-jade text-bg) hover:glow-xl"
           @click="processExplore"
       >Découvrir la serre
       </button>
