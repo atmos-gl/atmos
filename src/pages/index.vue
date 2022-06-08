@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import Header from './../components/Header.vue';
+import HeroHeader from './../components/HeroHeader.vue';
 import Footer from './../components/Footer.vue';
 import Section from './../components/Hp/Section.vue';
 import Explore from './../components/Explore.vue';
 import data from "../data/hpSectionsData";
 import Loader from '../components/Loader.vue';
-import {ref, watch} from 'vue';
-import {combineLoaders, exploreLoader, commonLoader} from '../composables/useLoader';
-import {delay} from '../utils';
+import {ref} from 'vue';
+import {combineLoaders, commonLoader, exploreLoader} from '../composables/useLoader';
 import {useEventBus} from '@vueuse/core';
 
 const {loading, progress, load} = combineLoaders(commonLoader, exploreLoader)
@@ -26,7 +25,7 @@ bus.on(scene => {
 <template>
   <div>
     <main v-if="!loading">
-      <Header/>
+      <HeroHeader />
       <Section v-for="(section) in data" :data="section"/>
       <Explore/>
       <Footer/>

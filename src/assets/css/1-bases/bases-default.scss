@@ -16,6 +16,10 @@ body {
 
 .theme-gradient {
   @apply bg-gradient-to-b from-imperial to-bg;
+
+  &--reversed {
+    @apply bg-gradient-to-b from-bg to-imperial;
+  }
 }
 
 .fade-enter-active,
