@@ -7,7 +7,7 @@ import {
     Mesh,
     MeshPhongMaterial,
     Object3D,
-    Vector2
+    Vector2, Vector3
 } from 'three';
 import {BaseScene} from '../BaseScene';
 import {getMetalMaterial} from '../materials/metalMaterials';
@@ -35,7 +35,7 @@ export default class Fertilizer implements DragAnimatable {
     private progress: number;
     public movement = new Vector2(-0.4, -0.4)
 
-    private animationBounds: Array<number> = [ 0.345, 3 ]
+    private animationBounds: Array<number> = [0.345, 3]
     private fertilizerAnimation: DragAnimation;
 
     private dragThreshold = 0.7
@@ -45,6 +45,9 @@ export default class Fertilizer implements DragAnimatable {
 
     public ui: UiTip;
     private bottle: Object3D;
+    private cap: Object3D;
+    private capClosed: Vector3;
+    private capOpened: Vector3;
 
     constructor(object: Object3D, scene: BaseScene, animationClip: AnimationClip) {
         this.object = object
@@ -60,7 +63,7 @@ export default class Fertilizer implements DragAnimatable {
         ;(this.object.getObjectByName('reservoir_pillule') as Mesh).material = new MeshPhongMaterial({
             color
         })
-        const glassmat =  getGlassMaterial({
+        const glassmat = getGlassMaterial({
             color,
             roughness: 0.3,
             ior: 8,
@@ -73,6 +76,11 @@ export default class Fertilizer implements DragAnimatable {
         this.bottleMesh = this.object.getObjectByName('Bouteille_ouverte') as Mesh
         this.bottleMesh.material = glassmat
         this.bottle = this.object.getObjectByName('Bouteille_fertilisant')
+
+        this.cap = this.object.getObjectByName('Bouchon')
+        this.capClosed = this.cap.position.clone()
+        this.capOpened = this.cap.position.clone()
+        this.capOpened.y += 50
 
         const granuleMat = new MeshPhongMaterial({
             color: '#c43420'
@@ -95,6 +103,14 @@ export default class Fertilizer implements DragAnimatable {
             onDragStart: async () => {
                 await delay(200)
                 this.ui.hide()
+            },
+            onHover: () => {
+                this.openCap()
+            },
+            onHoverOut: () => {
+                if (this.animationProgress === 0) {
+                    this.closeCap()
+                }
             }
         })
         // this.object.visible = false
@@ -106,6 +122,34 @@ export default class Fertilizer implements DragAnimatable {
 
     get animationProgress() {
         return this.progress - 0.345
+    }
+
+    public openCap() {
+        this.animCap({
+            y: this.capOpened.y,
+            rotation: Math.PI * 4
+        })
+    }
+
+    public closeCap() {
+        this.animCap({
+            y: this.capClosed.y,
+            rotation: 0
+        })
+    }
+    public animCap(to) {
+        animate({
+            from: {
+                y: this.cap.position.y,
+                rotation: this.cap.rotation.y
+            },
+            to,
+            duration: 500,
+            onUpdate: (v) => {
+                this.cap.position.y = v.y
+                this.cap.rotation.y = v.rotation
+            }
+        })
     }
 
     set animationProgress(set) {
@@ -129,9 +173,9 @@ export default class Fertilizer implements DragAnimatable {
         const shouldEnd = this.animationProgress > (this.dragThreshold - 0.1)
         const to = shouldEnd ? this.animationBounds[1] : 0;
         const duration = shouldEnd ? 2500 : 500
-        if(shouldEnd) {
+        if (shouldEnd) {
             setTimeout(() => {
-            dropSound.play()
+                dropSound.play()
             }, 500)
         }
         await animateAsync({
@@ -167,6 +211,7 @@ export default class Fertilizer implements DragAnimatable {
         })
         this.ui.show()
     }
+
     async hide() {
         this.object.getObjectByName('granule_').visible = false
         await animateAsync({
