@@ -5,7 +5,7 @@ import './assets/css/global.scss'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
-import useSoundEffect, {initMusic, initSoundEffects} from './composables/useSoundEffect';
+import {initMusic, initSoundEffects} from './composables/useSoundEffect';
 
 createApp(App)
     .use(router)
