@@ -25,6 +25,20 @@ const {shareId, shareOnFacebookUrl, shareOnTwitterUrl, imageDownloadUrl} = useSh
              title="Télécharger l'image"><i class="uil uil-image-download text-2xl"></i></a>
         </div>
       </Transition>
+      <p class="italic text-jade/60 text-sm flex items-center fade-in"><i class="uil uil-mobile-android text-xl"></i> Vous pouvez également partager directement depuis votre téléphone.</p>
     </div>
   </div>
 </template>
+<style scoped>
+.fade-in {
+  animation: fadein1 .3s both 1.1s;
+}
+@keyframes fadein1 {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+</style>
