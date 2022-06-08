@@ -4,9 +4,14 @@ import sliderData from '../data/sliderData'
 import {ref, watch} from "vue";
 
 const activeRangeIndex = ref(0)
-const activeCardIndex = ref(0)
+const activeCardIndex = ref(2)
 const transitionName = ref('card-fade')
+const sliderTransitionName = ref('slider-fade')
 const isPopup = ref(true)
+watch(activeRangeIndex, (oldVal, newVal) => {
+  sliderTransitionName.value = oldVal < newVal ? 'slider-fade-reverse' : 'slider-fade'
+})
+
 watch(activeCardIndex, (oldVal, newVal) => {
   transitionName.value = oldVal < newVal ? 'card-fade-reverse' : 'card-fade'
 })
@@ -53,13 +58,13 @@ const getCustomClass = (index) => {
     <Header />
     <ul class="font-title flex text-xl font-bold justify-center pb-10">
       <li v-for="(range, index) in sliderData"
-          @click="activeRangeIndex = index; activeCardIndex = 0"
+          @click="activeRangeIndex = index; activeCardIndex = 2"
           class="mx-4"
           :class="activeRangeIndex === index ? 'opacity-100' : 'opacity-50 cursor-pointer'">{{ range.title }}</li>
     </ul>
 
     <div class="flex-1 flex">
-      <Transition :name="transitionName" mode="out-in">
+      <Transition :name="sliderTransitionName" mode="out-in">
         <section class="flex items-center w-full h-full" :key="activeRangeIndex">
           <div class="w-3/5">
             <div class="relative overflow-hidden flex h-140">
@@ -71,12 +76,12 @@ const getCustomClass = (index) => {
             </div>
 
             <div class="flex items-center justify-end transform -translate-x-17/100">
-              <button @click="prev" class="mr-4 cursor-pointer">Précédent</button>
+              <button @click="prev" class="mr-4 cursor-pointer text-4xl mt-1" title="Précédent"><i class="uil uil-angle-left"></i></button>
               <span v-for="(dot, index) in sliderData[activeRangeIndex].products"
                     class="h-4 w-4 rounded-full mr-2"
                     :class="index === activeCardIndex ? 'border-2 border-white' : 'bg-white cursor-pointer'"
                     @click="activeCardIndex = index"></span>
-              <button @click="next" class="cursor-pointer ml-2">Suivant</button>
+              <button @click="next" class="cursor-pointer ml-2 text-4xl mt-1" title="Suivant"><i class="uil uil-angle-right"></i></button>
             </div>
           </div>
 
@@ -132,19 +137,38 @@ const getCustomClass = (index) => {
 <style scoped lang="scss">
 .card-fade-leave-active,
 .card-fade-reverse-leave-active
+
 {
   transition: all 0.25s cubic-bezier(0.47, 0, 0.75, 0.72);
 }
 
 .card-fade-enter-active,
-.card-fade-reverse-enter-active {
+.card-fade-reverse-enter-active
+{
   transition: all 0.25s cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+
+.slider-fade-leave-active,
+.slider-fade-reverse-leave-active
+
+{
+  transition: all 0.15s ease-in;
+}
+
+.slider-fade-enter-active,
+.slider-fade-reverse-enter-active
+{
+  transition: all 0.15s ease-out;
 }
 
 .card-fade-enter-from,
 .card-fade-leave-to,
 .card-fade-reverse-enter-from,
-.card-fade-reverse-leave-to {
+.card-fade-reverse-leave-to,
+.slider-fade-enter-from,
+.slider-fade-leave-to,
+.slider-fade-reverse-enter-from,
+.slider-fade-reverse-leave-to {
   opacity: 0;
 }
 .card-fade-enter-from, .card-fade-reverse-leave-to {
@@ -152,6 +176,13 @@ const getCustomClass = (index) => {
 }
 .card-fade-leave-to, .card-fade-reverse-enter-from {
   transform: translateY(-20px);
+}
+
+.slider-fade-enter-from, .slider-fade-reverse-leave-to {
+  transform: translateX(20px);
+}
+.slider-fade-leave-to, .slider-fade-reverse-enter-from {
+  transform: translateX(-20px);
 }
 
 .fade-leave-to, .fade-enter-from {
