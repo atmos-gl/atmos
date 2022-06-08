@@ -48,7 +48,7 @@ const getCustomClass = (index) => {
 
 </script>
 <template>
-  <main class="h-screen flex flex-col overflow-hidden theme-gradient">
+  <main class="h-screen flex flex-col overflow-hidden theme-gradient--reversed">
     <Header />
     <ul class="font-title flex text-xl font-bold justify-center pb-10">
       <li v-for="(range, index) in sliderData"
@@ -63,7 +63,7 @@ const getCustomClass = (index) => {
           <div class="w-3/5">
             <div class="relative overflow-hidden flex h-140">
               <div v-for="(slide, index) in sliderData[activeRangeIndex].products"
-                   class="absolute top-0 h-full transition-all duration-500 transform flex items-center"
+                   class="absolute top-0 h-full transition-all duration-500 transform flex items-center custom-shadow"
                    :class="getCustomClass(index)">
                 <img :src="slide.src" :alt="slide.alt" class="h-4/5">
               </div>
@@ -127,5 +127,14 @@ const getCustomClass = (index) => {
 }
 .card-fade-leave-to, .card-fade-reverse-enter-from {
   transform: translateY(-20px);
+}
+
+.custom-shadow::after {
+  content: '';
+  @apply absolute left-1/2 transform -translate-x-1/2 bottom-0;
+  width: 196px;
+  height: 57px;
+  background: transparent radial-gradient(closest-side at 50% 50%, #0000006B 0%, #00000000 100%) 0% 0% no-repeat padding-box;
+  opacity: 0.6;
 }
 </style>
