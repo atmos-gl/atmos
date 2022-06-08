@@ -15,7 +15,7 @@ export function initSoundEffects() {
             clacDoor: [6676, 637]
         },
         onload() {
-            console.log('sound effects ready')
+            console.log('Sound effects ready')
         }
     })
     // doorSound = new Howl({
@@ -38,7 +38,6 @@ export function playSoundEffect(name: string, volume = 1) {
 
 export function useDoorSoundEffect() {
     const play = () => {
-        console.log('hey')
         doorSound.play()
     }
     const stop = () => {

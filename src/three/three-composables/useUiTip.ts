@@ -11,7 +11,6 @@ export default function useUiTip(object: Object3D, scene: BaseScene, offset = ne
     })
 
     const updatePosition = () => {
-        console.log('updating ui position')
         const vector = new Vector3()
         object.getWorldPosition(vector)
         vector.add(offset)

@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import useKeySequence from './composables/useKeySequence';
 import useBypassMode from './composables/useBypassMode';
-import sequenceManager from './managers/sequenceManager';
 
-// useKeySequence(['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'],
-//     1000,
-//     () => {
-//       console.log('konami')
-//     })
 const {toggleBypass} = useBypassMode()
 useKeySequence(['Shift', 'Shift', 'm', 'Shift', 'Shift'],
     300,

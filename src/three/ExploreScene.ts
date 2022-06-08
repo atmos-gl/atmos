@@ -242,10 +242,6 @@ export class ExploreScene extends BaseScene {
 
         this.labelRenderer.render( this.scene, this.camera );
 
-        // this.controls.addEventListener('end', () => {
-        //     console.log(this.camera.position)
-        // })
-
         super.animate()
     }
 

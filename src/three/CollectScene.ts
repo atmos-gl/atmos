@@ -180,7 +180,6 @@ export class CollectScene extends BaseScene {
                 planeMesh.position.z,
             )
             this.world.addBody(planeBody)
-            console.log(planeMesh.position, planeMesh.rotation)
         }
         createPlane(
             new Vector3(0, -19.6, 0),
@@ -321,7 +320,7 @@ export class CollectScene extends BaseScene {
             try {
                 this.world.step(deltaTime)
             } catch (e) {
-                console.log(e)
+                console.error(e)
             }
             this.tomatoes.forEach(p => {
                 this.updateTomato(p)

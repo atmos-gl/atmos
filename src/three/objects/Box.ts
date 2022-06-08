@@ -142,7 +142,6 @@ export class Box {
             emissive: '#001f00',
             reflectivity: 0.5
         })
-        console.log(this.model)
         ;((uraniumFlask.getObjectByName('Cylinder') as Mesh).material as MeshLambertMaterial).color.set('#021c02')
 
         this.nuclearLight = this.model.getObjectByName('nuclear_light') as Mesh

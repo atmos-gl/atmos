@@ -48,10 +48,6 @@ function createLoader(toLoad?: ResourcesToLoad): LoaderComposable {
         }
     }
 
-
-    // loader.onStart = function (url, itemsLoaded, itemsTotal) {
-    //     console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-    // };
     loader.onLoad = async function () {
         loading.value = false
     };

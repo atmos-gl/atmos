@@ -54,7 +54,6 @@ const startProgress = () => {
     duration,
     ease: linear,
     onUpdate: v => holdProgress.value = v,
-    onComplete: onEnd
   })
 }
 const mouseUp = () => {
@@ -62,9 +61,6 @@ const mouseUp = () => {
   if (holdProgress.value === 100) {
     sequenceManager.send('collected')
   }
-}
-const onEnd = () => {
-  console.log('end')
 }
 window.addEventListener('mouseup', mouseUp)
 onBeforeUnmount(() => (

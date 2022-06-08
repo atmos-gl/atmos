@@ -16,7 +16,6 @@ export class ExploreGreenHouse {
         const {loader} = exploreLoader
         const fbx = loader.getFBX('explore')
         this.importModel(fbx)
-        console.log(fbx)
     }
 
     private importModel(fbx: Group) {

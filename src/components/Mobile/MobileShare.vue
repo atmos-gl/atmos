@@ -10,7 +10,6 @@ const image = ref(null)
 onMounted(async () => {
   if (!isSupported) return
   image.value = await fetch(shareUrl + shareId.value + '/mobile-image.png').then(r => r.blob())
-  console.log( shareUrl + shareId.value + '/mobile-image.png')
 })
 
 const shareResult = () => {

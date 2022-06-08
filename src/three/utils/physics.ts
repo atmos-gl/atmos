@@ -171,7 +171,6 @@ export default class CannonDebugRenderer {
         let mesh = this._meshes[index]
         if (!this._typeMatch(mesh, shape)) {
             if (mesh) {
-                //console.log(shape.type)
                 this.scene.remove(mesh)
             }
             mesh = this._meshes[index] = this._createMesh(shape)

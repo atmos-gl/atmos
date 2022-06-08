@@ -243,6 +243,5 @@ export class SetupPowerBlockScene extends BaseScene {
     // Memory management
     destroy() {
         super.destroy()
-        console.log(this.box)
     }
 }
