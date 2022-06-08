@@ -4,16 +4,16 @@ import useShareResult from '../../composables/useShareResult';
 import {onMounted, ref} from 'vue';
 import {useShare} from '@vueuse/core';
 const {shareId, shareOnTwitterUrl, shareOnFacebookUrl, imageDownloadUrl} = useShareResult()
-const imageSrc = shareUrl + shareId.value + '/top-shot.png'
+const imageSrc = shareUrl + shareId.value + '/top-shot.webp'
 const { share, isSupported } = useShare()
 const image = ref(null)
 onMounted(async () => {
   if (!isSupported) return
-  image.value = await fetch(shareUrl + shareId.value + '/mobile-image.png').then(r => r.blob())
+  image.value = await fetch(shareUrl + shareId.value + '/mobile-image.webp').then(r => r.blob())
 })
 
 const shareResult = () => {
-  const filesArray: File[] = [new File([image.value], 'tomates.png', { type: image.value.type, lastModified: new Date().getTime() })];
+  const filesArray: File[] = [new File([image.value], 'tomates.webp', { type: image.value.type, lastModified: new Date().getTime() })];
   if (isSupported) {
     share({
       files: filesArray
