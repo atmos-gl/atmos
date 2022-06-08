@@ -8,11 +8,14 @@ import GrowTomatoes from '../../components/Mobile/GrowTomatoes.vue';
 import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
 import MobileShare from '../../components/Mobile/MobileShare.vue';
 import useShareResult from '../../composables/useShareResult';
+import {cancelMusic} from '../../composables/useSoundEffect';
 
 const props = defineProps(['id'])
 
 const step = ref('tomatoExplanation')
 // step.value = 'share'
+
+cancelMusic()
 
 const {shareId, setShareID} = useShareResult()
 const {link} = usePair()
