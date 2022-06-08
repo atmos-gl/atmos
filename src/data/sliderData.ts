@@ -2,17 +2,17 @@ import localisation from '../assets/img/localIcon.svg'
 import label from '../assets/img/naturalIcon.svg'
 import water_amazonie from '../assets/img/shop/water/bouteille_Amazonie.png'
 import water_ecolo from '../assets/img/shop/water/bouteille_Ecolo.png'
-import water_Hymalaya from '../assets/img/shop/water/Bouteille_Hymalaya_Couleurs.png'
+import water_Himalaya from '../assets/img/shop/water/Bouteille_Himalaya_Couleurs.png'
 import water_sahara from '../assets/img/shop/water/Bouteille_Sahara_Couleurs.png'
 import water_yosemite from '../assets/img/shop/water/bouteille_Yosemite.png'
 import CO2_amazonie from '../assets/img/shop/CO2/CO2_Amazonie.png'
 import CO2_ecolo from '../assets/img/shop/CO2/CO2_Ecolo.png'
-import CO2_Hymalaya from '../assets/img/shop/CO2/CO2_Hymalaya.png'
+import CO2_Himalaya from '../assets/img/shop/CO2/CO2_Himalaya.png'
 import CO2_sahara from '../assets/img/shop/CO2/CO2_Sahara.png'
 import CO2_yosemite from '../assets/img/shop/CO2/CO2_Yosemite.png'
 import fertilizer_amazonie from '../assets/img/shop/fertilizer/fertilisant_amazonie.png'
 import fertilizer_ecolo from '../assets/img/shop/fertilizer/fertilisant_ecolo.png'
-import fertilizer_Hymalaya from '../assets/img/shop/fertilizer/fertilisant_hymalaya.png'
+import fertilizer_Himalaya from '../assets/img/shop/fertilizer/fertilisant_himalaya.png'
 import fertilizer_sahara from '../assets/img/shop/fertilizer/fertilisant_sahara.png'
 import fertilizer_yosemite from '../assets/img/shop/fertilizer/fertilisant_yosemite.png'
 
@@ -91,10 +91,10 @@ const data = [
                 },
             },
             {
-                src: water_Hymalaya,
-                alt: 'Eau d\'Hymalaya',
+                src: water_Himalaya,
+                alt: 'Eau d\'Himalaya',
                 card: {
-                    title: "Eau d\'Hymalaya",
+                    title: "Eau d\'Himalaya",
                     subtitle: "France",
                     localisation: localisation,
                     content: [
@@ -271,10 +271,10 @@ const data = [
                 },
             },
             {
-                src: CO2_Hymalaya,
-                alt: 'CO2 d\'Hymalaya',
+                src: CO2_Himalaya,
+                alt: 'CO2 d\'Himalaya',
                 card: {
-                    title: "CO2 d\'Hymalaya",
+                    title: "CO2 d\'Himalaya",
                     subtitle: "France",
                     localisation: localisation,
                     content: [
@@ -451,10 +451,10 @@ const data = [
                 },
             },
             {
-                src: fertilizer_Hymalaya,
-                alt: 'fertilisant d\'Hymalaya',
+                src: fertilizer_Himalaya,
+                alt: 'fertilisant d\'Himalaya',
                 card: {
-                    title: "fertilisant d\'Hymalaya",
+                    title: "fertilisant d\'Himalaya",
                     subtitle: "France",
                     localisation: localisation,
                     content: [
