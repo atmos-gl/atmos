@@ -56,16 +56,16 @@ export default class Fertilizer implements DragAnimatable {
     }
 
     init() {
+        const color = new Color('#360208')
         ;(this.object.getObjectByName('reservoir_pillule') as Mesh).material = new MeshPhongMaterial({
-            color: '#142a14'
+            color
         })
-
         const glassmat =  getGlassMaterial({
-            color: '#214121',
+            color,
             roughness: 0.3,
             ior: 8,
-            metalness: 0.9,
-            specularColor: new Color('#214121'),
+            metalness: 1,
+            specularColor: color,
             transmission: 0.5,
         })
         glassmat.thickness = 6
@@ -73,6 +73,13 @@ export default class Fertilizer implements DragAnimatable {
         this.bottleMesh = this.object.getObjectByName('Bouteille_ouverte') as Mesh
         this.bottleMesh.material = glassmat
         this.bottle = this.object.getObjectByName('Bouteille_fertilisant')
+
+        const granuleMat = new MeshPhongMaterial({
+            color: '#c43420'
+        })
+        this.object.getObjectByName('granule_').traverse((object: Mesh) => {
+            object.material = granuleMat
+        })
 
         //
         this.mixer = new AnimationMixer(this.object)
