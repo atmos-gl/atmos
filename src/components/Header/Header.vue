@@ -9,7 +9,7 @@
         <img src="../../assets/img/logo.png" class="h-16">
       </h1>
       <ul class="flex ml-auto">
-        <li class="mr-4"><a href="" v-cursor.click>Valeurs</a></li>
+        <li class="mr-4"><a href="">Valeurs</a></li>
         <li class="mr-4"><a href="">Exploration</a></li>
         <li class="mr-4"><a href="">Expérience</a></li>
         <li><RouterLink to="/shop">Boutique</RouterLink></li>

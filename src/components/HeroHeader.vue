@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import HeaderScene from './Header/HeaderScene.vue';
 import ScrollingText from './Header/ScrollingText.vue';
-import {exploreLoader} from '../composables/useLoader';
-import {onBeforeUnmount, ref} from 'vue';
+import MainNav from "./MainNav.vue";
 
 const scrollingLines = 4
 </script>
