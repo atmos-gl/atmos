@@ -10,6 +10,11 @@ import CO2_ecolo from '../assets/img/shop/CO2/CO2_Ecolo.png'
 import CO2_Hymalaya from '../assets/img/shop/CO2/CO2_Hymalaya.png'
 import CO2_sahara from '../assets/img/shop/CO2/CO2_Sahara.png'
 import CO2_yosemite from '../assets/img/shop/CO2/CO2_Yosemite.png'
+import fertilizer_amazonie from '../assets/img/shop/fertilizer/fertilisant_amazonie.png'
+import fertilizer_ecolo from '../assets/img/shop/fertilizer/fertilisant_ecolo.png'
+import fertilizer_Hymalaya from '../assets/img/shop/fertilizer/fertilisant_hymalaya.png'
+import fertilizer_sahara from '../assets/img/shop/fertilizer/fertilisant_sahara.png'
+import fertilizer_yosemite from '../assets/img/shop/fertilizer/fertilisant_yosemite.png'
 
 const data = [
     {
@@ -24,11 +29,11 @@ const data = [
                     localisation: localisation,
                     content: [
                         {
-                            text: "Ce coffret regroupe tous les ingrédients\n" +
-                                "          nécessaires pour faire pousser vos plantes\n" +
-                                "          européennes. Ce pack vient de matière 100%\n" +
-                                "          recyclés d'usine et de centrale. Contribuons\n" +
-                                "          ensemble à réduire l'effet de serre."
+                            text: "L'eau d'Amazonie est très riche en minéraux.Le" +
+                            "climat humide de cette région contribue" +
+                            "grandement à la prolifération des plantations. Tout" +
+                            "droit sortie de l'Amazone vos plantates pousseront" +
+                            "comme à l'état sauvage."
                         },
                         {
                             text: "Super pour faire pousser :\n" +
@@ -59,11 +64,11 @@ const data = [
                     localisation: localisation,
                     content: [
                         {
-                            text: "Ce coffret regroupe tous les ingrédients\n" +
-                                "          nécessaires pour faire pousser vos plantes\n" +
-                                "          européennes. Ce pack vient de matière 100%\n" +
-                                "          recyclés d'usine et de centrale. Contribuons\n" +
-                                "          ensemble à réduire l'effet de serre."
+                            text: "L'eau d'Amazonie est très riche en minéraux.Le" +
+                            "climat humide de cette région contribue" +
+                            "grandement à la prolifération des plantations. Tout" +
+                            "droit sortie de l'Amazone vos plantates pousseront" +
+                            "comme à l'état sauvage."
                         },
                         {
                             text: "Super pour faire pousser :\n" +
@@ -94,11 +99,11 @@ const data = [
                     localisation: localisation,
                     content: [
                         {
-                            text: "Ce coffret regroupe tous les ingrédients\n" +
-                                "          nécessaires pour faire pousser vos plantes\n" +
-                                "          européennes. Ce pack vient de matière 100%\n" +
-                                "          recyclés d'usine et de centrale. Contribuons\n" +
-                                "          ensemble à réduire l'effet de serre."
+                            text: "L'eau d'Amazonie est très riche en minéraux.Le" +
+                            "climat humide de cette région contribue" +
+                            "grandement à la prolifération des plantations. Tout" +
+                            "droit sortie de l'Amazone vos plantates pousseront" +
+                            "comme à l'état sauvage."
                         },
                         {
                             text: "Super pour faire pousser :\n" +
@@ -129,11 +134,11 @@ const data = [
                     localisation: localisation,
                     content: [
                         {
-                            text: "Ce coffret regroupe tous les ingrédients\n" +
-                                "          nécessaires pour faire pousser vos plantes\n" +
-                                "          européennes. Ce pack vient de matière 100%\n" +
-                                "          recyclés d'usine et de centrale. Contribuons\n" +
-                                "          ensemble à réduire l'effet de serre."
+                            text: "L'eau d'Amazonie est très riche en minéraux.Le" +
+                            "climat humide de cette région contribue" +
+                            "grandement à la prolifération des plantations. Tout" +
+                            "droit sortie de l'Amazone vos plantates pousseront" +
+                            "comme à l'état sauvage."
                         },
                         {
                             text: "Super pour faire pousser :\n" +
@@ -164,11 +169,11 @@ const data = [
                     localisation: localisation,
                     content: [
                         {
-                            text: "Ce coffret regroupe tous les ingrédients\n" +
-                                "          nécessaires pour faire pousser vos plantes\n" +
-                                "          européennes. Ce pack vient de matière 100%\n" +
-                                "          recyclés d'usine et de centrale. Contribuons\n" +
-                                "          ensemble à réduire l'effet de serre."
+                            text: "L'eau d'Amazonie est très riche en minéraux.Le" +
+                            "climat humide de cette région contribue" +
+                            "grandement à la prolifération des plantations. Tout" +
+                            "droit sortie de l'Amazone vos plantates pousseront" +
+                            "comme à l'état sauvage."
                         },
                         {
                             text: "Super pour faire pousser :\n" +
@@ -340,6 +345,186 @@ const data = [
                 alt: 'CO2 de yosemite',
                 card: {
                     title: "CO2 de yosemite",
+                    subtitle: "France",
+                    localisation: localisation,
+                    content: [
+                        {
+                            text: "Ce coffret regroupe tous les ingrédients\n" +
+                                "          nécessaires pour faire pousser vos plantes\n" +
+                                "          européennes. Ce pack vient de matière 100%\n" +
+                                "          recyclés d'usine et de centrale. Contribuons\n" +
+                                "          ensemble à réduire l'effet de serre."
+                        },
+                        {
+                            text: "Super pour faire pousser :\n" +
+                                "          Tomate, Avocat, Tomate, Avocat, Tomate, Avocat,\n" +
+                                "          Tomate, Avocat, Tomate, Avocat,..."
+                        }
+                    ],
+                    labels: [
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        }
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
+                },
+            }
+        ],
+    },
+    {
+        title: "fertilisant",
+        products: [
+            {
+                src: fertilizer_amazonie,
+                alt: 'fertilisant d\'Amazonie',
+                card: {
+                    title: "fertilisant d'Amazonie",
+                    subtitle: "France",
+                    localisation: localisation,
+                    content: [
+                        {
+                            text: "Ce coffret regroupe tous les ingrédients\n" +
+                                "          nécessaires pour faire pousser vos plantes\n" +
+                                "          européennes. Ce pack vient de matière 100%\n" +
+                                "          recyclés d'usine et de centrale. Contribuons\n" +
+                                "          ensemble à réduire l'effet de serre."
+                        },
+                        {
+                            text: "Super pour faire pousser :\n" +
+                                "          Tomate, Avocat, Tomate, Avocat, Tomate, Avocat,\n" +
+                                "          Tomate, Avocat, Tomate, Avocat,..."
+                        }
+                    ],
+                    labels: [
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        }
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
+                },
+            },
+            {
+                src: fertilizer_ecolo,
+                alt: 'fertilisant écologique',
+                card: {
+                    title: "fertilisant écologique",
+                    subtitle: "France",
+                    localisation: localisation,
+                    content: [
+                        {
+                            text: "Ce coffret regroupe tous les ingrédients\n" +
+                                "          nécessaires pour faire pousser vos plantes\n" +
+                                "          européennes. Ce pack vient de matière 100%\n" +
+                                "          recyclés d'usine et de centrale. Contribuons\n" +
+                                "          ensemble à réduire l'effet de serre."
+                        },
+                        {
+                            text: "Super pour faire pousser :\n" +
+                                "          Tomate, Avocat, Tomate, Avocat, Tomate, Avocat,\n" +
+                                "          Tomate, Avocat, Tomate, Avocat,..."
+                        }
+                    ],
+                    labels: [
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        }
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
+                },
+            },
+            {
+                src: fertilizer_Hymalaya,
+                alt: 'fertilisant d\'Hymalaya',
+                card: {
+                    title: "fertilisant d\'Hymalaya",
+                    subtitle: "France",
+                    localisation: localisation,
+                    content: [
+                        {
+                            text: "Ce coffret regroupe tous les ingrédients\n" +
+                                "          nécessaires pour faire pousser vos plantes\n" +
+                                "          européennes. Ce pack vient de matière 100%\n" +
+                                "          recyclés d'usine et de centrale. Contribuons\n" +
+                                "          ensemble à réduire l'effet de serre."
+                        },
+                        {
+                            text: "Super pour faire pousser :\n" +
+                                "          Tomate, Avocat, Tomate, Avocat, Tomate, Avocat,\n" +
+                                "          Tomate, Avocat, Tomate, Avocat,..."
+                        }
+                    ],
+                    labels: [
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        }
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
+                },
+            },
+            {
+                src: fertilizer_sahara,
+                alt: 'fertilisant du Sahara',
+                card: {
+                    title: "fertilisant du Sahara",
+                    subtitle: "France",
+                    localisation: localisation,
+                    content: [
+                        {
+                            text: "Ce coffret regroupe tous les ingrédients\n" +
+                                "          nécessaires pour faire pousser vos plantes\n" +
+                                "          européennes. Ce pack vient de matière 100%\n" +
+                                "          recyclés d'usine et de centrale. Contribuons\n" +
+                                "          ensemble à réduire l'effet de serre."
+                        },
+                        {
+                            text: "Super pour faire pousser :\n" +
+                                "          Tomate, Avocat, Tomate, Avocat, Tomate, Avocat,\n" +
+                                "          Tomate, Avocat, Tomate, Avocat,..."
+                        }
+                    ],
+                    labels: [
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        },
+                        {
+                            src: label
+                        }
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
+                },
+            },
+            {
+                src: fertilizer_yosemite,
+                alt: 'fertilisant de yosemite',
+                card: {
+                    title: "fertilisant de yosemite",
                     subtitle: "France",
                     localisation: localisation,
                     content: [
