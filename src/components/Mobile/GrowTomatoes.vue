@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import GrowSteps from './GrowSteps.vue';
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import {animate} from 'popmotion';
 
 const emit = defineEmits(['grow'])
@@ -8,20 +8,26 @@ const emit = defineEmits(['grow'])
 const ready = ref(false)
 const goButton = ref<HTMLElement>(null)
 const goPressed = ref(false)
-const isReady = async () => {
-  ready.value = true
+const scrollTo = (s) => {
   animate({
     from: window.scrollY,
-    to: document.body.scrollHeight - window.innerHeight,
+    to: s,
     onUpdate: v => {
       document.body.scrollTo({top: v})
     }
   })
 }
+const isReady = async () => {
+  ready.value = true
+  scrollTo(document.body.scrollHeight - window.innerHeight)
+}
 const startGrow = () => {
   goPressed.value = true
   emit('grow')
 }
+onMounted(() => {
+  scrollTo(0)
+})
 </script>
 <template>
   <div class="min-h-full w-full relative flex flex-col p-10 gap-4">

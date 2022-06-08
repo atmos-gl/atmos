@@ -3,6 +3,7 @@ import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import WindiCSS from 'vite-plugin-windicss'
 import voie from 'vite-plugin-voie'
+
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
@@ -13,6 +14,9 @@ export default defineConfig({
     server: {
         host: '0.0.0.0'
     },
+    // build: {
+    //   minify: false
+    // },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, "./src"),

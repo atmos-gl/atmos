@@ -10,7 +10,7 @@ import {
     Vector3,
     Vector4
 } from 'three';
-import {SetupPowerBlock} from '../SetupPowerBlock';
+import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 import useUiTip from '../three-composables/useUiTip';
 
 export default class UraniumFlask extends Bottle {
@@ -22,7 +22,7 @@ export default class UraniumFlask extends Bottle {
                     object,
                     targetObjectMesh,
                     scene,
-                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlock, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 }, clip: AnimationClip) {
+                }: { object: Object3D, targetObjectMesh: Mesh, scene: SetupPowerBlockScene, clamp?: Vector4, screwDirection?: number, initialPosition?: Vector2 }, clip: AnimationClip) {
         super({
             object,
             targetObjectMesh,
@@ -32,7 +32,8 @@ export default class UraniumFlask extends Bottle {
                 365, 450
             ),
             screwDirection: 1,
-            initialPosition: new Vector2(200, 400)
+            initialPosition: new Vector2(200, 400),
+            soundEffect: 'click'
         });
         clip.tracks.pop()
         this.clip = clip

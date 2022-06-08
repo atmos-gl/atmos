@@ -6,7 +6,7 @@ import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
 import Fertilizer from './Fertilizer';
 import {powerBlockLoader} from '../../composables/useLoader';
-import {SetupPowerBlock} from '../SetupPowerBlock';
+import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 import UraniumFlask from './UraniumFlask';
 import {animate} from 'popmotion';
 
@@ -14,7 +14,7 @@ export class Box {
     public model: Object3D
     public door: Door;
     public co2Bottle: Bottle;
-    private scene: SetupPowerBlock;
+    private scene: SetupPowerBlockScene;
     public waterBottle: Bottle;
     public tray: Tray;
     public fertilizer: Fertilizer;
@@ -22,7 +22,7 @@ export class Box {
     private nuclearLight: Mesh;
 
 
-    constructor(scene: SetupPowerBlock) {
+    constructor(scene: SetupPowerBlockScene) {
         this.scene = scene
         this.init()
     }
@@ -42,7 +42,7 @@ export class Box {
 
     setupChildren() {
 
-        const seeThroughGlass = glassMaterial(powerBlockLoader.loader, {
+        const seeThroughGlass = glassMaterial({
             opacity: 0.15,
             transparent: true,
             transmission: 0,
@@ -51,7 +51,7 @@ export class Box {
         })
         seeThroughGlass.thickness = 0
         const tube = this.model.getObjectByName('centrale').getObjectByName('Tube_1') as Mesh
-        tube.material =seeThroughGlass.clone()
+        tube.material = seeThroughGlass.clone()
 
 
         this.door = new Door(this.model.getObjectByName('porte'), this.scene)
@@ -61,7 +61,7 @@ export class Box {
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
 
         const {loader} = powerBlockLoader
-        ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial(loader)
+        ;(co2Bottle.getObjectByName('corp_c02') as Mesh).material = getMetalMaterial()
         ;(co2Bottle.getObjectByName('parvis_c02') as Mesh).material = goldMat
         this.co2Bottle = new Bottle(
             {
@@ -76,7 +76,7 @@ export class Box {
         )
 
         const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
-        waterBottle.material = glassMaterial(loader, {
+        waterBottle.material = glassMaterial({
             color: 'rgba(112,170,220,0.57)'
         })
         this.waterBottle = new Bottle({
@@ -88,7 +88,8 @@ export class Box {
                     -20, 90
                 ),
                 screwDirection: 1,
-            initialPosition: new Vector2(450, 50)
+                initialPosition: new Vector2(450, 50),
+                soundEffect: 'screw2'
             }
         )
 
@@ -106,7 +107,7 @@ export class Box {
         const flaskBody = uraniumFlask.getObjectByName('Capsule') as Mesh
         flaskBody.material = seeThroughGlass
         const uraniumClip = AnimationClip.findByName(this.model.animations, 'pilule')
-        this.uraniumFlask = new  UraniumFlask({
+        this.uraniumFlask = new UraniumFlask({
                 object: uraniumFlask,
                 targetObjectMesh: this.model.getObjectByName('Tube_5') as Mesh,
                 scene: this.scene,
@@ -114,7 +115,11 @@ export class Box {
             uraniumClip
         )
 
-        ;(this.model.getObjectByName('Pillule').children[0] as Mesh).material = new MeshPhongMaterial({color: '#0f0', emissive: '#040', reflectivity: 0.5})
+        ;(this.model.getObjectByName('Pillule').children[0] as Mesh).material = new MeshPhongMaterial({
+            color: '#0f0',
+            emissive: '#040',
+            reflectivity: 0.5
+        })
 
         this.nuclearLight = this.model.getObjectByName('nuclear_light') as Mesh
         this.nuclearLight.material = new MeshPhongMaterial({

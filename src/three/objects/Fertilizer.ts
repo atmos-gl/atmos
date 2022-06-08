@@ -16,6 +16,9 @@ import {animate, createExpoIn, reverseEasing} from 'popmotion';
 import {animateAsync, delay} from '../../utils';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
 import {powerBlockLoader} from '../../composables/useLoader';
+import useSoundEffect from '../../composables/useSoundEffect';
+
+const dropSound = useSoundEffect('drop')
 
 
 export default class Fertilizer implements DragAnimatable {
@@ -56,7 +59,7 @@ export default class Fertilizer implements DragAnimatable {
 
         const {loader} = powerBlockLoader
         this.bottleMesh = this.object.getObjectByName('Bouteille_ouverte') as Mesh
-        this.bottleMesh.material = getMetalMaterial(loader)
+        this.bottleMesh.material = getMetalMaterial()
         this.bottle = this.object.getObjectByName('Bouteille_fertilisant')
         //
         this.mixer = new AnimationMixer(this.object)
@@ -106,6 +109,11 @@ export default class Fertilizer implements DragAnimatable {
         const shouldEnd = this.animationProgress > (this.dragThreshold - 0.1)
         const to = shouldEnd ? this.animationBounds[1] : 0;
         const duration = shouldEnd ? 2500 : 500
+        if(shouldEnd) {
+            setTimeout(() => {
+            dropSound.play()
+            }, 500)
+        }
         await animateAsync({
             from: this.animationProgress,
             to,

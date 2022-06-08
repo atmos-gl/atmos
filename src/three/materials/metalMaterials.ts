@@ -1,5 +1,6 @@
 import {Mesh, MeshStandardMaterial} from 'three';
 import ResourcesLoader from '../ResourcesLoader';
+import {commonLoader} from '../../composables/useLoader';
 
 export const goldMat = new MeshStandardMaterial({
         color: '#ffcd00',
@@ -8,8 +9,8 @@ export const goldMat = new MeshStandardMaterial({
         transparent: true
     })
 
-export function getMetalMaterial(loader: ResourcesLoader, color = '#ffffff') {
-    const envMap = loader.getCubeTexture('envmap')
+export function getMetalMaterial(color = '#ffffff') {
+    const envMap = commonLoader.loader.getCubeTexture('envmap')
     return new MeshStandardMaterial({
         color: '#c9d1d9',
         roughness: 0.5,

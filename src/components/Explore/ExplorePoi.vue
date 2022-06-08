@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import {onMounted, reactive, ref} from 'vue';
-import {ExplorePoi} from '../../three/ExplorePoi';
+import {computed, ref} from 'vue';
+import {ExploreScene} from '../../three/ExploreScene';
 import Card from './Card.vue';
 import data from "../../data/poiData";
-import {animate} from "popmotion";
 import {animateAsync} from "../../utils";
 import useScene from "../../composables/useScene";
-import {powerBlockLoader} from '../../composables/useLoader';
+import useBypassMode from '../../composables/useBypassMode';
 
 const isOpen = ref(false)
 const poiDesc = ref('Atmos')
 const showBgText = ref(true)
+const exploreNumber = ref(0)
 
-const {scene: app, canvas} = useScene<ExplorePoi>(new ExplorePoi(poiDesc, showBgText))
-
+const {scene: app, canvas} = useScene<ExploreScene>(new ExploreScene(poiDesc, showBgText))
+const {isCameraMoving} = app
 const currentPoi = ref(null)
 app.onSelectPoi = index => {
+  exploreNumber.value++
   currentPoi.value = index
 }
 
@@ -26,8 +27,11 @@ const onClosePoi = () => {
 
 const block = ref<HTMLElement>(null)
 
-const processDiscover = () => {
+const leave = (close = true) => {
   // Enabled scroll
+  if (close) {
+    isOpen.value = false
+  }
   document.body.classList.remove('overflow-hidden')
 }
 
@@ -47,10 +51,11 @@ const processExplore = async () => {
 
   // Disable scroll
   document.body.classList.add('overflow-hidden')
-
-  // Preload upcoming resources
-  powerBlockLoader.load()
 }
+
+const showOverlay = computed(() => isOpen.value && currentPoi.value === null && !isCameraMoving.value)
+
+const {isBypass} = useBypassMode()
 </script>
 <template>
   <section ref="block" class="relative py-0 h-screen">
@@ -69,19 +74,37 @@ const processExplore = async () => {
       </div>
 
       <transition name="fade">
-        <RouterLink v-if="isOpen"
-                    to="/experience"
-                    class="absolute right-16 bottom-12 bg-bg border border-white text-lg py-4 px-14 rounded-full cursor-pointer"
-                    @click="processDiscover"
-        >Démarrer l'expérience
-        </RouterLink>
+        <div v-show="showOverlay" class="absolute top-0 left-0 w-full px-10 py-8 flex justify-between items-start">
+          <button class="hover:underline flex items-center" @click="leave()">
+            <i class="uil uil-angle-left text-xl mt-1"></i> Retour
+          </button>
+          <transition name="fade">
+            <RouterLink v-show="isBypass || exploreNumber"
+                        to="/experience"
+                        class="btn"
+                        @click="leave(false)"
+            >Démarrer l'expérience
+            </RouterLink>
+          </transition>
+        </div>
+      </transition>
+      <transition name="fade">
+        <div v-show="showOverlay"
+             class="absolute text-jade/70 text-sm left-1/2 transform -translate-x-1/2 max-w-156 text-center bottom-0 w-full py-6 px-12">
+          <div
+              v-if="!exploreNumber" class="flex items-center justify-center">Cliquez sur les <i
+              class="uil uil-plus text-white text-lg mx-1 mt-0.5"></i> pour décourir les secrets de la Serre !
+          </div>
+          <div v-else-if="exploreNumber >= 4">Quand vous avez terminé, continuez en cliquant sur "Démarrer
+            l'expérience"
+          </div>
+        </div>
       </transition>
     </div>
     <transition name="fade">
       <button
           v-if="!isOpen"
           class="absolute-center bg-bg border border-white text-2xl py-6 px-16 rounded-full cursor-pointer"
-          v-cursor.button
           @click="processExplore"
       >Découvrir la serre
       </button>

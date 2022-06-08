@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ExplorePoi from './Explore/ExplorePoi.vue';
 import {exploreLoader} from '../composables/useLoader';
-import {delay} from '../utils';
 import Loader from './Loader.vue';
 
 const {loading, progress} = exploreLoader

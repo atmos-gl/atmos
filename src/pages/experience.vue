@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SetupPowerBlock from '../components/Experience/SetupPowerBlock.vue';
-import {growLoader, powerBlockLoader} from '../composables/useLoader';
+import {combineLoaders, commonLoader, growLoader, powerBlockLoader} from '../composables/useLoader';
 import sequenceManager from '../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
 import {onBeforeUnmount, reactive, ref, watch} from 'vue';
@@ -9,11 +9,32 @@ import Link from '@paapi/client/dist/Link';
 import WhenOnMobile from '../components/Experience/WhenOnMobile.vue';
 import Introduction from '../components/Experience/Introduction.vue';
 import {TomatoColor, TomatoParams} from '../three/objects/Tomato';
+import Loader from '../components/Loader.vue';
+import SkipButton from '../components/SkipButton.vue';
+import {useEventBus} from '@vueuse/core';
+import useShareResult from '../composables/useShareResult';
 
-const {loading, percentageProgress} = powerBlockLoader
-if (!powerBlockLoader.ready.value) {
-  powerBlockLoader.load()
-}
+const {
+  loading: powerBlockLoading,
+  progress: powerBlockProgress,
+  load: loadPowerBlock
+} = commonLoader.ready.value ? powerBlockLoader : combineLoaders(commonLoader, powerBlockLoader)
+const {
+  loading: growLoading,
+  progress: growProgress
+} = growLoader
+
+const displayPowerBlockLoading = ref(powerBlockLoading.value)
+const bus = useEventBus('init-scene')
+watch(powerBlockLoading, isLoading => {
+  displayPowerBlockLoading.value = isLoading
+})
+bus.on(scene => {
+  if (scene === 'power-block') {
+    displayPowerBlockLoading.value = false
+  }
+})
+
 const {state, send} = useActor(sequenceManager)
 
 const tomatoParams: TomatoParams = reactive({
@@ -30,7 +51,7 @@ const onPair = (l: Link) => {
   const updateStateToLink = () => {
     link.value.emit('update:state', sequenceManager.state.value)
   }
-  sequenceManager.onTransition(() => {
+  sequenceManager.onTransition((state) => {
     updateStateToLink()
   })
   link.value.on('sequence:send', event => {
@@ -44,12 +65,12 @@ const onPair = (l: Link) => {
   updateStateToLink()
 }
 
-// Preload further resources
-watch(loading, newVal => {
-  if (!newVal) {
-    growLoader.load()
-  }
+const {shareId} = useShareResult()
+watch(shareId, newVal => {
+  link.value.emit('update:shareId', newVal)
 })
+
+loadPowerBlock()
 
 onBeforeUnmount(() => {
   sequenceManager.stop()
@@ -57,18 +78,31 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-  <div v-if="loading">Loading: {{ percentageProgress }}</div>
-  <div v-else class="experience-wrapper theme-gradient h-full">
+  <div class="experience-wrapper theme-gradient h-full">
     <Transition name="fade" mode="out-in">
       <Introduction v-if="state.value === 'introduction'" @next="send('next')"/>
       <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair"/>
-      <WhenOnMobile
+      <Transition
           v-else-if=" ['tomatoExplanation', 'customizeTomato', 'growReady','grow', 'collectReady', 'collect', 'collected', 'share'].includes(state.value)"
-          :step="state.value"
-          :tomato-params="tomatoParams"
-      />
-      <SetupPowerBlock v-else class="w-full h-full"/>
+          name="fade-quick" mode="out-in"
+      >
+        <Loader v-if="growLoading" :progress="growProgress"/>
+        <WhenOnMobile
+            v-else
+            :step="state.value"
+            :tomato-params="tomatoParams"
+        />
+      </Transition>
+      <div class="w-full h-full" v-else>
+        <SetupPowerBlock v-if="!powerBlockLoading" class="w-full h-full z-10"/>
+        <Transition name="fade-quick">
+          <div v-show="displayPowerBlockLoading" class="absolute w-full h-full inset-0 bg-imperial">
+            <Loader :progress="powerBlockProgress"/>
+          </div>
+        </Transition>
+      </div>
     </Transition>
+    <SkipButton/>
   </div>
 </template>
 <style scoped>

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
-import {Header} from "../../three/Header";
+import {HeaderScene} from "../../three/HeaderScene";
 import useScene from "../../composables/useScene";
 
-const {canvas } = useScene(new Header())
+const {canvas } = useScene(new HeaderScene())
 </script>
 <template>
   <canvas ref="canvas" class="h-full w-full"/>

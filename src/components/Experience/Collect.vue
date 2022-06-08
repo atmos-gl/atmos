@@ -1,24 +1,30 @@
 <script setup lang="ts">
-import {GrowScene} from '../../three/GrowScene';
 import useScene from '../../composables/useScene';
-import {TomatoColor, TomatoParams} from '../../three/objects/Tomato';
-import {reactive, toRefs} from 'vue';
+import {TomatoParams} from '../../three/objects/Tomato';
+import {defineEmits, toRefs} from 'vue';
 import {CollectScene} from '../../three/CollectScene';
 import sequenceManager from '../../managers/sequenceManager';
+import useShareResult from '../../composables/useShareResult';
 
 const props = defineProps<{
   tomatoParams: TomatoParams,
   progress: number
 }>()
+const emit = defineEmits(['load-scene'])
 
 const { progress } = toRefs(props)
 
 const { scene, canvas } = useScene<CollectScene>(new CollectScene(props.tomatoParams, progress))
 
+const {uploadSceneData} = useShareResult()
 // sequenceManager.send('tomatoOk')
 sequenceManager.onTransition(state => {
   if (state.value === 'collected') {
     scene.dropTomatoes()
+  }
+
+  if (state.value === 'share') {
+    uploadSceneData(scene.getSceneData())
   }
 })
 

@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@iconscout/unicons': ^4.0.1
   '@paapi/client': ^1.0.2
+  '@types/howler': ^2.2.7
   '@types/node': ^17.0.31
   '@types/three': ^0.139.0
   '@vitejs/plugin-vue': ^2.3.1
@@ -10,6 +11,7 @@ specifiers:
   '@vueuse/integrations': ^8.3.1
   '@xstate/vue': ^2.0.0
   cannon-es: ^0.19.0
+  howler: ^2.2.3
   lil-gui: ^0.16.1
   popmotion: ^11.0.3
   postprocessing: ^6.26.4
@@ -36,6 +38,7 @@ dependencies:
   '@vueuse/integrations': 8.3.1_qrcode@1.5.0+vue@3.2.33
   '@xstate/vue': 2.0.0_vue@3.2.33+xstate@4.31.0
   cannon-es: 0.19.0
+  howler: 2.2.3
   lil-gui: 0.16.1
   popmotion: 11.0.3
   postprocessing: 6.26.4_three@0.139.2
@@ -47,6 +50,7 @@ dependencies:
   xstate: 4.31.0
 
 devDependencies:
+  '@types/howler': 2.2.7
   '@types/node': 17.0.31
   '@vitejs/plugin-vue': 2.3.1_vite@2.9.6+vue@3.2.33
   sass: 1.51.0
@@ -144,6 +148,10 @@ packages:
   /@socket.io/component-emitter/3.1.0:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
     dev: false
+
+  /@types/howler/2.2.7:
+    resolution: {integrity: sha512-PEZldwZqJJw1PWRTpupyC7ajVTZA8aHd8nB/Y0n6zRZi5u8ktYDntsHj13ltEiBRqWwF06pASxBEvCTxniG8eA==}
+    dev: true
 
   /@types/node/17.0.31:
     resolution: {integrity: sha512-AR0x5HbXGqkEx9CadRH3EBYx/VkiUgZIhP4wvPn/+5KIsgpNoyFaRlVe0Zlx9gRtg8fA06a9tskE2MSN7TcG4Q==}
@@ -1278,6 +1286,10 @@ packages:
 
   /hey-listen/1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
+    dev: false
+
+  /howler/2.2.3:
+    resolution: {integrity: sha512-QM0FFkw0LRX1PR8pNzJVAY25JhIWvbKMBFM4gqk+QdV+kPXOhleWGCB6AiAF/goGjIHK2e/nIElplvjQwhr0jg==}
     dev: false
 
   /htmlparser2/6.1.0:

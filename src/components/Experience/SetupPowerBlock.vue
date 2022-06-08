@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
 import {Vector3} from 'three';
-import {SetupPowerBlock} from '../../three/SetupPowerBlock';
+import {SetupPowerBlockScene} from '../../three/SetupPowerBlockScene';
 import sequenceManager from '../../managers/sequenceManager';
 import {useActor} from '@xstate/vue';
 import StepTitle from './StepTitle.vue';
@@ -13,7 +13,7 @@ import localIcon from '../../assets/img/localIcon.svg'
 import useScene from '../../composables/useScene';
 import Helper from './Helper.vue';
 
-const {scene, canvas, appReady} = useScene(new SetupPowerBlock())
+const {scene, canvas, appReady} = useScene(new SetupPowerBlockScene())
 
 const {state} = useActor(sequenceManager)
 
@@ -25,6 +25,9 @@ const doorUi = ref(null)
 onMounted(() => {
   doorUi.value = scene.doorUi
 })
+
+// Fix vue compiler glitch
+const getVec3 = (x, y, z) => new Vector3(x, y, z)
 </script>
 <template>
   <main>
@@ -36,13 +39,14 @@ onMounted(() => {
     </div>
     <div v-if="appReady">
       <Transition name="fade">
-      <div v-if="doorUi.show" class="absolute top-0 left-0" :style="`transform: translate(${doorUi.position.x}px, ${doorUi.position.y}px)`">
-        <Helper class="absolute -left-10" :angle="160" />
-      </div>
+        <div v-if="doorUi.show" class="absolute top-0 left-0"
+             :style="`transform: translate(${doorUi.position.x}px, ${doorUi.position.y}px)`">
+          <Helper class="absolute -left-10" :angle="160"/>
+        </div>
       </Transition>
       <StepTip :tip="scene.co2BottleUi"
                :icon="co2Icon"
-              :helper-position="new Vector3(-35, 30, 190)"
+               :helper-position="getVec3(-35, 30, 190)"
       >
         <p><strong>Le C02</strong> est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé
           notamment
@@ -50,7 +54,7 @@ onMounted(() => {
       </StepTip>
       <StepTip :tip="scene.waterBottleUi"
                :icon="naturalIcon"
-               :helper-position="new Vector3(-35, 20, 160)"
+               :helper-position="getVec3(-35, 20, 160)"
       >
         <p>
           Les fruits et légumes sont <strong>composés d'environ 90% d'eau</strong>. Il est donc important de nourrir
@@ -60,7 +64,7 @@ onMounted(() => {
       </StepTip>
       <StepTip :tip="scene.trayUi"
                :icon="localIcon"
-               :helper-position="new Vector3(-60, 40, 10)"
+               :helper-position="getVec3(-60, 40, 10)"
       >
         <p>
           Le tiroir de fertilisant peut contenir jusqu'à 4 types de fertilisant différents. Cela permet à la serre de
@@ -69,7 +73,7 @@ onMounted(() => {
       </StepTip>
       <StepTip :tip="scene.fertilizerUi"
                :icon="localIcon"
-               :helper-position="new Vector3(-70, -60, 155)"
+               :helper-position="getVec3(-70, -60, 155)"
       >
         <p>
           Nos granules de fertilisant contiennent des produits utilisés pour la pousse des végétaux du monde entier. Vos
@@ -79,7 +83,7 @@ onMounted(() => {
       </StepTip>
       <StepTip :tip="scene.uraniumFlaskUi"
                :icon="localIcon"
-               :helper-position="new Vector3(-30, -70, 130)"
+               :helper-position="getVec3(-30, -70, 130)"
       >
         <p>
           ICI c'est l'uranium Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur cum dicta

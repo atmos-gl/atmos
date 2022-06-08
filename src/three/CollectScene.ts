@@ -10,7 +10,7 @@ import {
 } from 'three';
 import {BaseScene} from './BaseScene';
 import {Tomato, TomatoParams} from './objects/Tomato';
-import {growLoader} from '../composables/useLoader';
+import {commonLoader, growLoader} from '../composables/useLoader';
 import {World, Vec3, Body, Plane, Box, Sphere, ConvexPolyhedron, Material, ContactMaterial} from 'cannon-es'
 import CannonDebugRenderer, {createPolyHedron, createTrimesh} from './utils/physics';
 import {delay} from '../utils';
@@ -40,7 +40,7 @@ export class CollectScene extends BaseScene {
     private lastShownTomato = 0
 
     constructor(tomatoParams: TomatoParams, progress: Ref<number>) {
-        super();
+        super('collect');
         this.tomatoParams = tomatoParams
 
         watch(progress, p => this.updateProgress(p))
@@ -65,12 +65,11 @@ export class CollectScene extends BaseScene {
 
         // const cart = loader.getGLTF('cart').scene
         const cart = loader.getFBX('cart')
-        console.log(cart)
         cart.scale.setScalar(0.06)
         cart.position.y = -15
         this.scene.add(cart)
 
-        this.tomatoModel = loader.getFBX('tomato')
+        this.tomatoModel = commonLoader.loader.getFBX('tomato')
 
         // physics
         this.world = new World({
@@ -128,6 +127,27 @@ export class CollectScene extends BaseScene {
         ), new Vec3(0, 8, 0))
         this.createTomato(new Vector3(
             -4, 8, -7
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            4, -2, -3
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            3, -4, 4
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            0, 8, -2
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            4, 4, -2
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            2, 9, 5
+        ), new Vec3(0, 8, 0))
+        this.createTomato(new Vector3(
+            2, 9, -5
+        ), new Vec3(0, 15, 0))
+        this.createTomato(new Vector3(
+            4, 12, -3
         ), new Vec3(0, 8, 0))
     }
 
@@ -193,6 +213,9 @@ export class CollectScene extends BaseScene {
         const scale = this.tomatoScale
         tomato.mesh.scale.setScalar(scale)
         tomato.mesh.position.copy(position)
+        tomato.mesh.rotation.x = Math.random() * Math.PI * 2
+        tomato.mesh.rotation.y = Math.random() * Math.PI * 2
+        tomato.mesh.rotation.z = Math.random() * Math.PI * 2
         this.scene.add(tomato.mesh)
         const geometry = tomato.bodyWorldGeometry
         geometry.computeBoundingSphere()
@@ -221,6 +244,12 @@ export class CollectScene extends BaseScene {
         tomatoBody.position.x = tomato.mesh.position.x + spherePosition.x
         tomatoBody.position.y = tomato.mesh.position.y + spherePosition.y
         tomatoBody.position.z = tomato.mesh.position.z + spherePosition.z
+        tomatoBody.quaternion.set(
+            tomato.mesh.quaternion.x,
+            tomato.mesh.quaternion.y,
+            tomato.mesh.quaternion.z,
+            tomato.mesh.quaternion.w,
+        )
         this.world.addBody(tomatoBody)
         tomato.mesh.scale.setScalar(0)
         this.tomatoes.push({
@@ -280,6 +309,9 @@ export class CollectScene extends BaseScene {
             null, duration, ease)
         await delay(300)
         sequenceManager.send('dropped')
+        // Stop physics to avoid background bug
+        await delay(2000)
+        this.dropped = false
     }
 
     animate() {
@@ -298,6 +330,18 @@ export class CollectScene extends BaseScene {
         this.physicsDebug?.update()
 
         super.animate()
+    }
+
+    public getSceneData() {
+        return {
+            tomatoParams: this.tomatoParams,
+            tomatoes: this.tomatoes.map(t => {
+                return {
+                    position: t.tomato.mesh.position,
+                    quaternion: t.tomato.mesh.quaternion,
+                }
+            })
+        }
     }
 
     // Memory management
