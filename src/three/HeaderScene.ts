@@ -10,7 +10,7 @@ export class HeaderScene extends BaseScene {
     private greenHouse: Greenhouse;
 
     private defaultCamPos: Vector3 = new Vector3(0, 1.3, 15)
-    private defaultCamLookAt: Vector3 = new Vector3()
+    private defaultCamLookAt: Vector3 = new Vector3(0, 0, 0)
 
     private isHover = false
 

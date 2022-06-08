@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HeroHeader from './../components/HeroHeader.vue';
+import HeroHeader from '../components/Header/HeroHeader.vue';
 import Footer from './../components/Footer.vue';
 import Section from './../components/Hp/Section.vue';
 import Explore from './../components/Explore.vue';
