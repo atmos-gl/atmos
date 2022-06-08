@@ -1,10 +1,10 @@
 import {
     AnimationAction,
     AnimationClip,
-    AnimationMixer, Color,
+    AnimationMixer, BufferGeometry, Color,
     LoopOnce,
     MathUtils,
-    Mesh,
+    Mesh, MeshLambertMaterial,
     MeshPhongMaterial,
     Object3D,
     Vector2, Vector3
@@ -45,7 +45,7 @@ export default class Fertilizer implements DragAnimatable {
 
     public ui: UiTip;
     private bottle: Object3D;
-    private cap: Object3D;
+    private cap: Mesh<BufferGeometry, MeshLambertMaterial>;
     private capClosed: Vector3;
     private capOpened: Vector3;
 
@@ -77,9 +77,11 @@ export default class Fertilizer implements DragAnimatable {
         this.bottleMesh.material = glassmat
         this.bottle = this.object.getObjectByName('Bouteille_fertilisant')
 
-        this.cap = this.object.getObjectByName('Bouchon')
+        this.cap = this.object.getObjectByName('Bouchon') as Mesh<BufferGeometry, MeshLambertMaterial>
+        this.cap.material.transparent = true
         this.capClosed = this.cap.position.clone()
         this.capOpened = this.cap.position.clone()
+        this.capOpened.x += 20
         this.capOpened.y += 50
 
         const granuleMat = new MeshPhongMaterial({
@@ -88,6 +90,7 @@ export default class Fertilizer implements DragAnimatable {
         this.object.getObjectByName('granule_').traverse((object: Mesh) => {
             object.material = granuleMat
         })
+        this.cap.rotation.order = 'XZY'
 
         //
         this.mixer = new AnimationMixer(this.object)
@@ -126,28 +129,36 @@ export default class Fertilizer implements DragAnimatable {
 
     public openCap() {
         this.animCap({
+            x: this.capOpened.x,
             y: this.capOpened.y,
-            rotation: Math.PI * 4
+            rY: Math.PI * 4,
+            rZ: -Math.PI / 4,
         })
     }
 
     public closeCap() {
         this.animCap({
+            x: this.capClosed.x,
             y: this.capClosed.y,
-            rotation: 0
+            rY: 0,
+            rZ: 0,
         })
     }
     public animCap(to) {
         animate({
             from: {
+                x: this.cap.position.x,
                 y: this.cap.position.y,
-                rotation: this.cap.rotation.y
+                rY: this.cap.rotation.y,
+                rZ: this.cap.rotation.z
             },
             to,
             duration: 500,
             onUpdate: (v) => {
+                this.cap.position.x = v.x
                 this.cap.position.y = v.y
-                this.cap.rotation.y = v.rotation
+                this.cap.rotation.y = v.rY
+                this.cap.rotation.z = v.rZ
             }
         })
     }
@@ -214,6 +225,14 @@ export default class Fertilizer implements DragAnimatable {
 
     async hide() {
         this.object.getObjectByName('granule_').visible = false
+        animate({
+            from: 1,
+            to: 0,
+            onUpdate: v => {
+                this.cap.material.opacity = v
+            },
+            duration: 600
+        })
         await animateAsync({
             from: this.bottle.position.x,
             to: this.bottle.position.x + 600,

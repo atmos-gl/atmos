@@ -26,9 +26,9 @@ const {
 
 const displayPowerBlockLoading = ref(powerBlockLoading.value)
 const bus = useEventBus('init-scene')
-watch(powerBlockLoading, isLoading => {
-  displayPowerBlockLoading.value = isLoading
-})
+// watch(powerBlockLoading, isLoading => {
+//   displayPowerBlockLoading.value = isLoading
+// })
 bus.on(scene => {
   if (scene === 'power-block') {
     displayPowerBlockLoading.value = false
@@ -80,7 +80,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="experience-wrapper theme-gradient h-full">
     <Transition name="fade" mode="out-in">
-      <Introduction v-if="state.value === 'introduction'" @next="send('next')"/>
+      <Introduction v-if="state.value === 'introduction'" class="z-20 theme-gradient" @next="send('next')"/>
       <PairPhone v-else-if="state.value === 'leaveWork'" @pair="onPair"/>
       <Transition
           v-else-if=" ['tomatoExplanation', 'customizeTomato', 'growReady','grow', 'collectReady', 'collect', 'collected', 'share'].includes(state.value)"
@@ -95,13 +95,13 @@ onBeforeUnmount(() => {
       </Transition>
       <div class="w-full h-full" v-else>
         <SetupPowerBlock v-if="!powerBlockLoading" class="w-full h-full z-10"/>
-        <Transition name="fade-quick">
-          <div v-show="displayPowerBlockLoading" class="absolute w-full h-full inset-0 bg-imperial">
-            <Loader :progress="powerBlockProgress"/>
-          </div>
-        </Transition>
       </div>
     </Transition>
+      <Transition name="fade-quick">
+        <div v-show="displayPowerBlockLoading" class="absolute w-full h-full inset-0 bg-imperial z-10">
+          <Loader :progress="powerBlockProgress"/>
+        </div>
+      </Transition>
     <SkipButton/>
   </div>
 </template>
