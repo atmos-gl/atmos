@@ -28,6 +28,8 @@ interface DragHooks {
     onDragStart?: () => any|void
     onDrag?: () => any|void
     onDragEnd?: () => any|void
+    onHover?: () => any|void
+    onHoverOut?: () => any|void
 }
 
 export default function useDragAnimation(
@@ -44,6 +46,8 @@ export default function useDragAnimation(
     let startPoint: Vector2 = new Vector2()
 
     const raycaster = new Raycaster()
+
+    let isHovering = false
 
     const updatePointer = (e) => {
         pointer.x = (e.clientX / dragEventsSource.clientWidth) * 2 - 1;
@@ -91,7 +95,15 @@ export default function useDragAnimation(
             const intersects = intersect(e)
             if (intersects.length) {
                 dragEventsSource.style.cursor = 'grab'
+                if (!isHovering) {
+                    isHovering = true
+                    hooks.onHover?.()
+                }
             } else {
+                if (isHovering) {
+                    isHovering = false
+                    hooks.onHoverOut?.()
+                }
                 dragEventsSource.style.cursor = 'auto'
             }
         }

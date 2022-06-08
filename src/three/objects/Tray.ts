@@ -4,6 +4,7 @@ import {DragControls} from 'three/examples/jsm/controls/DragControls';
 import CustomDragControls from '../custom/CustomDragControls';
 import {animateAsync, delay} from '../../utils';
 import useUiTip, {UiTip} from '../three-composables/useUiTip';
+import {playSoundEffect} from '../../composables/useSoundEffect';
 
 export default class Tray {
     public object: Object3D;
@@ -82,12 +83,16 @@ export default class Tray {
         if (shouldOpen) {
             to = this.openX
         }
+        setTimeout(() => {
+            playSoundEffect('clacDoor', 0.4)
+        },400)
         await animateAsync({
             from: position.x,
             to,
             onUpdate: v => {
                 position.x = v
-            }
+            },
+            duration: 500
         })
         if (shouldOpen) {
             this.onOpen?.()

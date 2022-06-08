@@ -132,7 +132,7 @@ onBeforeUnmount(() => (
           </button>
         </div>
       </div>
-      <Share v-else-if="['share'].includes(step.toString())" :scene="collectScene" />
+      <Share v-else-if="['share'].includes(step.toString())" />
     </Transition>
   </div>
 </template>
