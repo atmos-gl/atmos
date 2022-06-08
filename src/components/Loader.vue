@@ -26,7 +26,7 @@ onBeforeUnmount(() => pause)
   <div class="h-full w-full flex flex-col items-center justify-center relative">
     <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-transparent to-jade breathe"></div>
     <div class="progress relative">
-      <div class="spin">
+      <div>
         <svg :height="size" :width="size">
           <circle
               :cx="size / 2"
@@ -39,14 +39,24 @@ onBeforeUnmount(() => pause)
                   :cx="size / 2"
                   :cy="size / 2"
                   :r="radius"
-                  stroke-width="8"
+                  stroke-width="3"
                   stroke-dasharray="565.48"
                   :stroke-dashoffset="animatedPct"
                   stroke-linecap="round"
           />
         </svg>
       </div>
-      <div class="absolute inset-0 w-full h-full center-content font-title text-xl">Chargement...</div>
+      <div class="absolute inset-0 w-full h-full center-content font-title text-xl">
+
+        <video class="w-full" autoplay loop muted playsinline disablePictureInPicture>
+          <source
+              src="/assets/video/loader-hevc-safari.mp4"
+              type='video/mp4; codecs="hvc1"'>
+          <source
+              src="/assets/video/loader-vp9-chrome.webm"
+              type="video/webm">
+        </video>
+      </div>
     </div>
   </div>
 </template>
