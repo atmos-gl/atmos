@@ -46,7 +46,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             },
             {
@@ -80,7 +81,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             },
             {
@@ -114,7 +116,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             },
             {
@@ -148,7 +151,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             },
             {
@@ -182,7 +186,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             }
         ],
@@ -221,7 +226,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             },
             {
@@ -255,7 +261,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             },
             {
@@ -289,7 +296,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             },
             {
@@ -323,7 +331,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             },
             {
@@ -357,7 +366,8 @@ const data = [
                         {
                             src: label
                         }
-                    ]
+                    ],
+                    delivery: "Livraison en 2 à 4 jours ouvrés"
                 },
             }
         ],
