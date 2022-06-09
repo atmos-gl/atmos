@@ -4,6 +4,19 @@ import ScrollingText from './ScrollingText.vue';
 import Header from "./Header.vue";
 import bottlesImage from '../../assets/img/bottles-header.png'
 
+import recyclingIcon from '../../assets/img/labels/label_recyclable.svg'
+import naturalIcon from '../../assets/img/labels/label_natural.svg'
+import localIcon from '../../assets/img/labels/label_local.svg';
+import fairIcon from '../../assets/img/labels/label_equitable.svg';
+import veganIcon from '../../assets/img/labels/label_vegan.svg';
+
+const labels = {
+  naturalIcon,
+  recyclingIcon,
+  localIcon,
+  veganIcon,
+  fairIcon,
+}
 const scrollingLines = 4
 </script>
 
@@ -24,6 +37,14 @@ const scrollingLines = 4
         <h3 class="my-6 text-4xl">La serre qui réduit l'effet de serre</h3>
         <p>Atmos, votre serre connectée vous facilite le quotidien en adoptant une démarche écologgique et durable.
           Manger sain et varié devient une priorité.</p>
+        <div class="flex items-center w-full gap-4 mt-8">
+          <img v-for="label in labels"
+               :src="label"
+               :key="label"
+               alt="label"
+               class="w-1/6 opacity-80"
+          >
+        </div>
       </div>
     </div>
     <Header class="absolute top-0 left-0 w-full"/>
