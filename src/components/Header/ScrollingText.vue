@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onUnmounted, ref} from "vue";
 import {animate, linear} from "popmotion";
 
 const props = defineProps<{
@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 const { startOffset, duration, direction } = props
 const translate = ref(startOffset)
-animate({
+const animation = animate({
   from: startOffset,
   to: startOffset - 25 * direction,
   duration: duration * 1000,
@@ -18,6 +18,9 @@ animate({
   },
   ease: linear,
   repeat: Infinity
+})
+onUnmounted(() => {
+  animation.stop()
 })
 </script>
 
