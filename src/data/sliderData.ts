@@ -1,4 +1,8 @@
-import localisation from '../assets/img/labels/label_local.svg'
+import planet_amazonie from '../assets/img/shop/planets/amazonie.png'
+import planet_himalaya from '../assets/img/shop/planets/himalaya.png'
+import planet_recycle from '../assets/img/shop/planets/recycle.png'
+import planet_sahara from '../assets/img/shop/planets/sahara.png'
+import planet_yosemite from '../assets/img/shop/planets/yosemite.png'
 import label_equitable from '../assets/img/labels/label_equitable.svg'
 import label_local from '../assets/img/labels/label_local.svg'
 import label_natural from '../assets/img/labels/label_natural.svg'
@@ -30,7 +34,7 @@ const data = [
                 card: {
                     title: "Eau d'Amazonie",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_amazonie,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -62,7 +66,7 @@ const data = [
                 card: {
                     title: "Eau écologique",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_recycle,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -94,7 +98,7 @@ const data = [
                 card: {
                     title: "Eau d\'Himalaya",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_himalaya,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -126,7 +130,7 @@ const data = [
                 card: {
                     title: "Eau du Sahara",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_sahara,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -158,7 +162,7 @@ const data = [
                 card: {
                     title: "Eau de yosemite",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_yosemite,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -195,7 +199,7 @@ const data = [
                 card: {
                     title: "CO2 d'Amazonie",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_amazonie,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -227,7 +231,7 @@ const data = [
                 card: {
                     title: "CO2 écologique",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_recycle,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -259,7 +263,7 @@ const data = [
                 card: {
                     title: "CO2 d\'Himalaya",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_himalaya,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -291,7 +295,7 @@ const data = [
                 card: {
                     title: "CO2 du Sahara",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_sahara,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -323,7 +327,7 @@ const data = [
                 card: {
                     title: "CO2 de yosemite",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_yosemite,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -360,7 +364,7 @@ const data = [
                 card: {
                     title: "fertilisant d'Amazonie",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_amazonie,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -392,7 +396,7 @@ const data = [
                 card: {
                     title: "fertilisant écologique",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_recycle,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -424,7 +428,7 @@ const data = [
                 card: {
                     title: "fertilisant d\'Himalaya",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_himalaya,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -456,7 +460,7 @@ const data = [
                 card: {
                     title: "fertilisant du Sahara",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_sahara,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -488,7 +492,7 @@ const data = [
                 card: {
                     title: "fertilisant de yosemite",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_yosemite,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
