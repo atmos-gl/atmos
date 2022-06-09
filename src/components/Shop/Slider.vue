@@ -3,12 +3,13 @@ import sliderData from '../../data/sliderData'
 import {ref, watch} from "vue";
 
 const activeRangeIndex = ref(0)
-const activeCardIndex = ref(2)
+const activeCardIndex = ref(Math.floor(sliderData[activeRangeIndex.value].products.length / 2))
 const transitionName = ref('card-fade')
 const sliderTransitionName = ref('slider-fade')
 
 watch(activeRangeIndex, (oldVal, newVal) => {
   sliderTransitionName.value = oldVal < newVal ? 'slider-fade-reverse' : 'slider-fade'
+  activeCardIndex.value = Math.floor(sliderData[activeRangeIndex.value].products.length / 2)
 })
 
 watch(activeCardIndex, (oldVal, newVal) => {
@@ -55,7 +56,7 @@ const getCustomClass = (index) => {
 <template>
   <ul class="font-title flex text-xl font-bold justify-center pb-10">
     <li v-for="(range, index) in sliderData"
-        @click="activeRangeIndex = index; activeCardIndex = 2"
+        @click="activeRangeIndex = index;"
         class="mx-4"
         :class="activeRangeIndex === index ? 'opacity-100' : 'opacity-50 cursor-pointer'">{{ range.title }}</li>
   </ul>
@@ -72,7 +73,7 @@ const getCustomClass = (index) => {
             </div>
           </div>
 
-          <div class="flex items-center justify-end transform -translate-x-19/100">
+          <div v-show="sliderData[activeRangeIndex].products.length > 1" class="flex items-center justify-end transform -translate-x-19/100">
             <button @click="prev" class="mr-4 cursor-pointer text-4xl mt-1" title="Précédent"><i class="uil uil-angle-left"></i></button>
             <span v-for="(dot, index) in sliderData[activeRangeIndex].products"
                   class="h-4 w-4 rounded-full mr-2"
