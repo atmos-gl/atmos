@@ -112,9 +112,7 @@ export class GrowScene extends BaseScene {
         ty: 0.5,
         tz: 0,
     }, null, 5000)
-        console.time('tmp')
         await this.greenhouse.grow()
-        console.timeEnd('tmp')
         this.greenhouse.openDoor()
         await this.camera.move({
             x: 0,

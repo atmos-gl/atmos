@@ -48,6 +48,7 @@ export class HeaderScene extends BaseScene {
         const raycaster = new Raycaster()
         const pointer = new Vector2()
         this.canvas.addEventListener('mousemove', (e: MouseEvent) => {
+            if (!this.canvas) return
             const rect = this.canvas.getBoundingClientRect()
             const rX = e.x - rect.x
             const rY = e.y - rect.y
