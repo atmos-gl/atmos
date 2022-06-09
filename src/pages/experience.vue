@@ -70,7 +70,7 @@ const {shareId} = useShareResult()
 watch(shareId, newVal => {
   setTimeout( () => {
     link.value.emit('update:shareId', newVal)
-  }, 1000)
+  }, 2000)
 })
 
 loadPowerBlock()
