@@ -1,5 +1,8 @@
 <script setup>
-import tomatoIcon from '../../assets/img/tomatoIcon.png'
+import tomatoIcon from '../../assets/img/vegetables/tomatoIcon.png'
+import kiwiIcon from '../../assets/img/vegetables/kiwiIcon.png'
+import pepperIcon from '../../assets/img/vegetables/pepperIcon.png'
+import potatoIcon from '../../assets/img/vegetables/potatoIcon.png'
 
 const plants = [
   {
@@ -8,13 +11,18 @@ const plants = [
     disabled: false
   },
   {
-    name: 'Avocat',
-    icon: tomatoIcon,
+    name: 'Kiwi',
+    icon: kiwiIcon,
     disabled: true
   },
   {
-    name: 'Carotte',
-    icon: tomatoIcon,
+    name: 'Piment',
+    icon: pepperIcon,
+    disabled: true
+  },
+  {
+    name: 'Patate douce',
+    icon: potatoIcon,
     disabled: true
   },
 ]
@@ -33,7 +41,10 @@ const plants = [
           :key="plant.name"
           class="block
           flex items-center font-light text-jade border border-white bg-black/10 rounded-lg disabled:(opacity-50)
-          h-16 px-4 gap-3"
+          h-16 px-4 gap-3
+          transition duration-200
+active:(bg-jade/20)
+"
           :disabled="plant.disabled"
           @click="$emit('next')">
         <img :src="plant.icon"
