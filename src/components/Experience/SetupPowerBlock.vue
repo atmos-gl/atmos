@@ -87,7 +87,7 @@ const getVec3 = (x, y, z) => new Vector3(x, y, z)
                :helper-position="getVec3(-30, -70, 130)"
       >
         <p>
-          Cette pilule d'uranium est le secret de notre produit. Non seulement cela permet d'économiser sur votre facture d'électricité, mais cela permet également à votre plantation d'augmenter sa vitesse de production jusqu'à 100x plus rapide.
+          Cette pilule d'uranium recyclé est le secret de notre produit. Non seulement cela permet d'économiser sur votre facture d'électricité, mais cela permet également à votre plantation d'augmenter sa vitesse de production jusqu'à 100x plus rapide.
         </p>
       </StepTip>
     </div>
