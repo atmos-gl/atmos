@@ -52,6 +52,18 @@ const getCustomClass = (index) => {
   return classes
 }
 
+const copyCode = () => {
+  navigator.permissions.query({name: "clipboard-write"}).then(result => {
+    if (result.state == "granted" || result.state == "prompt") {
+      navigator.clipboard.writeText('URANIUM4LIFE').then(function() {
+        /* le presse-papier est correctement paramétré */
+      }, function() {
+        /* l'écriture dans le presse-papier a échoué */
+      });
+    }
+  });
+}
+
 </script>
 <template>
   <main class="h-screen flex flex-col overflow-hidden theme-gradient--reversed">
@@ -127,7 +139,7 @@ const getCustomClass = (index) => {
 
             <div class="mb-6 w-50">
               <p class="mt-8">sur la serre, pour 3 packs de produits achetés avec le code:</p>
-              <p class="bg-pearl font-bold uppercase rounded-full py-2 px-6 text-xl mt-3 mb-2 text-center">uranium4life</p>
+              <p class="bg-pearl font-bold uppercase rounded-full py-2 px-6 text-xl mt-3 mb-2 text-center items-center flex gap-2"><span>uranium4life</span> <button @click="copyCode"><i class="uil uil-copy text-xl"></i></button></p>
               <p class="text-xs text-center">du 08/06/22 au 20/06/22</p>
             </div>
           </div>

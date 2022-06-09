@@ -248,5 +248,6 @@ export class ExploreScene extends BaseScene {
     // Memory management
     destroy() {
         super.destroy()
+        this.labelRenderer.domElement.remove()
     }
 }

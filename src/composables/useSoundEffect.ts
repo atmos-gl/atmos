@@ -51,12 +51,15 @@ export function useDoorSoundEffect() {
     return { play, stop, setIntensity }
 }
 
+let music
+let musicCanceled = false
 export function initMusic() {
-    const music = new Howl({
+    music = new Howl({
         src: ['/assets/audio/bg.mp3'],
         loop: true
     })
     const startMusic = () => {
+        if (musicCanceled) return
         music.fade(0, 0.15, 5000)
         music.play()
         document.body.removeEventListener('scroll', startMusic)
@@ -64,4 +67,9 @@ export function initMusic() {
     }
     document.body.addEventListener('scroll', startMusic, {once: true})
     document.body.addEventListener('click', startMusic, {once: true})
+}
+
+export function cancelMusic() {
+    musicCanceled = true
+    music?.stop?.()
 }

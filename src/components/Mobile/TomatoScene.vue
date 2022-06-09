@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
 import {TomatoScene} from '../../three/custom/TomatoScene';
 import {TomatoParams} from '../../three/objects/Tomato';
+import useScene from '../../composables/useScene';
 
 const props = defineProps<{
   tomato: TomatoParams
@@ -9,15 +9,10 @@ const props = defineProps<{
 
 const { tomato } = props
 
-const canvas = ref(null);
-const app = new TomatoScene(tomato)
-onMounted(() => {
-  app.init(canvas.value)
-  app.run()
-})
+const { canvas} = useScene(new TomatoScene(tomato))
 </script>
-<template>
-  <canvas id="scene" ref="canvas"></canvas>
+<template>Œ
+  <canvas ref="canvas"></canvas>
 </template>
 
 <style>

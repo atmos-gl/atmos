@@ -68,7 +68,9 @@ const onPair = (l: Link) => {
 
 const {shareId} = useShareResult()
 watch(shareId, newVal => {
-  link.value.emit('update:shareId', newVal)
+  setTimeout( () => {
+    link.value.emit('update:shareId', newVal)
+  }, 1000)
 })
 
 loadPowerBlock()
