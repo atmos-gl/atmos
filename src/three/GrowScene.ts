@@ -128,6 +128,7 @@ export class GrowScene extends BaseScene {
     }
 
     animate() {
+        if (this.disposed) return
         // this.mixer.update(this.clock.getDelta())
         const deltaTime = this.clock.getDelta()
         if (this.tomato.mesh.visible) {
