@@ -10,7 +10,6 @@ type DoorToOpen = 'left' | 'right' | 'both';
 
 export class Greenhouse {
     public object: Object3D
-    private scene: BaseScene;
     private leftDoor: Object3D;
     private rightDoor: Object3D;
 
@@ -71,6 +70,12 @@ export class Greenhouse {
         this.plant2.object.position.set(-90, 70, 0)
         this.plant2.object.rotation.y = 4
         this.object.add(this.plant2.object)
+
+        const speaker1 = this.object.getObjectByName('enceinte_1')
+        speaker1.rotation.z += 0.1
+        const speaker2 = this.object.getObjectByName('enceinte_2')
+        speaker2.rotation.y -= 0.02
+        console.log(speaker2)
     }
 
     get mesh() {
