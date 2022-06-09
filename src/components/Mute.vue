@@ -47,17 +47,11 @@ useRafFn(animate)
 </template>
 <style scoped>
 button {
-  animation: show 0.5s both 3s;
   opacity: 0.5;
   transition: all 0.5s;
 }
 button:hover {
   opacity: 1;
-}
-@keyframes show {
-  from {
-    opacity: 0;
-  }
 }
 svg {
   @apply w-8 h-8;

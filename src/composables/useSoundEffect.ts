@@ -1,5 +1,5 @@
 import {Howl} from 'howler';
-import {computed, ref} from 'vue';
+import {computed, onUnmounted, ref} from 'vue';
 
 let sound
 let doorSound

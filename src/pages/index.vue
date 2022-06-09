@@ -8,6 +8,7 @@ import Loader from '../components/Loader.vue';
 import {ref} from 'vue';
 import {combineLoaders, commonLoader, exploreLoader} from '../composables/useLoader';
 import {useEventBus} from '@vueuse/core';
+import Mute from '../components/Mute.vue';
 
 const {loading, progress, load} = combineLoaders(commonLoader, exploreLoader)
 const displayLoading = ref(loading.value)
@@ -30,6 +31,7 @@ bus.on(scene => {
       <Explore/>
       <Footer/>
     </main>
+    <Mute class="fixed right-6 bottom-6" />
     <Transition name="fade-delay">
       <div v-show="displayLoading" class=" absolute inset-0 h-full w-full theme-gradient">
         <Loader :progress="progress"/>

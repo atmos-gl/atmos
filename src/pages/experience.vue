@@ -14,6 +14,7 @@ import SkipButton from '../components/SkipButton.vue';
 import {useEventBus} from '@vueuse/core';
 import useShareResult from '../composables/useShareResult';
 import Header from '../components/Header/Header.vue';
+import Mute from '../components/Mute.vue';
 
 const {
   loading: powerBlockLoading,
@@ -109,6 +110,7 @@ onBeforeUnmount(() => {
       <Header v-if="['share'].includes(state.value)" class="absolute top-0 left-0 w-full"/>
     </Transition>
     <SkipButton/>
+    <Mute class="fixed right-6 bottom-6 z-500" />
   </div>
 </template>
 <style scoped>
