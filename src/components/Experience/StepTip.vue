@@ -50,7 +50,7 @@ const {tip, icon, helperPosition} = toRefs(props)
 }
 
 .tip {
-  @apply absolute -top-20 left-20 p-4 rounded-xl border border-white text-jade w-72 -xl:w-64 font-core;
+  @apply absolute -top-20 left-20 p-4 rounded-xl border border-white text-jade w-80 -xl:w-64 font-core;
   backdrop-filter: blur(3px);
   background-color: #ffffff33;
 }

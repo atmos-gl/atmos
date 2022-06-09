@@ -86,9 +86,7 @@ const getVec3 = (x, y, z) => new Vector3(x, y, z)
                :helper-position="getVec3(-30, -70, 130)"
       >
         <p>
-          ICI c'est l'uranium Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur cum dicta
-          dignissimos ea eum fuga, fugit inventore labore, molestias mollitia nesciunt nisi possimus provident
-          repellendus sapiente tempore temporibus totam!
+          Cette pilule d'uranium est le secret de notre produit. Non seulement cela permet d'économiser sur votre facture d'électricité, mais cela permet également à votre plantation d'augmenter sa vitesse de production jusqu'à 100x plus rapide.
         </p>
       </StepTip>
     </div>
