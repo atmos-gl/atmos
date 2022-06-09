@@ -11,9 +11,9 @@ const videoUrl = {
 </script>
 
 <template>
-  <section class="o-container flex justify-between relative flex-col my-30" :class="data.isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'">
-    <div class="h-full flex-grow snake w-full md:w-3/4 lg:w-1/2">
-      <video width="600" height="100%" autoplay loop muted playsinline disablePictureInPicture>
+  <section class="o-container flex justify-between relative flex-col my-30 gap-16" :class="data.isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'">
+    <div class="h-full snake w-1/2">
+      <video width="700" height="100%" autoplay loop muted playsinline disablePictureInPicture>
         <source
             :src="videoUrl.safari"
             type='video/mp4; codecs="hvc1"'>
@@ -23,8 +23,8 @@ const videoUrl = {
       </video>
     </div>
 
-    <div class="my-35 w-full md:w-3/4 lg:w-1/2" :class="data.isReversed ? 'lg:text-left' : 'lg:text-right'">
-      <h2 class="font-title text-5xl mb-12 font-bold text-jade" :class="data.isReversed ? 'lg:mr-28' : 'lg:ml-28'">{{ data.title }}</h2>
+    <div class="my-35 flex-grow w-1/2" >
+      <h2 class="font-title text-5xl mb-12 font-bold text-jade" >{{ data.title }}</h2>
       <TextElement v-for="text in data.texts" :text="text"/>
     </div>
   </section>

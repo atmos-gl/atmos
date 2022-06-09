@@ -3,10 +3,9 @@ const props = defineProps(['text'])
 </script>
 
 <template>
-  <ul v-if="Array.isArray(text)" class="mb-4">
-    <li v-for="item in text" class="custom-dot">{{item}}</li>
-  </ul>
-  <p v-else class="font-light text-lg leading-7 mb-4">{{ text }}</p>
+  <p class="font-light text-jade text-xl leading-7 mb-2"
+  v-html="text"
+  ></p>
 </template>
 
 <style scoped lang="scss">
