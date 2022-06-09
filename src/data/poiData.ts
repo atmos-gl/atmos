@@ -60,7 +60,7 @@ const data = [
         title: "Centrale",
         content: [
             {
-                text: "La centrale est le coeur de votre plantation. Ce boitier permet de d'alimenter plsueirs serre en même temps. Plus besoin de prendre soin de vos plantation une à une la centrale s'occupe de tout."
+                text: "La centrale est le coeur de votre plantation. Ce boitier permet de d'alimenter plusieurs serres en même temps. Plus besoin de prendre soin de vos plantations une à une, la centrale s'occupe de tout."
             },
             {
                 text: "Nous avons travaillé pour vous fournir un élément esthétique qui trouvera parfaitement sa place dans votre salon."
