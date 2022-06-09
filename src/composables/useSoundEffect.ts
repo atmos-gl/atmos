@@ -1,4 +1,5 @@
 import {Howl} from 'howler';
+import {computed, ref} from 'vue';
 
 let sound
 let doorSound
@@ -51,22 +52,46 @@ export function useDoorSoundEffect() {
     return { play, stop, setIntensity }
 }
 
-let music
 let musicCanceled = false
+const music = new Howl({
+    src: ['/assets/audio/bg.mp3'],
+    loop: true
+})
+const musicVolume = 0.1
 export function initMusic() {
-    music = new Howl({
-        src: ['/assets/audio/bg.mp3'],
-        loop: true
-    })
     const startMusic = () => {
         if (musicCanceled) return
-        music.fade(0, 0.15, 5000)
         music.play()
+        music.fade(0, musicVolume, 5000)
         document.body.removeEventListener('scroll', startMusic)
         document.body.removeEventListener('click', startMusic)
     }
     document.body.addEventListener('scroll', startMusic, {once: true})
     document.body.addEventListener('click', startMusic, {once: true})
+}
+
+const musicFadeDuration = 300
+export function useMusicPlay() {
+    const _playing = ref(music.playing())
+    const playing = computed({
+        get: () => {
+            return _playing.value
+        },
+        set: (val) => {
+            if (val) {
+                music.play()
+                music.fade(0, musicVolume, musicFadeDuration)
+            } else {
+                music.fade(musicVolume, 0, musicFadeDuration)
+                setTimeout(() => music.pause(), musicFadeDuration)
+            }
+        }
+    })
+    music.on('play', () => _playing.value = true)
+    music.on('pause', () => _playing.value = false)
+    return {
+        playing
+    }
 }
 
 export function cancelMusic() {
