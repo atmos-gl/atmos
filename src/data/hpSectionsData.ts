@@ -2,13 +2,9 @@ const data = [
     {
         title: "Le monde entier dans votre assiette",
         texts: [
-            "Vous en avez marre de manger toujours les mêmes choses ?",
-            "Grâce à la serre Atmos :",
-            [
-                "Faites pousser chez vous les fruits et légumes d’ailleurs.",
-                "Transformer l’exotique en local",
-                "Réduiser l’impact de l’importation des fruits et légumes.",
-            ]
+            "Marre de manger toujours les mêmes choses ?",
+            "Faites pousser les fruits et légumes du monde entier directement chez vous",
+            "L'impact de l'importation est réduit de 99%",
         ],
         isReversed: false,
         video: 'section-1',
