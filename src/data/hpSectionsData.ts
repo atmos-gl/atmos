@@ -37,7 +37,7 @@ const data = [
             "Peur de la facture énergétique ?",
             "Plus besoin d’électricité pour alimenter votre serre.",
             "Fission nucléaire intégrée grâce à une microscopique pilule d’uranium",
-            "Une recharge qui dure plusieurs années",
+            "Contrôle intelligent et à distance grâce à l'application Atmos",
         ],
         isReversed: true,
         video: 'section-4',
