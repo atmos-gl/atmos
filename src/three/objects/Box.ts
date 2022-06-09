@@ -1,5 +1,6 @@
 import {
     AnimationClip,
+    CubeTexture,
     DoubleSide,
     Group,
     Mesh,
@@ -13,14 +14,12 @@ import {
 import Door from './Door';
 import Bottle from './Bottle';
 import glassMaterial from '../materials/glassMaterial';
-import {getMetalMaterial, goldMat} from '../materials/metalMaterials';
 import Tray from './Tray';
 import Fertilizer from './Fertilizer';
 import {commonLoader, powerBlockLoader} from '../../composables/useLoader';
 import {SetupPowerBlockScene} from '../SetupPowerBlockScene';
 import UraniumFlask from './UraniumFlask';
 import {animate} from 'popmotion';
-import getGlassMaterial from '../materials/glassMaterial';
 
 export class Box {
     public model: Object3D
@@ -71,17 +70,7 @@ export class Box {
 
         const envMap = commonLoader.loader.getCubeTexture('envmap')
         const co2Bottle = this.model.getObjectByName('Bonbonne_de_CO2');
-        const co2mat = (co2Bottle.getObjectByName('corp_c02') as Mesh).material as MeshPhongMaterial
-        co2mat.shininess = 100
-        co2mat.envMap = envMap
-        co2mat.reflectivity = 0.2
-        const moletMat = new MeshPhongMaterial({
-            shininess: 100,
-            envMap,
-            reflectivity: 0.7,
-            color: '#c4c2c2'
-        })
-        ;(co2Bottle.getObjectByName('molette') as Mesh).material = moletMat
+        this.setupBottleMat(co2Bottle, envMap)
         this.co2Bottle = new Bottle(
             {
                 object: co2Bottle,
@@ -94,13 +83,11 @@ export class Box {
             }
         )
 
-        const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
+        const otherCo2 = this.model.getObjectByName('other_co2');
+        this.setupBottleMat(otherCo2, envMap, '_2')
 
-        ;(waterBottle.getObjectByName('etiquette_couleur') as Mesh).material[1].side = DoubleSide
-        waterBottle.material = glassMaterial({
-            roughness: 0.1,
-            transmission: 1
-        })
+        const waterBottle = this.model.getObjectByName('Bouteille') as Mesh
+        this.setupWaterBottleMat(waterBottle)
 
         this.waterBottle = new Bottle({
                 object: waterBottle,
@@ -115,6 +102,9 @@ export class Box {
                 soundEffect: 'screw2'
             }
         )
+
+        const otherWater = this.model.getObjectByName('bouteille_other') as Mesh
+        this.setupWaterBottleMat(otherWater, '_other')
 
         // const pipe = this.model.getObjectByName('tuyeau').children[0] as Mesh
         // pipe.material = glassMaterial(loader)
@@ -149,6 +139,30 @@ export class Box {
             color: '#1a1a1a'
         })
 
+    }
+
+    private setupBottleMat(bottle: Object3D, envMap: CubeTexture, suffix = '') {
+        console.log(bottle)
+        const co2mat = (bottle.getObjectByName('corp_c02' + suffix) as Mesh).material as MeshPhongMaterial
+        co2mat.shininess = 100
+        co2mat.envMap = envMap
+        co2mat.reflectivity = 0.2
+        const moletMat = new MeshPhongMaterial({
+                shininess: 100,
+                envMap,
+                reflectivity: 0.7,
+                color: '#c4c2c2'
+            })
+        ;(bottle.getObjectByName('molette' + suffix) as Mesh).material = moletMat
+    }
+
+    private setupWaterBottleMat(bottle:Mesh, suffix = '') {
+        const mat = (bottle.getObjectByName('etiquette_couleur' + suffix) as Mesh).material as MeshPhongMaterial
+        mat.side = DoubleSide
+        bottle.material = glassMaterial({
+            roughness: 0.1,
+            transmission: 1
+        })
     }
 
     public turnLightOn() {
