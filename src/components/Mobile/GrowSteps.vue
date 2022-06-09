@@ -6,7 +6,7 @@ const emit = defineEmits(['animation-finished'])
 
 const steps = reactive([
   {
-    text: `Installation des graines de <b>tomate</b>`,
+    text: `Téléchargement des graines de <b>tomate</b>`,
     active: false
   },
   {
