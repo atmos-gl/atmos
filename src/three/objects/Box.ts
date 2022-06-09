@@ -142,7 +142,6 @@ export class Box {
     }
 
     private setupBottleMat(bottle: Object3D, envMap: CubeTexture, suffix = '') {
-        console.log(bottle)
         const co2mat = (bottle.getObjectByName('corp_c02' + suffix) as Mesh).material as MeshPhongMaterial
         co2mat.shininess = 100
         co2mat.envMap = envMap

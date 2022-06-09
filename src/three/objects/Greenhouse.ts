@@ -84,7 +84,6 @@ export class Greenhouse {
         speaker1.rotation.z += 0.1
         const speaker2 = this.object.getObjectByName('enceinte_2')
         speaker2.rotation.y -= 0.02
-        console.log(speaker2)
     }
 
     get mesh() {
