@@ -230,12 +230,8 @@ export class SetupPowerBlockScene extends BaseScene {
         }
     }
 
-    // protected render() {
-    //     // super.render();
-    //     this.renderer.render(this.scene, this.camera)
-    // }
-
     animate() {
+        if (this.disposed) return
         this.box.animate(this.clock.getDelta())
         super.animate()
     }
