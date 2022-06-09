@@ -33,7 +33,7 @@ const getVec3 = (x, y, z) => new Vector3(x, y, z)
 <template>
   <main>
     <canvas id="scene" ref="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
-    <div class="absolute right-0 top-0 pointer-events-none text-jade px-12 pt-20 xl:pt-24 w-2/5">
+    <div class="absolute right-0 top-0 pointer-events-none text-jade px-12 pt-12 xl:pt-16 w-4/10">
       <Transition name="fade">
         <StepTitle v-show="showUi" :step="step"/>
       </Transition>

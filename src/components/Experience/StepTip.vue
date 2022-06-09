@@ -16,7 +16,7 @@ const {tip, icon, helperPosition} = toRefs(props)
         }">
       <div class="line"></div>
       <div class="tip flex flex-col items-start">
-        <div class="absolute -top-8 -right-6 h-16">
+        <div class="absolute -top-10 -right-10 h-16">
           <div class="absolute-center w-16 h-16 rounded-full bg-imperial"></div>
           <img v-if="icon" :src="icon" alt="Icon" class="h-full relative">
         </div>

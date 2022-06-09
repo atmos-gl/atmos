@@ -98,7 +98,7 @@ export class Box {
                     -20, 90
                 ),
                 screwDirection: 1,
-                initialPosition: new Vector2(450, 50),
+                initialPosition: new Vector2(450, 0),
                 soundEffect: 'screw2'
             }
         )
