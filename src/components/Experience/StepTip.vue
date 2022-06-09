@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import {computed, toRefs} from 'vue';
+import {toRefs} from 'vue';
 import Helper from './Helper.vue';
-import {UiTip} from '../../three/three-composables/useUiTip';
-import {Vector3} from 'three';
 
 const props = defineProps(['tip', 'icon', 'helperPosition'])
 const {tip, icon, helperPosition} = toRefs(props)
@@ -18,7 +16,10 @@ const {tip, icon, helperPosition} = toRefs(props)
         }">
       <div class="line"></div>
       <div class="tip flex flex-col items-start">
-        <img v-if="icon" :src="icon" alt="Icon" class="h-12 mb-2">
+        <div class="absolute -top-8 -right-6 h-16">
+          <div class="absolute-center w-16 h-16 rounded-full bg-imperial"></div>
+          <img v-if="icon" :src="icon" alt="Icon" class="h-full relative">
+        </div>
         <slot/>
       </div>
       <Helper v-if="helperPosition" class="absolute"
@@ -50,7 +51,7 @@ const {tip, icon, helperPosition} = toRefs(props)
 }
 
 .tip {
-  @apply absolute -top-20 left-20 p-4 rounded-xl border border-white text-jade w-72 -xl:w-64 font-core;
+  @apply absolute -top-20 left-20 p-6 rounded-xl border border-white text-jade w-72 -xl:w-64 font-core;
   backdrop-filter: blur(3px);
   background-color: #ffffff33;
 }

@@ -1,5 +1,9 @@
-import localisation from '../assets/img/localIcon.svg'
-import label from '../assets/img/naturalIcon.svg'
+import localisation from '../assets/img/labels/label_local.svg'
+import label_equitable from '../assets/img/labels/label_equitable.svg'
+import label_local from '../assets/img/labels/label_local.svg'
+import label_natural from '../assets/img/labels/label_natural.svg'
+import label_recyclable from '../assets/img/labels/label_recyclable.svg'
+import label_vegan from '../assets/img/labels/label_vegan.svg'
 import water_amazonie from '../assets/img/shop/water/bouteille_Amazonie.png'
 import water_ecolo from '../assets/img/shop/water/bouteille_Ecolo.png'
 import water_Himalaya from '../assets/img/shop/water/Bouteille_Himalaya_Couleurs.png'
@@ -43,13 +47,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -78,13 +79,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -113,13 +111,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -148,13 +143,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -183,13 +175,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -223,13 +212,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -258,13 +244,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -293,13 +276,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -328,13 +308,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -363,13 +340,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -403,13 +377,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -438,13 +409,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -473,13 +441,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -508,13 +473,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -543,13 +505,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"

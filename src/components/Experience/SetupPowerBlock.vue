@@ -7,9 +7,10 @@ import {useActor} from '@xstate/vue';
 import StepTitle from './StepTitle.vue';
 import StepTip from './StepTip.vue';
 
-import co2Icon from '../../assets/img/co2Icon.svg'
-import naturalIcon from '../../assets/img/naturalIcon.svg'
-import localIcon from '../../assets/img/localIcon.svg'
+import recyclingIcon from '../../assets/img/labels/label_recyclable.svg'
+import naturalIcon from '../../assets/img/labels/label_natural.svg'
+import localIcon from '../../assets/img/labels/label_local.svg';
+import fairIcon from '../../assets/img/labels/label_equitable.svg';
 import useScene from '../../composables/useScene';
 import Helper from './Helper.vue';
 
@@ -45,7 +46,7 @@ const getVec3 = (x, y, z) => new Vector3(x, y, z)
         </div>
       </Transition>
       <StepTip :tip="scene.co2BottleUi"
-               :icon="co2Icon"
+               :icon="recyclingIcon"
                :helper-position="getVec3(-35, 30, 190)"
       >
         <p><strong>Le C02</strong> est un ingrédient essentiel au bon dévelopement des plantes. Nous avons développé
@@ -82,7 +83,7 @@ const getVec3 = (x, y, z) => new Vector3(x, y, z)
         </p>
       </StepTip>
       <StepTip :tip="scene.uraniumFlaskUi"
-               :icon="localIcon"
+               :icon="fairIcon"
                :helper-position="getVec3(-30, -70, 130)"
       >
         <p>
