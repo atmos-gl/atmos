@@ -19,6 +19,7 @@ export class Greenhouse {
     private tomatoParams: TomatoParams;
 
     private currentAnimation
+    private glass: Mesh;
 
     constructor(tomatoParams: TomatoParams = {
         long: 1,
@@ -27,6 +28,14 @@ export class Greenhouse {
     }) {
         this.tomatoParams = tomatoParams
         this.init()
+    }
+
+    get intersectables() {
+        return [
+            this.leftDoor,
+            this.rightDoor,
+            this.glass,
+        ]
     }
 
     public init() {
@@ -47,8 +56,8 @@ export class Greenhouse {
             reflectivity: 0.82
         })
         glassMat.thickness = 1
-        const glass = fbx.getObjectByName('Cube_3') as Mesh
-        glass.material = glassMat
+        this.glass = fbx.getObjectByName('Cube_3') as Mesh
+        this.glass.material = glassMat
 
         ;(fbx.getObjectByName('Vitre_droite').children[0] as Mesh).material = glassMat
         ;(fbx.getObjectByName('Vitre_gauche').children[0] as Mesh).material = glassMat

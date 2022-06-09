@@ -1,79 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import {ref} from "vue";
+import {animate, linear} from "popmotion";
+
+const props = defineProps<{
+  duration: number,
+  startOffset: number,
+  direction: number
+}>()
+const { startOffset, duration, direction } = props
+const translate = ref(startOffset)
+animate({
+  from: startOffset,
+  to: startOffset - 25 * direction,
+  duration: duration * 1000,
+  onUpdate: v => {
+    translate.value = v
+  },
+  ease: linear,
+  repeat: Infinity
+})
+</script>
 
 <template>
-  <div class="scrolling-text">
-    <span>Atmos</span>
-    <span>Atmos</span>
-    <span>Atmos</span>
-    <span>Atmos</span>
-    <span>Atmos</span>
-    <span>Atmos</span>
-    <span>Atmos</span>
-    <span>Atmos</span>
+  <div class="scrolling-text pointer-events-none flex" :style="{ transform: `translateX(${translate}%)` }">
+    <span v-for="i in 8" :key="i" class="mr-8">Atmos</span>
   </div>
 </template>
-
-<style scoped lang="scss">
-.scrolling-text {
-  pointer-events: none;
-  &:nth-child(1) {
-    animation: title__first 24s infinite linear;
-    transform: translateX(-25%);
-  }
-
-  &:nth-child(2) {
-    animation: title__second 14s infinite linear;
-    transform: translateX(-43%);
-  }
-
-  &:nth-child(3) {
-    animation: title__third 14s infinite linear;
-    transform: translateX(-20%);
-  }
-
-  &:nth-child(4) {
-    animation: title__fourth 22s infinite linear;
-    transform: translateX(-48%);
-  }
-
-  span {
-    @apply mr-28;
-  }
-}
-
-@keyframes title__first {
-  from {
-    transform: translateX(-25%);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes title__second {
-  from {
-    transform: translateX(-43%);
-  }
-  to {
-    transform: translateX(-18%);
-  }
-}
-
-@keyframes title__third {
-  from {
-    transform: translateX(-20%);
-  }
-  to {
-    transform: translateX(-45%);
-  }
-}
-
-@keyframes title__fourth {
-  from {
-    transform: translateX(-48%);
-  }
-  to {
-    transform: translateX(-23%);
-  }
-}
-</style>
