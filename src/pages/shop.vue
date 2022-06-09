@@ -87,7 +87,7 @@ const copyCode = () => {
               </div>
             </div>
 
-            <div class="flex items-center justify-end transform -translate-x-17/100">
+            <div class="flex items-center justify-end transform -translate-x-19/100">
               <button @click="prev" class="mr-4 cursor-pointer text-4xl mt-1" title="Précédent"><i class="uil uil-angle-left"></i></button>
               <span v-for="(dot, index) in sliderData[activeRangeIndex].products"
                     class="h-4 w-4 rounded-full mr-2"
@@ -98,7 +98,7 @@ const copyCode = () => {
           </div>
 
           <div class="w-2/5">
-            <div class="border border-white rounded-3xl py-12 px-14 relative">
+            <div class="border border-r-0 border-white rounded-l-3xl py-12 px-14 relative">
               <Transition :name="transitionName" mode="out-in">
                 <div :key="activeCardIndex">
                   <h2 class="font-title text-4xl font-bold mb-4">{{ sliderData[activeRangeIndex].products[activeCardIndex].card.title }}</h2>
@@ -109,8 +109,11 @@ const copyCode = () => {
                   <div class="w-4/5">
                     <p class="mb-8" v-for="text in sliderData[activeRangeIndex].products[activeCardIndex].card.content">{{ text.text }}</p>
                   </div>
-                  <ul class="flex justify-between mx-auto w-3/4 mb-8">
-                    <img v-for="label in sliderData[activeRangeIndex].products[activeCardIndex].card.labels" :src="label.src" alt="Label">
+                  <ul class="flex mb-8">
+                    <img v-for="label in sliderData[activeRangeIndex].products[activeCardIndex].card.labels"
+                         :src="label.src"
+                         alt="Label"
+                         class="h-18 mr-8">
                   </ul>
                   <p class="underline">{{ sliderData[activeRangeIndex].products[activeCardIndex].card.delivery }}</p>
                 </div>

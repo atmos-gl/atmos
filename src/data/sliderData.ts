@@ -1,5 +1,13 @@
-import localisation from '../assets/img/localIcon.svg'
-import label from '../assets/img/naturalIcon.svg'
+import planet_amazonie from '../assets/img/shop/planets/amazonie.png'
+import planet_himalaya from '../assets/img/shop/planets/himalaya.png'
+import planet_recycle from '../assets/img/shop/planets/recycle.png'
+import planet_sahara from '../assets/img/shop/planets/sahara.png'
+import planet_yosemite from '../assets/img/shop/planets/yosemite.png'
+import label_equitable from '../assets/img/labels/label_equitable.svg'
+import label_local from '../assets/img/labels/label_local.svg'
+import label_natural from '../assets/img/labels/label_natural.svg'
+import label_recyclable from '../assets/img/labels/label_recyclable.svg'
+import label_vegan from '../assets/img/labels/label_vegan.svg'
 import water_amazonie from '../assets/img/shop/water/bouteille_Amazonie.png'
 import water_ecolo from '../assets/img/shop/water/bouteille_Ecolo.png'
 import water_Himalaya from '../assets/img/shop/water/Bouteille_Himalaya_Couleurs.png'
@@ -26,7 +34,7 @@ const data = [
                 card: {
                     title: "Eau d'Amazonie",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_amazonie,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -43,13 +51,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -61,7 +66,7 @@ const data = [
                 card: {
                     title: "Eau écologique",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_recycle,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -78,13 +83,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -96,7 +98,7 @@ const data = [
                 card: {
                     title: "Eau d\'Himalaya",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_himalaya,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -113,13 +115,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -131,7 +130,7 @@ const data = [
                 card: {
                     title: "Eau du Sahara",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_sahara,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -148,13 +147,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -166,7 +162,7 @@ const data = [
                 card: {
                     title: "Eau de yosemite",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_yosemite,
                     content: [
                         {
                             text: "L'eau d'Amazonie est très riche en minéraux.Le" +
@@ -183,13 +179,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_equitable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_local
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -206,7 +199,7 @@ const data = [
                 card: {
                     title: "CO2 d'Amazonie",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_amazonie,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -223,13 +216,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -241,7 +231,7 @@ const data = [
                 card: {
                     title: "CO2 écologique",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_recycle,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -258,13 +248,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -276,7 +263,7 @@ const data = [
                 card: {
                     title: "CO2 d\'Himalaya",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_himalaya,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -293,13 +280,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -311,7 +295,7 @@ const data = [
                 card: {
                     title: "CO2 du Sahara",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_sahara,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -328,13 +312,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -346,7 +327,7 @@ const data = [
                 card: {
                     title: "CO2 de yosemite",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_yosemite,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -363,13 +344,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_recyclable
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -386,7 +364,7 @@ const data = [
                 card: {
                     title: "fertilisant d'Amazonie",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_amazonie,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -403,13 +381,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -421,7 +396,7 @@ const data = [
                 card: {
                     title: "fertilisant écologique",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_recycle,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -438,13 +413,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -456,7 +428,7 @@ const data = [
                 card: {
                     title: "fertilisant d\'Himalaya",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_himalaya,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -473,13 +445,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -491,7 +460,7 @@ const data = [
                 card: {
                     title: "fertilisant du Sahara",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_sahara,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -508,13 +477,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
@@ -526,7 +492,7 @@ const data = [
                 card: {
                     title: "fertilisant de yosemite",
                     subtitle: "France",
-                    localisation: localisation,
+                    localisation: planet_yosemite,
                     content: [
                         {
                             text: "Ce coffret regroupe tous les ingrédients\n" +
@@ -543,13 +509,10 @@ const data = [
                     ],
                     labels: [
                         {
-                            src: label
+                            src: label_vegan
                         },
                         {
-                            src: label
-                        },
-                        {
-                            src: label
+                            src: label_natural
                         }
                     ],
                     delivery: "Livraison en 2 à 4 jours ouvrés"
