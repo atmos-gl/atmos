@@ -73,7 +73,7 @@ export class ExploreScene extends BaseScene {
             objInstance: this.explorePoiObject.mainGreenhouse.mesh.getObjectByName('spray_2'),
             textContainer: "js-watering",
             isClickable: true,
-            poiDesc: 'Arrosage',
+            poiDesc: 'CO2',
             name: 'watering'
         })
 

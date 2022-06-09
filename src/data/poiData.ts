@@ -1,12 +1,12 @@
 const data = [
     {
-        title: "Arrosage",
+        title: "CO2",
         content: [
             {
-                text: "Le système d'arrosage automatique de votre serre vous permet de fournir la quantité d'eau idéale à votre plantation. Nous garantissons un taux d'échec inférieur à 1% pour votre plantation."
+                text: "Le système de diffusion automatique de C02 permet de fournir les conditions d'air et d'humidité idéales à votre plantation. Nous garantissons un taux d'échec inférieur à 1%."
             },
             {
-                text: "Elle permet aussi de vous soulager d'une charge mentale supplémentaire. Le jardinage ne sera plus une tâche fatiguante, mais un plaisir au quotidien."
+                text: "Il permet également de vous soulager d'une charge mentale supplémentaire. Le jardinage ne sera plus une tâche fatiguante, mais un plaisir au quotidien."
             }
         ],
         features: [
@@ -22,7 +22,7 @@ const data = [
         title: "L'enceinte",
         content: [
             {
-                text: "Plusieurs scientifiques et chercheurs ont prouvés que les plantes réagissent à la musique. En effet cela impacte la vitesse de pousse des végétaux. Ces enceintes permettent à vos plantes de bénéficier de ces biens faits miraculeux."
+                text: "Plusieurs scientifiques et chercheurs ont prouvé que les plantes réagissent à la musique. En effet cela impacte la vitesse de pousse des végétaux. Ces enceintes permettent à vos plantes de bénéficier de ces bienfaits miraculeux."
             },
             {
                 text: "Nous vous proposons une gamme de musique du monde entier adaptée pour chaque type de plantation. Il vous suffit de sélectionner la musique de votre choix sur l'application."
@@ -43,9 +43,6 @@ const data = [
             {
                 text: "Ce câble qu'on appelle aussi \"tuyau\" est le lien entre votre serre Atmos et votre centrale. Il permet de transmettre tous les nutriments nécessaires à votre plantation. Elle lui transmet aussi l'énergie électrique créée par la pilule énergétique."
             },
-            {
-                text: "Il permet aussi l'agencement ultra rapide des bienfaits de l'uranium à vos plantes qui les font pousser beaucoup plus vite."
-            }
         ],
         features: [
             {
