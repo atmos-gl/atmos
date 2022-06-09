@@ -67,9 +67,9 @@ const getCustomClass = (index) => {
         <div class="w-3/5">
           <div class="relative overflow-hidden flex h-140">
             <div v-for="(slide, index) in sliderData[activeRangeIndex].products"
-                 class="absolute top-0 h-full transition-all duration-500 transform flex items-center custom-shadow"
+                 class="absolute top-0 h-full transition-all duration-500 transform flex items-center custom-shadow w-55"
                  :class="getCustomClass(index)">
-              <img :src="slide.src" :alt="slide.alt" class="h-4/5">
+              <img :src="slide.src" :alt="slide.alt" class="h-4/5 object-contain mx-auto">
             </div>
           </div>
 
