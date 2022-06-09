@@ -56,7 +56,7 @@ export class HeaderScene extends BaseScene {
                 -( rY / rect.height ) * 2 + 1,
             )
             raycaster.setFromCamera(pointer, this.camera)
-            const intersect = raycaster.intersectObject(this.greenHouse.mesh)
+            const intersect = raycaster.intersectObjects(this.greenHouse.intersectables, false)
             this.setHover(!!intersect.length)
         })
         this.canvas.addEventListener('mouseout', () => this.greenHouse.closeDoor('both',300))
