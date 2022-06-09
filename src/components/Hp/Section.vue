@@ -11,7 +11,7 @@ const videoUrl = {
 </script>
 
 <template>
-  <section class="o-container flex justify-between relative flex-col my-30 gap-16" :class="data.isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'">
+  <section class="o-container flex justify-between relative flex-col mt-30 gap-16" :class="data.isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'">
     <div class="h-full snake w-1/2">
       <video width="700" height="100%" autoplay loop muted playsinline disablePictureInPicture>
         <source
