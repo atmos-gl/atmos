@@ -24,7 +24,7 @@ onBeforeUnmount(() => pause)
 </script>
 <template>
   <div class="h-full w-full flex flex-col items-center justify-center relative">
-    <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-transparent to-jade breathe"></div>
+    <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-bg to-imperial breathe"></div>
     <div class="progress relative">
       <div>
         <svg :height="size" :width="size">
